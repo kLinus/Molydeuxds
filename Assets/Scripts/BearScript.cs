@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 // TODO: Collider around bear to trigger 'Roar' sound
-// TODO: Collision when eating people
-// TODO: Energy Bar
 // TODO: Fix jump and movement physics
 
 // Required Components
@@ -16,6 +14,9 @@ public class BearScript : MonoBehaviour
 	
 	public  float jumpSpeed;
 	private bool  canJump=true;
+	
+	public  float roarCheckRadius;
+	private SphereCollider roarColliderCheck;
 	
 	[System.SerializableAttribute]
 	public class EnergyProperties
@@ -41,6 +42,7 @@ public class BearScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		//Energy Setup
 		energy.lastDecay = Time.realtimeSinceStartup;
 		energy.current = energy.max;
 		GetComponentInChildren<HealthBar>().Initialize(energy.max, energy.current);
@@ -51,6 +53,20 @@ public class BearScript : MonoBehaviour
 	{
 		UpdateMovement();
 		UpdateEnergy();
+		Roar();
+	}
+	
+	
+	public void Roar()
+	{
+		Collider[] collides = Physics.OverlapSphere(gameObject.transform.position, roarCheckRadius);
+		foreach( Collider col in collides)
+		{
+			if(col.tag == "Person")
+			{
+				print("Roar!!");
+			}
+		}
 	}
 	
 	public void UpdateMovement()

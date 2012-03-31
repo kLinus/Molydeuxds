@@ -4,31 +4,35 @@ using System.Collections;
 [RequireComponent (typeof(GUITexture) )]
 public class HealthBar : MonoBehaviour 
 {
-	public float currentHealth;
-	public float maxHealth;
+	public float currentHealth = 0.0f;
+	public float maxHealth = 0.0f;
+	public float barHeightOffset;
 	public GameObject pinnedObject;
 	private bool isInitialized = false;
-	private Texture healthBar;
-	private Camera cam;
+	private GameObject healthBar;
+	public GameObject healthBarPrefab;
 				
 	// Use this for initialization
 	void Start () 
 	{
-	
+		if(pinnedObject != null)
+		{
+			AttachToGameObject(pinnedObject);
+		}
+		
+		if( currentHealth != 0.0f && maxHealth != 0.0f)
+		{
+			isInitialized = true;
+		}
 	}
 	
-	void OnGUI () 
+	void Update () 
 	{
-		if (isInitialized && cam != null)
+		if (isInitialized && healthBar != null)
 		{
-			Vector3 pos = cam.WorldToScreenPoint(pinnedObject.transform.position);
-			GUI.color = new Color(255, 0, 0);
-			GUI.HorizontalScrollbar(new Rect(pos.x - maxHealth/2, pos.y + 20, 100, 20), 0, currentHealth, 0, maxHealth);
-			
-		}
-		else if (cam == null)
-		{
-			cam = Camera.mainCamera;
+			healthBar.transform.position = OffsetVector;
+			healthBar.transform.rotation = pinnedObject.transform.rotation;
+			Debug.Log("It's moving!");
 		}
 		else
 		{
@@ -57,5 +61,19 @@ public class HealthBar : MonoBehaviour
 	public void AttachToGameObject(GameObject gObject)
 	{
 		pinnedObject = gObject;
+		if (healthBarPrefab != null)
+		{
+			healthBar = (GameObject)GameObject.Instantiate(this.healthBarPrefab, pinnedObject.transform.position, pinnedObject.transform.rotation);
+	
+		}
+		else
+		{
+			Debug.Log("Set up the healthBarPrefab plx");
+		}
+	}
+	
+	public Vector3 OffsetVector
+	{
+		get{ return new Vector3(pinnedObject.transform.position.x, pinnedObject.transform.position.y + barHeightOffset, pinnedObject.transform.position.z); }
 	}
 }
