@@ -42,7 +42,7 @@ public class Chunk : MonoBehaviour
 	
 	public float getWorldHeight( int x, int z )
 	{
-		for( int y = 15; y >= 0; y-- )
+		for( int y = 15; y >= 0; --y )
 		{
 			short type = getType_l( x, y, z );
 			if( type != 0 ) return m_y + y + 1.0f;
@@ -336,7 +336,6 @@ public class World : MonoBehaviour
 		
 		scatterResource( m_treeDef, 100 );
 		scatterResource( m_rockDef, 100 );
-		
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
@@ -346,13 +345,13 @@ public class World : MonoBehaviour
 	
 	public int worldToChunkIndex( float x, float y, float z )
 	{
-		if( x < 0 ) x += -16.0f;
-		if( y < 0 ) y += -16.0f;
-		if( z < 0 ) z += -16.0f;
+		if( x < 0 ) x += -s_chunkWorldSize;
+		if( y < 0 ) y += -s_chunkWorldSize;
+		if( z < 0 ) z += -s_chunkWorldSize;
 		
-		int chunkX = (int)x / Chunk.s_chunkSize;
-		int chunkY = (int)y / Chunk.s_chunkSize;
-		int chunkZ = (int)z / Chunk.s_chunkSize;
+		int chunkX = ((int)x) / Chunk.s_chunkSize;
+		int chunkY = ((int)y) / Chunk.s_chunkSize;
+		int chunkZ = ((int)z) / Chunk.s_chunkSize;
 		
 		if( chunkX < 0 || chunkX >= s_chunkSide ) return 0;
 		if( chunkZ < 0 || chunkZ >= s_chunkSide ) return 0;
@@ -390,7 +389,7 @@ public class World : MonoBehaviour
 		
 		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
 		
-		return chScr.getWorldHeight( (int)x % s_chunkSide, (int)z % s_chunkSide );
+		return chScr.getWorldHeight( (int)x % Chunk.s_chunkSize, (int)z % Chunk.s_chunkSize );
 	}
 	
 	public void scatterResource( GameObject def, int count )

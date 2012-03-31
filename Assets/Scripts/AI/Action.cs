@@ -40,7 +40,6 @@ class Action
 			
 			m_walker.transform.position = new Vector3( p.x, y, p.z );
 
-			
 			yield return 0;
 
 			moved = m_walker.transform.position - startPos;
