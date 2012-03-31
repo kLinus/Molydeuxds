@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Walker : MonoBehaviour 
 {
-	public GameObject m_walkerDef;
+	public GameObject m_buildingDef;
 	
 	public float s_ageToMakeBuilding = 60.0f;
 	public float s_chanceToMakeBuilding = 0.1f;
@@ -12,11 +12,16 @@ public class Walker : MonoBehaviour
 	
 	float m_chanceOfBuilding = Random.Range( 0.0f, 1.0f );
 	
+	ActWorker m_act;
+	
 	// Use this for initialization
 	void Start () 
 	{
-	
+		m_act = new ActWorker( this );
+		
+		StartCoroutine( m_act.act() );
 	}
+	
 	
 	// Update is called once per frame
 	void Update () 
@@ -29,12 +34,8 @@ public class Walker : MonoBehaviour
 			{
 				m_chanceOfBuilding = 1.0f;
 				
-				Instantiate( m_walkerDef, transform.position, new Quaternion() );
+				Instantiate( m_buildingDef, transform.position, new Quaternion() );
 			}
-		}
-		
-		
-		
-		
+		}		
 	}
 }

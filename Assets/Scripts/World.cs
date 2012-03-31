@@ -277,6 +277,8 @@ public class World : MonoBehaviour
 {
 	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
+	
+	public static World me;
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	
@@ -287,6 +289,8 @@ public class World : MonoBehaviour
 	
 	void Start () 
 	{
+		me = this;
+		
 		print ( "Start world create" );
 		for( int z = 0; z < s_chunkSide; ++z )
 		{
