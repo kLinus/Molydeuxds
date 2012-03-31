@@ -278,6 +278,8 @@ public class World : MonoBehaviour
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	
 	public GameObject m_chunkObjectDef;
+	public GameObject m_walkerDef;
+	public GameObject m_hutDef;
 	
 	void Start () 
 	{
