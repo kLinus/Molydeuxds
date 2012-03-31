@@ -45,7 +45,7 @@ public class Chunk : MonoBehaviour
 		for( int y = 15; y >= 0; y-- )
 		{
 			short type = getType_l( x, y, z );
-			if( type != 0 ) return m_y + y + 2.8f;
+			if( type != 0 ) return m_y + y + 1.0f;
 		}
 		
 		return m_y;
@@ -273,17 +273,17 @@ public class Chunk : MonoBehaviour
 }
 
 
-
-
 public class World : MonoBehaviour 
 {
-	static public int s_chunkSide = 8;
+	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	
 	public GameObject m_chunkObjectDef;
 	public GameObject m_hutDef;
+	public GameObject m_rockDef;
+	public GameObject m_treeDef;
 	
 	void Start () 
 	{
@@ -328,6 +328,8 @@ public class World : MonoBehaviour
 		
 		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
 		
+		scatterResource( m_treeDef, 100 );
+		scatterResource( m_rockDef, 100 );
 		
 	}
 	
@@ -378,10 +380,29 @@ public class World : MonoBehaviour
 	{
 		int index = worldToChunkIndex( x, 0, z );
 		
-		if( index < 0 || index > s_chunkSide ) return 0.0f;
+		if( index < 0 || index > (s_chunkSide * s_chunkSide) ) return 0.0f;
 		
 		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
 		
 		return chScr.getWorldHeight( (int)x % s_chunkSide, (int)z % s_chunkSide );
 	}
+	
+	public void scatterResource( GameObject def, int count )
+	{
+		for( int i = 0; i < count; ++i )
+		{
+			float fx = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			float fz = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			
+			float fy = getWorldHeight( fx, fz );
+			
+			Vector3 pos = new Vector3( fx, fy, fz );
+			
+			GameObject resource = Instantiate( def, pos, new Quaternion() ) as GameObject;
+			
+			
+		}
+
+	}
+	
 }

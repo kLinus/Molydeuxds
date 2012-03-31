@@ -6,7 +6,9 @@ public class Building : MonoBehaviour
 	public GameObject m_walkerDef;
 
 	float m_nextAgentSpawn = 10.0f;
-
+	
+	
+	
 	// Use this for initialization
 	void Start () 
 	{

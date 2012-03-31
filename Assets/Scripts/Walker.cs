@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Walker : MonoBehaviour 
 {
+	public GameObject m_walkerDef;
+	
 	public float s_ageToMakeBuilding = 60.0f;
 	public float s_chanceToMakeBuilding = 0.1f;
 	
@@ -30,5 +32,9 @@ public class Walker : MonoBehaviour
 				Instantiate( m_walkerDef, transform.position, new Quaternion() );
 			}
 		}
+		
+		
+		
+		
 	}
 }
