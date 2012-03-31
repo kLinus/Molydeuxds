@@ -1,27 +1,32 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class ResourceDef
+{
+	public string type;
+	public float  amount;
+}
 
 public class Building : MonoBehaviour 
 {
 	public GameObject m_walkerDef;
 	public GameObject m_upgradesToDef;
 	
-	public float m_foodNeeded = 10.0f;
+
+	public ResourceDef[] m_resNeededForSpawn;
+	public ResourceDef[] m_resNeededForUpgrade;
 	
-	public float m_lumberNeeded = 10.0f;
-	public float m_rocksNeeded = 10.0f;
+	public Dictionary<string, ResourceDef> m_res;
+
 
 	float m_nextAgentSpawn = 10.0f;
-	
-	float m_lumber	= 0.0f;
-	float m_rocks	= 0.0f;
-	float m_food	= 0.0f;
-	
+		
 	// Use this for initialization
 	void Start () 
 	{
 	}
-	
 	
 	// Update is called once per frame
 	void Update () 
