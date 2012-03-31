@@ -4,10 +4,18 @@ using System.Collections;
 public class Building : MonoBehaviour 
 {
 	public GameObject m_walkerDef;
+	public GameObject m_upgradesToDef;
+	
+	public float m_foodNeeded = 10.0f;
+	
+	public float m_lumberNeeded = 10.0f;
+	public float m_rocksNeeded = 10.0f;
 
 	float m_nextAgentSpawn = 10.0f;
 	
-	
+	float m_lumber	= 0.0f;
+	float m_rocks	= 0.0f;
+	float m_food	= 0.0f;
 	
 	// Use this for initialization
 	void Start () 
