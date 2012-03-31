@@ -18,7 +18,7 @@ public class Building : MonoBehaviour
 	public ResourceDef[] m_resNeededForSpawn;
 	public ResourceDef[] m_resNeededForUpgrade;
 	
-	public Dictionary<string, ResourceDef> m_res;
+	public Dictionary<string, ResourceDef> m_res = new Dictionary<string, ResourceDef>();
 
 
 	float m_nextAgentSpawn = 10.0f;
@@ -28,6 +28,53 @@ public class Building : MonoBehaviour
 	{
 	}
 	
+	public void addResource( ResourceDef def )
+	{
+		ResourceDef curDef;
+		if( m_res.TryGetValue( def.type, out curDef ) )
+		{
+			curDef.amount += def.amount;
+		}
+		else
+		{
+			curDef = def;
+			m_res[def.type] = def;
+		}
+		
+		print( "Have "+curDef.amount+" of "+def.type );
+	}
+
+	bool hasEnough( ResourceDef[] res )
+	{
+		for( int i = 0; i < res.Length; ++i )
+		{
+			ResourceDef curDef = new ResourceDef();
+			if( m_res.TryGetValue( res[i].type, out curDef ) )
+			{
+				if( curDef.amount < res[i].amount ) return false;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	void useResources( ResourceDef[] res )
+	{
+		for( int i = 0; i < res.Length; ++i )
+		{
+			ResourceDef curDef = new ResourceDef();
+			if( m_res.TryGetValue( res[i].type, out curDef ) )
+			{
+				curDef.amount -= res[i].amount;
+			}
+		}
+	}
+	
+	
 	// Update is called once per frame
 	void Update () 
 	{
@@ -35,9 +82,16 @@ public class Building : MonoBehaviour
 		
 		if( m_nextAgentSpawn < 0 )
 		{
-			Instantiate( m_walkerDef, transform.position, new Quaternion() );
+			if( hasEnough( m_resNeededForSpawn ) )
+			{
+				print( "Making new villager" );
+				
+				useResources( m_resNeededForSpawn );
+				
+				Instantiate( m_walkerDef, transform.position, new Quaternion() );
+			}
 			
-			m_nextAgentSpawn = Random.Range( 10.0f, 20.0f );
+			m_nextAgentSpawn = Random.Range( 3.0f, 5.0f );
 		}
 	}
 }

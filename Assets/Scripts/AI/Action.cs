@@ -87,7 +87,10 @@ class Action
 				if( building != null )
 				{
 					MonoBehaviour.print( "Heading home to:"+building.gameObject.name );
-					yield return m_walker.StartCoroutine( gotoSquare( building.transform.position, 1.0f, 0.01f ) );				
+					yield return m_walker.StartCoroutine( gotoSquare( building.transform.position, 1.0f, 0.01f ) );
+					
+					building.addResource( m_walker.m_resCarrying );
+					
 					yield break;
 				}
 			}
@@ -133,7 +136,7 @@ class Action
 			}
 		}
 
-		MonoBehaviour.print( "Random walk" );
+		//MonoBehaviour.print( "Random walk" );
 
 		float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
 		float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );

@@ -8,7 +8,7 @@ public class Walker : MonoBehaviour
 	public float s_ageToMakeBuilding = 60.0f;
 	public float s_chanceToMakeBuilding = 0.1f;
 	
-	public float m_maxAge = 60.0f;
+	public float m_maxAge = 600.0f;
 	float m_age = 0.0f;
 	
 	float m_chanceOfBuilding = Random.Range( 0.0f, 1.0f );
