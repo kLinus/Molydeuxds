@@ -43,25 +43,41 @@ That Brooklyn NOUN, we're on it"
 
 	};
 
+	private string[] sa_childhood = new string[] {
+	};
+
+	private string[] sa_teen = new string[] {
+	};
+
+	private string[] sa_youngAdult = new string[] {
+	};
+
+	private string[] sa_adult = new string[] {
+	};
+
+	private string[] sa_elderly = new string[] {
+	};
+	
+	
 	
 	// Use this for initialization
 	public MadLib()
 	{
 		lp_libParts = new List<LibPart>();
 		
-		lp_libParts.Add(new LibPart("NOUN", new string[] {
+		lp_libParts.Add(new LibPart("*NOUN*", new string[] {
 			"roller skate",
 			"banana",
 			"grave"
 		}));
 		
-		lp_libParts.Add(new LibPart("VERB", new string[] {
+		lp_libParts.Add(new LibPart("*VERB*", new string[] {
 			"staple",
 			"punch",
 			"slide"
 		}));
 		
-		lp_libParts.Add(new LibPart("ADJ", new string[] {
+		lp_libParts.Add(new LibPart("*ADJ*", new string[] {
 			"cold",
 			"happy",
 			"yellow"
