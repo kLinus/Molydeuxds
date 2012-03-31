@@ -40,6 +40,17 @@ public class Chunk : MonoBehaviour
 		return m_types[index];
 	}
 	
+	public float getWorldHeight( int x, int z )
+	{
+		for( int y = 15; y >= 0; --y )
+		{
+			short type = getType_l( x, y, z );
+			if( type != 0 ) return m_y + y + 1.0f;
+		}
+		
+		return m_y;
+	}
+	
 	public short getType( int x, int y, int z )
 	{
 		bool isOutside = (x < 0) | (y < 0) | (z < 0) | (x >= s_chunkSize) | (y >= s_chunkSize) | (z >= s_chunkSize);
@@ -259,28 +270,29 @@ public class Chunk : MonoBehaviour
 		GetComponent<MeshCollider>().sharedMesh = mesh;
 		//GetComponent<MeshRenderer>().enabled = true;
 	}
-	
-	
-	
-	
-	
-	
 }
-
-
 
 
 public class World : MonoBehaviour 
 {
-	static public int s_chunkSide = 8;
+	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
+	
+	public static World me;
+	
+	
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	
 	public GameObject m_chunkObjectDef;
+	public GameObject m_hutDef;
+	public GameObject m_rockDef;
+	public GameObject m_treeDef;
 	
 	void Start () 
 	{
+		me = this;
+		
 		print ( "Start world create" );
 		for( int z = 0; z < s_chunkSide; ++z )
 		{
@@ -312,11 +324,40 @@ public class World : MonoBehaviour
 			}
 		}
 		print ( "End world create" );
+		
+		float bX = 8.0f; 
+		float bZ = 8.0f; 
+		
+		float bY = getWorldHeight( bX, bZ );
+		
+		Vector3 bPos = new Vector3( bX, bY, bZ );
+		
+		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
+		
+		scatterResource( m_treeDef, 100 );
+		scatterResource( m_rockDef, 100 );
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
 	{
 		return chZ * s_chunkSide + chX;
+	}
+	
+	public int worldToChunkIndex( float x, float y, float z )
+	{
+		if( x < 0 ) x += -s_chunkWorldSize;
+		if( y < 0 ) y += -s_chunkWorldSize;
+		if( z < 0 ) z += -s_chunkWorldSize;
+		
+		int chunkX = ((int)x) / Chunk.s_chunkSize;
+		int chunkY = ((int)y) / Chunk.s_chunkSize;
+		int chunkZ = ((int)z) / Chunk.s_chunkSize;
+		
+		if( chunkX < 0 || chunkX >= s_chunkSide ) return 0;
+		if( chunkZ < 0 || chunkZ >= s_chunkSide ) return 0;
+		if( chunkY < 0 || chunkY >= 2 ) return 0;
+
+		return chunkIndex( chunkX, chunkY, chunkZ );
 	}
 			
 	public short getType( int x, int y, int z )
@@ -340,5 +381,33 @@ public class World : MonoBehaviour
 		return chScr.getType_l( x % Chunk.s_chunkSize, y % Chunk.s_chunkSize, z % Chunk.s_chunkSize );
 	}
 
+	public float getWorldHeight( float x, float z )
+	{
+		int index = worldToChunkIndex( x, 0, z );
+		
+		if( index < 0 || index > (s_chunkSide * s_chunkSide) ) return 0.0f;
+		
+		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
+		
+		return chScr.getWorldHeight( (int)x % Chunk.s_chunkSize, (int)z % Chunk.s_chunkSize );
+	}
+	
+	public void scatterResource( GameObject def, int count )
+	{
+		for( int i = 0; i < count; ++i )
+		{
+			float fx = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			float fz = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			
+			float fy = getWorldHeight( fx, fz );
+			
+			Vector3 pos = new Vector3( fx, fy, fz );
+			
+			GameObject resource = Instantiate( def, pos, new Quaternion() ) as GameObject;
+			
+			
+		}
+
+	}
 	
 }
