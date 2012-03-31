@@ -26,7 +26,7 @@ Twist cabbage off instinct niggas don't think shit stink
 pink gators, my Detroit NOUNs
 Timbs for my hooligans in Brooklyn
 Dead right, if they head right, Biggie there every night
-Poppa been ADJ since days of Underroos
+NICK been ADJ since days of Underroos
 Never lose, never choose to, bruise crews who
 do something to us, talk go through us
 Girls walk to us, wanna do us, VERB us
@@ -69,11 +69,24 @@ That Brooklyn NOUN, we're on it"
 		
 	}
 	
-	public String GetParagraph()
+	public String GetParagraph(string name)
+	{
+		return GetParagraph(name, name, name);
+	}
+	
+	public String GetParagraph(string name, string nickname)
+	{
+		return GetParagraph(name, nickname, name);
+	}
+	
+	public String GetParagraph(string name, string nickname, string formalname)
 	{
 		Random rand = new Random();
 		
-		//String paragraph = sa_paragraphs[Random.Range(0,sa_paragraphs.Length - 1)];
+		lp_libParts.Add(new LibPart("NAME", new string[] { name }));
+		lp_libParts.Add(new LibPart("NICK", new string[] { nickname }));
+		lp_libParts.Add(new LibPart("FORMAL", new string[] { formalname }));
+		
 		String paragraph = sa_paragraphs[rand.Next(sa_paragraphs.Length)];
 		
 		foreach(LibPart lp in lp_libParts)
@@ -82,8 +95,16 @@ That Brooklyn NOUN, we're on it"
 			int i = 0;
 			while((i = paragraph.IndexOf(lp.key, i)) != -1)
 			{
-				//string randomWord = lp.words[Random.Range(0,lp.words.Length - 1)];
 				string randomWord = lp.words[rand.Next(lp.words.Length)];
+				//find if last character was a period, and capitalize the first letter of the added word
+				int j = i;
+				do{
+					j--;
+					if(paragraph[j] == char.Parse(".") || paragraph[j] == char.Parse("\n"))
+						randomWord = char.ToUpper(randomWord[0]) + randomWord.Substring(1);
+				}
+				while(char.IsWhiteSpace(paragraph[j]));
+				
 				paragraph = paragraph.Remove(i,keylength).Insert(i,randomWord);
 				i += keylength;
 			}
