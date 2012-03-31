@@ -81,7 +81,7 @@ That Brooklyn NOUN, we're on it"
 	
 	public String GetParagraph(string name, string nickname, string formalname)
 	{
-		Random rand = new Random();
+		Random rand = new Random((int) DateTime.Now.Ticks);
 		
 		lp_libParts.Add(new LibPart("NAME", new string[] { name }));
 		lp_libParts.Add(new LibPart("NICK", new string[] { nickname }));
