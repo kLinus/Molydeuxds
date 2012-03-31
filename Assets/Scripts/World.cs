@@ -279,6 +279,8 @@ public class World : MonoBehaviour
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
 	
 	public static World me;
+	
+	
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	

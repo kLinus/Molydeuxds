@@ -34,7 +34,12 @@ class Action
 		{
 			float distThisFrame = speed * Time.deltaTime;
 			
-			m_walker.transform.position += dir * distThisFrame;
+			Vector3 p = m_walker.transform.position + dir * distThisFrame;
+			
+			float y = World.me.getWorldHeight( p.x, p.z );
+			
+			m_walker.transform.position = new Vector3( p.x, y, p.z );
+
 			
 			yield return 0;
 
@@ -80,8 +85,8 @@ class ActWorker : Action
 	{
 		while( true )
 		{
-			float x = Random.Range( 0.0f, 32.0f );
-			float z = Random.Range( 0.0f, 32.0f );
+			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
 			
 			float y = World.me.getWorldHeight( x, z );
 			
