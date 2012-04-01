@@ -40,7 +40,7 @@ public class Walker : MonoBehaviour
 	{
 		m_age += Time.deltaTime;
 		
-		World.me.m_energy.current += m_addEnergy * Time.deltaTime;
+		World.me.m_energy.add( m_addEnergy * Time.deltaTime );
 		
 		if( m_chanceOfBuilding < s_chanceToMakeBuilding )
 		{

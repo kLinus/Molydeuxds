@@ -295,11 +295,22 @@ public class World : MonoBehaviour
 		public float max;
 		public float decayAmount;
 		public float decayTime;
-		public float current;
 		public float lastDecay;
-	}
-	public EnergyProperties m_energy;
-	//public EnergyProperties m_cloudEnergy;
+
+		public float current{ get; private set; }
+		
+		public void add( float val )
+		{
+			current = Mathf.Clamp( current + val, 0, max );
+		}
+		
+		public void decay()
+		{
+			current -= decayAmount;
+			lastDecay = Time.realtimeSinceStartup;
+		}
+		
+	}public EnergyProperties m_energy;
 	
 	public static World me;
 	
@@ -310,8 +321,14 @@ public class World : MonoBehaviour
 	public GameObject m_hutDef;
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
-	#endregion
+	public GameObject m_foodDef;
+
+	public float m_godRainEnergy = 25.0f;
 	
+	public GameObject m_guiEnergy;
+
+	#endregion
+		
 	void Start () 
 	{
 		createWorld();
@@ -325,8 +342,9 @@ public class World : MonoBehaviour
 		
 		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
 		
-		scatterResource( m_treeDef, 100 );
+		scatterResource( m_foodDef, 100 );
 		scatterResource( m_rockDef, 100 );
+		scatterResource( m_treeDef, 100 );
 	}
 	
 	void Update()
@@ -374,6 +392,11 @@ public class World : MonoBehaviour
 			Camera.current.enabled = false;
 			camGOD.enabled = true;
 		}
+<<<<<<< HEAD
+=======
+		int energy = (int)m_energy.current;
+		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
+>>>>>>> 13bfb0fb238fed0ccd30edd295f7d265d728bd76
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
@@ -474,7 +497,7 @@ public class World : MonoBehaviour
 			float fx = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			float fz = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			
-			float fy = getWorldHeight( fx, fz );
+			float fy = getWorldHeight( fx, fz ) - 0.5f;
 			
 			Vector3 pos = new Vector3( fx, fy, fz );
 			

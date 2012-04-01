@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 897769535a2d24132a47c0dd5b56415d
+guid: b51b3995da9215548a921cb9e65724f2
 ModelImporter:
   fileIDToRecycleName:
-    4300000: hut_model_pCube1
+    4300000: Box02
   serializedVersion: 10
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     generateAnimations: 3
@@ -20,7 +20,7 @@ ModelImporter:
     clipAnimations: []
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
@@ -45,18 +45,11 @@ ModelImporter:
         first: 4
         second: 801a0600
       data:
-        first: 111
-        second: 605fa900
-    hut_model_pCube1:
-      data:
-        first: 1
-        second: a2860100
-      data:
-        first: 4
-        second: 821a0600
-      data:
         first: 23
         second: 60182300
       data:
         first: 33
         second: a05a3200
+      data:
+        first: 111
+        second: 605fa900

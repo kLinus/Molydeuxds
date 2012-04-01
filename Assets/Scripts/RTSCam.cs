@@ -45,8 +45,8 @@ public class RTSCam : MonoBehaviour
 				
 	            if( Physics.Raycast( ray, out hit ) )
 				{
-					Instantiate( World.me.m_treeDef, hit.point, new Quaternion() );
-					World.me.m_energy.current -= World.me.m_godRainEnergy;
+					Instantiate( World.me.m_foodDef, hit.point, new Quaternion() );
+					World.me.m_energy.add ( -World.me.m_godRainEnergy );
 				}
 			}
 		}*/
