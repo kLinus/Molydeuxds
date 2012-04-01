@@ -7,6 +7,24 @@ public class RTSCam : MonoBehaviour
 	
 	public GameObject m_selection;
 	
+	
+	
+	IEnumerator Volcano( Vector3 pos )
+	{
+		int count = 0;
+		while( count < World.me.m_volcanoProbes )
+		{
+			
+			
+			yield return 0;
+			++count;
+		}
+
+		yield return 0;
+	}
+	
+	
+	
 	// Use this for initialization
 	void Start () 
 	{

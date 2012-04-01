@@ -441,6 +441,9 @@ public class World : MonoBehaviour
 		scatterResource( m_foodDef, 300 );
 		scatterResource( m_rockDef, 300 );
 		scatterResource( m_treeDef, 300 );
+		
+		StartCoroutine( growFood() );
+		StartCoroutine( growTrees() );
 	}
 	
 	void Update()
@@ -673,6 +676,8 @@ public class World : MonoBehaviour
 			
 			float fy = getWorldHeight( fx, fz ) - 0.5f;
 			
+			if( fy < World.me.m_waterObj.transform.position.y ) continue;
+			
 			Vector3 pos = new Vector3( fx, fy, fz );
 			
 			GameObject resource = Instantiate( def, pos, new Quaternion() ) as GameObject;
@@ -697,6 +702,27 @@ public class World : MonoBehaviour
 		if(Input.GetKey(KeyCode.Alpha3))
 		{
 			m_currentMode = Mode.CLOUD;
+		}
+	}
+	
+	
+	IEnumerator growTrees()
+	{
+		while( true )
+		{
+			yield return new WaitForSeconds(1);
+
+			scatterResource( m_foodDef, 1 );
+		}
+	}
+	
+	IEnumerator growFood()
+	{
+		while( true )
+		{
+			yield return new WaitForSeconds(1);
+
+			scatterResource( m_foodDef, 1 );
 		}
 	}
 	
