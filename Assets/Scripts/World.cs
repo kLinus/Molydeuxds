@@ -60,22 +60,37 @@ public class Chunk : MonoBehaviour
 	
 	public void createRandomCubes()
 	{
-		for( int y = 0; y < 16; ++y )
+		float noiseZ = Random.Range( 0.0f, 1000000000000000.0f );
+		
+		Noise.Triple fnFBNLargeSmooth = ( x, y, z ) => Mathf.Sin( ( 1.0f / Mathf.PI * 2.0f ) * 0.7f * ( 0.44f + (float)Noise.Perlin.fBm( x, y, z + 57.0f, ( x1, y1, z1 ) => 3.0f, ( x1, y1, z1 ) => 0.3f, ( x1, y1, z1 ) => 0.7f ) ) );
+        Noise.Triple fnFBNPlanety = ( x, y, z ) =>  0.79 * ( 0.62 + Noise.Perlin.fBm( x, y, z + 37, ( x1, y1, z1 ) => 10, ( x1, y1, z1 ) => 1.9, ( x1, y1, z1 ) => 0.6 ) );
+        Noise.Triple fnFBNStrings = ( x, y, z ) => Mathf.Max( -0.2f, Mathf.Min( 1.2f, 20.0f * ( -0.1f + (float)Noise.Perlin.fBm( x, y, z + 79.0f, ( x1, y1, z1 ) => 6.0f, ( x1, y1, z1 ) => 2.0f, ( x1, y1, z1 ) => 0.1f ) ) ) );
+        Noise.Triple fnRidged = ( x, y, z ) => 0.8 * ( -0.24 + Noise.Perlin.RidgedMF( x, y, z, (int)12, (float)1.8, (float)0.65f, 1.0f ) );
+        Noise.Triple fnChunkPlanety = ( x, y, z ) => 0.0 + ( 0.3 * (1 - fnFBNStrings( x, y, z )) * fnFBNPlanety( x, y, z ) );
+        Noise.Triple fnStringRidged = ( x, y, z ) => 0.0 + ( 0.3 * fnFBNStrings( x, y, z ) * fnRidged( x, y, z ) );
+        Noise.Triple fnFinal = ( x, y, z ) => fnFBNLargeSmooth( x, y, z ) + fnStringRidged(x,y,z) + fnChunkPlanety(x,y,z);
+		
+		for( int z = 0; z < 16; ++z )
 		{
-			float fy = (float)y;
-			for( int z = 0; z < 16; ++z )
+			float fz = (float)z;
+			for( int x = 0; x < 16; ++x )
 			{
-				float fz = (float)z;
-				for( int x = 0; x < 16; ++x )
+				float fx = (float)x;
+			
+				float wx = fx + m_x;
+				float wz = fz + m_z;
+
+				float height = (float)fnFinal( wx / 50.0f, wz / 50.0f, noiseZ ) * 32.0f - 4.0f;
+						
+				
+				int index0 = localToIndex( x, 0, z );
+				m_types[ index0 ] = 1;
+				
+				for( int y = 1; y < 15; ++y )
 				{
-					float fx = (float)x;
-					
+					float fy = (float)y;
+				
 					int index = localToIndex( x, y, z );
-					
-					float wx = fx + m_x;
-					float wz = fz + m_z;
-					
-					float height = ( Mathf.Sin( wz / 17.0f ) + Mathf.Sin( wx / 23.0f ) ) * 2.0f + 4.0f;
 					
 					short val = (short)((height > fy) ? 1 : 0 );
 					
