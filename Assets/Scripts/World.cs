@@ -60,6 +60,15 @@ public class Chunk : MonoBehaviour
 	
 	public void createRandomCubes()
 	{
+		Noise.Triple fnFBNLargeSmooth = ( x, y, z ) => Mathf.Sin( ( 1.0f / Mathf.PI * 2.0f ) * 0.7f * ( 0.44f + (float)Noise.Perlin.fBm( x, y, z + 57.0f, ( x1, y1, z1 ) => 3.0f, ( x1, y1, z1 ) => 0.3f, ( x1, y1, z1 ) => 0.7f ) ) );
+        Noise.Triple fnFBNPlanety = ( x, y, z ) =>  0.79 * ( 0.62 + Noise.Perlin.fBm( x, y, z + 37, ( x1, y1, z1 ) => 10, ( x1, y1, z1 ) => 1.9, ( x1, y1, z1 ) => 0.6 ) );
+        Noise.Triple fnFBNStrings = ( x, y, z ) => Mathf.Max( -0.2f, Mathf.Min( 1.2f, 20.0f * ( -0.1f + (float)Noise.Perlin.fBm( x, y, z + 79.0f, ( x1, y1, z1 ) => 6.0f, ( x1, y1, z1 ) => 2.0f, ( x1, y1, z1 ) => 0.1f ) ) ) );
+        Noise.Triple fnRidged = ( x, y, z ) => 0.8 * ( -0.24 + Noise.Perlin.RidgedMF( x, y, z, (int)12, (float)1.8, (float)0.65f, 1.0f ) );
+        Noise.Triple fnChunkPlanety = ( x, y, z ) => 0.0 + ( 0.3 * (1 - fnFBNStrings( x, y, z )) * fnFBNPlanety( x, y, z ) );
+        Noise.Triple fnStringRidged = ( x, y, z ) => 0.0 + ( 0.3 * fnFBNStrings( x, y, z ) * fnRidged( x, y, z ) );
+        Noise.Triple fnFinal = ( x, y, z ) => fnFBNLargeSmooth( x, y, z ) + fnStringRidged(x,y,z) + fnChunkPlanety(x,y,z);
+		
+		
 		for( int y = 0; y < 16; ++y )
 		{
 			float fy = (float)y;
@@ -75,7 +84,7 @@ public class Chunk : MonoBehaviour
 					float wx = fx + m_x;
 					float wz = fz + m_z;
 					
-					float height = ( Mathf.Sin( wz / 17.0f ) + Mathf.Sin( wx / 23.0f ) ) * 2.0f + 4.0f;
+					float height = (float)fnFinal( wx / 50.0f, wz / 50.0f, 0.0f ) * 32.0f;
 					
 					short val = (short)((height > fy) ? 1 : 0 );
 					
