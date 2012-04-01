@@ -21,6 +21,10 @@ public class RabidBear : Walker
 
 
 	}
+		
+	void OnGUI()
+	{
+	}
 	
 	public void setName(string name)
 	{
