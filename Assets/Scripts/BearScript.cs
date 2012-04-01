@@ -34,7 +34,6 @@ public class BearScript : MonoBehaviour
 	{
 		//Energy Setup
 		World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
-		World.me.m_energy.add( World.me.m_energy.max );
 		GetComponentInChildren<HealthBar>().Initialize(World.me.m_energy.max, World.me.m_energy.current);
 	}
 	

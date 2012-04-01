@@ -267,7 +267,7 @@ public class Chunk : MonoBehaviour
 		GetComponent<MeshFilter>().mesh = mesh;
 		//GetComponent<MeshFilter>().sharedMesh = mesh;
 		GetComponent<MeshCollider>().sharedMesh = mesh;
-		//GetComponent<MeshRenderer>().enabled = true;
+		//GetComponent<MeshRenderer>().gameObject.active = true;
 	}
 }
 
@@ -309,8 +309,9 @@ public class World : MonoBehaviour
 			current -= decayAmount;
 			lastDecay = Time.realtimeSinceStartup;
 		}
-		
-	}public EnergyProperties m_energy;
+	}
+	
+	public EnergyProperties m_energy;
 	
 	public static World me;
 	
@@ -331,6 +332,7 @@ public class World : MonoBehaviour
 		
 	void Start () 
 	{
+		m_energy.add(m_energy.max);
 		createWorld();
 		
 		float bX = 8.0f; 
@@ -349,9 +351,6 @@ public class World : MonoBehaviour
 	
 	void Update()
 	{		
-		int energy = (int)m_energy.current;
-		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
-		
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
 		{
@@ -378,20 +377,20 @@ public class World : MonoBehaviour
 		}
 		
 		//Switch Cameras depending on state
-		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.enabled == false)
+		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.gameObject.active == false)
 		{
-			Camera.current.enabled = false;
-			camBEAR.enabled = true;
+			Camera.current.gameObject.active = false;
+			camBEAR.gameObject.active = true;
 		}
-		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
+		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.gameObject.active == false)
 		{
-			Camera.current.enabled = false;
-			camCLOUD.enabled = true;
+			Camera.current.gameObject.active = false;
+			camCLOUD.gameObject.active = true;
 		}		
-		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.enabled == false)
+		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.gameObject.active == false)
 		{
-			Camera.current.enabled = false;
-			camGOD.enabled = true;
+			Camera.current.gameObject.active = false;
+			camGOD.gameObject.active = true;
 		}
 	}
 	
