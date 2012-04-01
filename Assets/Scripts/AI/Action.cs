@@ -27,6 +27,8 @@ class Action
 		float totalDistSqr = dir.sqrMagnitude;
 
 		dir.Normalize();
+		
+		m_walker.transform.LookAt(smallMove);
 
 		Vector3 moved = new Vector3();
 
