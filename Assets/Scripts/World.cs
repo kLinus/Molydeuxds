@@ -525,18 +525,21 @@ public class World : MonoBehaviour
 			ClearCameras();
 			camBEAR.enabled = true;
 			camBEAR.GetComponent<BearCam>().enabled = true;
+			camBEAR.GetComponentInChildren<AudioListener>().enabled = true;
 		}
 		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
 		{
 			ClearCameras();
 			camCLOUD.enabled = true;
 			camCLOUD.GetComponent<CloudCam>().enabled = true;
+			camCLOUD.GetComponentInChildren<AudioListener>().enabled = true;
 		}		
 		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.enabled == false)
 		{
 			ClearCameras();
 			camGOD.enabled = true;
 			camGOD.GetComponent<RTSCam>().enabled = true;
+			camGOD.GetComponentInChildren<AudioListener>().enabled = true;
 		}
 	}
 	
@@ -570,6 +573,7 @@ public class World : MonoBehaviour
 		foreach(Camera cam in cameras)
 		{
 			cam.enabled = false;
+			cam.GetComponentInChildren<AudioListener>().enabled = false;
 		}
 
 		camBEAR.GetComponent<BearCam>().enabled = false;
