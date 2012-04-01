@@ -392,11 +392,8 @@ public class World : MonoBehaviour
 			Camera.current.enabled = false;
 			camGOD.enabled = true;
 		}
-<<<<<<< HEAD
-=======
 		int energy = (int)m_energy.current;
 		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
->>>>>>> 13bfb0fb238fed0ccd30edd295f7d265d728bd76
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
