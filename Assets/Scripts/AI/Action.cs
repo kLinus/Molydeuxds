@@ -115,7 +115,7 @@ class Action
 				
 				Building building = go.GetComponent<Building>();
 				
-				if( building != null )
+				if( building != null && building.m_side == m_walker.m_side )
 				{
 					MonoBehaviour.print( "Heading home to:"+building.gameObject.name );
 					yield return m_walker.StartCoroutine( gotoSquare( building.transform.position, 1.0f, 0.01f ) );
@@ -133,13 +133,16 @@ class Action
 				}
 			}
 	
-			MonoBehaviour.print( "Finding home!" );
-			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			MonoBehaviour.print( "Finding home!" );		
+			float xOff = Random.Range( -32.0f, 32.0f );
+			float zOff = Random.Range( -32.0f, 32.0f );
+			
+			float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
 			
 			float y = World.me.getWorldHeight( x, z );
 					
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 1.0f, 0.01f ) );
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 2.0f, 0.01f ) );
 						
 			--count;
 		}
@@ -239,7 +242,7 @@ class ActGhost : Action
 			float y = World.me.getWorldHeight( x, z );
 			
 			
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 4.0f, 0.01f ) );
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 0.5f, 0.01f ) );
 			
 			
 			
