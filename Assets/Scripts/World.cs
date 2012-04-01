@@ -119,7 +119,7 @@ public class Chunk : MonoBehaviour
 				
 				float heightUnit = (float)fnFinal( wx / 50.0f, wz / 50.0f, noiseZ );
 				
-				float height = ( heightUnit ) * 16.0f;
+				float height = ( heightUnit ) * 22.0f;
 						
 				
 				int index0 = localToIndex( x, 0, z );
@@ -145,7 +145,7 @@ public class Chunk : MonoBehaviour
 					}
 					else if( heightDiff > 2.0f )
 					{
-						val = Random.Range( 0.0f, 1.0f ) < 0.5f ? (short)2 : (short)1;
+						val = fy > 6.5f ? (short)1 : (short)2;
 					}
 										
 					m_types[ index ] = val;
