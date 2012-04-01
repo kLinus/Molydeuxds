@@ -24,7 +24,7 @@ public class Building : MonoBehaviour
 	public Dictionary<string, ResourceDef> m_res = new Dictionary<string, ResourceDef>();
 
 
-	float m_nextAgentSpawn = 10.0f;
+	float m_nextAgentSpawn = 0.0f;
 		
 	// Use this for initialization
 	void Start () 

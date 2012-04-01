@@ -322,16 +322,13 @@ public class World : MonoBehaviour
 	public GameObject m_hutDef;
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
-<<<<<<< HEAD
 	#endregion
-=======
+	public GameObject m_foodDef;
 
 	public float m_godRainEnergy = 25.0f;
 	
 	public GameObject m_guiEnergy;
-	
->>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
-	
+		
 	void Start () 
 	{
 		createWorld();
@@ -345,13 +342,12 @@ public class World : MonoBehaviour
 		
 		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
 		
-		scatterResource( m_treeDef, 100 );
+		scatterResource( m_foodDef, 100 );
 		scatterResource( m_rockDef, 100 );
 	}
 	
 	void Update()
 	{
-<<<<<<< HEAD
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
 		{
@@ -390,10 +386,8 @@ public class World : MonoBehaviour
 		else if (m_currentMode == Mode.GOD)
 		{
 		}
-=======
 		int energy = (int)m_energy.current;
 		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
->>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
