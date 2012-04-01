@@ -348,7 +348,10 @@ public class World : MonoBehaviour
 	}
 	
 	void Update()
-	{
+	{		
+		int energy = (int)m_energy.current;
+		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
+		
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
 		{
@@ -375,25 +378,21 @@ public class World : MonoBehaviour
 		}
 		
 		//Switch Cameras depending on state
-		if (m_currentMode == Mode.BEAR && camBEAR.enabled == false)
+		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.enabled == false)
 		{
 			Camera.current.enabled = false;
 			camBEAR.enabled = true;
 		}
-		
-		else if (m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
+		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
 		{
 			Camera.current.enabled = false;
 			camCLOUD.enabled = true;
-		}
-		
-		else if (m_currentMode == Mode.GOD && camGOD.enabled == false)
+		}		
+		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.enabled == false)
 		{
 			Camera.current.enabled = false;
 			camGOD.enabled = true;
 		}
-		int energy = (int)m_energy.current;
-		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
