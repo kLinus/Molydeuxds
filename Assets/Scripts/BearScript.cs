@@ -119,13 +119,6 @@ public class BearScript : MonoBehaviour
 		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 	}
 	
-	void OnGUI()
-	{
-		GUI.color = new Color(133, 0 ,0);
-		Vector3 gameObjPosition = this.gameObject.transform.position;
-		GUI.HorizontalScrollbar( new Rect (gameObjPosition.x, gameObjPosition.y + 10, 50, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
-	}
-	
 	public void TriggerJump()
 	{
 		if(canJump)

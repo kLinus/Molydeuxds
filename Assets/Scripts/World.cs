@@ -486,9 +486,7 @@ public class World : MonoBehaviour
 	}
 	
 	void Update()
-	{
-		m_guiEnergy.GetComponent<GUIText>().text = ((int)m_energy.current).ToString();
-		
+	{	
 		CheaterKeys();
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
@@ -517,6 +515,7 @@ public class World : MonoBehaviour
 			}
 		}
 		
+		
 		//Switch Cameras depending on state
 		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.enabled == false)
 		{
@@ -537,6 +536,13 @@ public class World : MonoBehaviour
 			camGOD.GetComponent<RTSCam>().enabled = true;
 		}
 	}
+	
+	void OnGUI()
+	{
+		GUI.color = new Color(133, 0 ,0);
+		GUI.HorizontalScrollbar( new Rect (10, 10, 50, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
+	}
+	
 	public Camera GetActiveCamera()
 	{
 		if(camBEAR.enabled == true)
