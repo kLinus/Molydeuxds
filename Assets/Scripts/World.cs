@@ -344,6 +344,7 @@ public class World : MonoBehaviour
 		
 		scatterResource( m_foodDef, 100 );
 		scatterResource( m_rockDef, 100 );
+		scatterResource( m_treeDef, 100 );
 	}
 	
 	void Update()
@@ -488,7 +489,7 @@ public class World : MonoBehaviour
 			float fx = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			float fz = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			
-			float fy = getWorldHeight( fx, fz );
+			float fy = getWorldHeight( fx, fz ) - 0.5f;
 			
 			Vector3 pos = new Vector3( fx, fy, fz );
 			
