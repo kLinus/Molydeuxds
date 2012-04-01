@@ -315,7 +315,7 @@ public class World : MonoBehaviour
 	public LayerMask s_layerWalker;
 	public LayerMask s_layerResource;
 	
-	static public int s_chunkSide = 20;
+	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
 	public enum Mode {BEAR, CLOUD, GOD};
 	public Mode m_currentMode = Mode.GOD;
