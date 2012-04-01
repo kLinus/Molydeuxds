@@ -35,6 +35,17 @@ public class RTSCam : MonoBehaviour
 			Camera.main.transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * speed );
 		}
 		
+		if( Input.GetKeyDown( "r" ) )
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			
+			RaycastHit hit;
+			
+            if( Physics.Raycast( ray, out hit ) )
+			{
+				Instantiate( World.me.m_treeDef, hit.point, new Quaternion() );
+			}
+		}
 		
 		if( Input.GetMouseButtonDown( 0 ) )
 		{
