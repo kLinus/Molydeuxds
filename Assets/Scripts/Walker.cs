@@ -78,7 +78,7 @@ public class Walker : MonoBehaviour
 		}
 	}
 	*/
-	void oldDeath()
+	public void oldDeath()
 	{
 		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
 		temp.GetComponent<Ghost>().setName(m_name);
