@@ -7,6 +7,8 @@ public class Walker : MonoBehaviour
 	
 	public GameObject m_buildingDef;
 	
+	public GameObject ghostSpawn;
+	
 	public float s_ageToMakeBuilding = 60.0f;
 	public float s_chanceToMakeBuilding = 0.5f;
 	
@@ -52,11 +54,8 @@ public class Walker : MonoBehaviour
 			}
 		}
 		
-		if( m_age > m_maxAge )
-		{
-			// TODO: Generate and popup life story.  
-			Object.Destroy( gameObject );
-		}
+			if( m_age > m_maxAge )
+			oldDeath();
 	}
 	
 	void OnGUI()
@@ -67,6 +66,15 @@ public class Walker : MonoBehaviour
 			Rect labelRect = new Rect(inScreen.x - 100, Screen.height - inScreen.y + 50, 200, 100); 
 			GUI.Label(labelRect, m_name, nameLabel);
 		}
+	}
+	
+	void oldDeath()
+	{
+		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
+		temp.GetComponent<Ghost>().setName(m_name);
+		temp.GetComponent<DeathGUI>().setName(m_name);
+		
+		Object.Destroy( gameObject );
 	}
 	
 	static string getName()

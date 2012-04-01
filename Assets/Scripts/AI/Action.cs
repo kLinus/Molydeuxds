@@ -182,3 +182,29 @@ class ActWorker : Action
 	}
 }
 
+class ActGhost : Action
+{
+	public ActGhost( Ghost ghost ): base( ghost )
+	{
+	}
+	
+	public IEnumerator act()
+	{
+		while( true )
+		{
+			
+			MonoBehaviour.print( "Wandering the spirit realm" );
+			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			
+			float y = World.me.getWorldHeight( x, z );
+			
+			
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 4.0f, 0.01f ) );
+			
+			
+			
+		}
+	}
+}
+

@@ -21,41 +21,136 @@ public class MadLib
 	private List<LibPart> lp_libParts;
 	
 	private string[] sa_paragraphs = new string[] {
-		@"Hah, sicker than your average Poppa
+		@"Hah, sicker than your average NAME
 Twist cabbage off instinct niggas don't think shit stink
-pink gators, my Detroit NOUNs
+pink gators, my Detroit *NOUN*s
 Timbs for my hooligans in Brooklyn
 Dead right, if they head right, Biggie there every night
-NICK been ADJ since days of Underroos
+NICK been *ADJ* since days of Underroos
 Never lose, never choose to, bruise crews who
 do something to us, talk go through us
-Girls walk to us, wanna do us, VERB us
+Girls walk to us, wanna do us, *VERB* us
 Who us? Yeah, Poppa and Puff (ehehehe)
 Close like Starsky and Hutch, stick the clutch
 Dare I squeeze three at your cherry M-3
 (Take that, take that, take that, ha ha!)
 Bang every MC easily, busily
 Recently niggas fronting ain't saying nothing (nope)
-So I just VERB my piece, (c'mon) keep my piece
+So I just *VERB* my piece, (c'mon) keep my piece
 Cubans with the Jesus piece (thank you God), with my peeps
 Packing, asking who want it, you got it nigga flaunt it
-That Brooklyn NOUN, we're on it"
+That Brooklyn *NOUN*, we're on it"
 
 	};
 
 	private string[] sa_childhood = new string[] {
+		@"cHah, sicker than your average NAME
+Twist cabbage off instinct niggas don't think shit stink
+pink gators, my Detroit *NOUN*s
+Timbs for my hooligans in Brooklyn
+Dead right, if they head right, Biggie there every night
+NICK been *ADJ* since days of Underroos
+Never lose, never choose to, bruise crews who
+do something to us, talk go through us
+Girls walk to us, wanna do us, *VERB* us
+Who us? Yeah, Poppa and Puff (ehehehe)
+Close like Starsky and Hutch, stick the clutch
+Dare I squeeze three at your cherry M-3
+(Take that, take that, take that, ha ha!)
+Bang every MC easily, busily
+Recently niggas fronting ain't saying nothing (nope)
+So I just *VERB* my piece, (c'mon) keep my piece
+Cubans with the Jesus piece (thank you God), with my peeps
+Packing, asking who want it, you got it nigga flaunt it
+That Brooklyn *NOUN*, we're on it"
 	};
 
 	private string[] sa_teen = new string[] {
+		@"tHah, sicker than your average NAME
+Twist cabbage off instinct niggas don't think shit stink
+pink gators, my Detroit *NOUN*s
+Timbs for my hooligans in Brooklyn
+Dead right, if they head right, Biggie there every night
+NICK been *ADJ* since days of Underroos
+Never lose, never choose to, bruise crews who
+do something to us, talk go through us
+Girls walk to us, wanna do us, *VERB* us
+Who us? Yeah, Poppa and Puff (ehehehe)
+Close like Starsky and Hutch, stick the clutch
+Dare I squeeze three at your cherry M-3
+(Take that, take that, take that, ha ha!)
+Bang every MC easily, busily
+Recently niggas fronting ain't saying nothing (nope)
+So I just *VERB* my piece, (c'mon) keep my piece
+Cubans with the Jesus piece (thank you God), with my peeps
+Packing, asking who want it, you got it nigga flaunt it
+That Brooklyn *NOUN*, we're on it"
 	};
 
 	private string[] sa_youngAdult = new string[] {
+		@"yaHah, sicker than your average NAME
+Twist cabbage off instinct niggas don't think shit stink
+pink gators, my Detroit *NOUN*s
+Timbs for my hooligans in Brooklyn
+Dead right, if they head right, Biggie there every night
+NICK been *ADJ* since days of Underroos
+Never lose, never choose to, bruise crews who
+do something to us, talk go through us
+Girls walk to us, wanna do us, *VERB* us
+Who us? Yeah, Poppa and Puff (ehehehe)
+Close like Starsky and Hutch, stick the clutch
+Dare I squeeze three at your cherry M-3
+(Take that, take that, take that, ha ha!)
+Bang every MC easily, busily
+Recently niggas fronting ain't saying nothing (nope)
+So I just *VERB* my piece, (c'mon) keep my piece
+Cubans with the Jesus piece (thank you God), with my peeps
+Packing, asking who want it, you got it nigga flaunt it
+That Brooklyn *NOUN*, we're on it"
 	};
 
 	private string[] sa_adult = new string[] {
+		@"aHah, sicker than your average NAME
+Twist cabbage off instinct niggas don't think shit stink
+pink gators, my Detroit *NOUN*s
+Timbs for my hooligans in Brooklyn
+Dead right, if they head right, Biggie there every night
+NICK been *ADJ* since days of Underroos
+Never lose, never choose to, bruise crews who
+do something to us, talk go through us
+Girls walk to us, wanna do us, *VERB* us
+Who us? Yeah, Poppa and Puff (ehehehe)
+Close like Starsky and Hutch, stick the clutch
+Dare I squeeze three at your cherry M-3
+(Take that, take that, take that, ha ha!)
+Bang every MC easily, busily
+Recently niggas fronting ain't saying nothing (nope)
+So I just *VERB* my piece, (c'mon) keep my piece
+Cubans with the Jesus piece (thank you God), with my peeps
+Packing, asking who want it, you got it nigga flaunt it
+That Brooklyn *NOUN*, we're on it"
 	};
 
 	private string[] sa_elderly = new string[] {
+		@"eHah, sicker than your average NAME
+Twist cabbage off instinct niggas don't think shit stink
+pink gators, my Detroit *NOUN*s
+Timbs for my hooligans in Brooklyn
+Dead right, if they head right, Biggie there every night
+NICK been *ADJ* since days of Underroos
+Never lose, never choose to, bruise crews who
+do something to us, talk go through us
+Girls walk to us, wanna do us, *VERB* us
+Who us? Yeah, Poppa and Puff (ehehehe)
+Close like Starsky and Hutch, stick the clutch
+Dare I squeeze three at your cherry M-3
+(Take that, take that, take that, ha ha!)
+Bang every MC easily, busily
+Recently niggas fronting ain't saying nothing (nope)
+So I just *VERB* my piece, (c'mon) keep my piece
+Cubans with the Jesus piece (thank you God), with my peeps
+Packing, asking who want it, you got it nigga flaunt it
+That Brooklyn *NOUN*, we're on it"
 	};
 	
 	
@@ -83,19 +178,22 @@ That Brooklyn NOUN, we're on it"
 			"yellow"
 		}));
 		
+		
+		
 	}
 	
-	public String GetParagraph(string name)
+	public String GetParagraph(int type, string name)
 	{
-		return GetParagraph(name, name, name);
+		UnityEngine.Debug.Log(name);
+		return GetParagraph(type, name, name, name);
 	}
 	
-	public String GetParagraph(string name, string nickname)
+	public String GetParagraph(int type, string name, string nickname)
 	{
-		return GetParagraph(name, nickname, name);
+		return GetParagraph(type, name, nickname, name);
 	}
 	
-	public String GetParagraph(string name, string nickname, string formalname)
+	public String GetParagraph(int type, string name, string nickname, string formalname)
 	{
 		Random rand = new Random((int) DateTime.Now.Ticks);
 		
@@ -103,7 +201,33 @@ That Brooklyn NOUN, we're on it"
 		lp_libParts.Add(new LibPart("NICK", new string[] { nickname }));
 		lp_libParts.Add(new LibPart("FORMAL", new string[] { formalname }));
 		
-		String paragraph = sa_paragraphs[rand.Next(sa_paragraphs.Length)];
+		String paragraph;
+
+		
+		switch(type)
+		{
+		case 0:
+			paragraph = sa_childhood[rand.Next(sa_childhood.Length)];
+			break;
+		case 1:
+			paragraph = sa_teen[rand.Next(sa_teen.Length)];
+			break;
+		case 2:
+			paragraph = sa_youngAdult[rand.Next(sa_youngAdult.Length)];
+			break;
+		case 3:
+			paragraph = sa_adult[rand.Next(sa_adult.Length)];
+			break;
+		case 4:
+			paragraph = sa_elderly[rand.Next(sa_elderly.Length)];
+			break;
+		default:
+			paragraph = sa_paragraphs[rand.Next(sa_paragraphs.Length)];
+			break;
+			
+		}
+		
+		 
 		
 		foreach(LibPart lp in lp_libParts)
 		{
@@ -112,6 +236,7 @@ That Brooklyn NOUN, we're on it"
 			while((i = paragraph.IndexOf(lp.key, i)) != -1)
 			{
 				string randomWord = lp.words[rand.Next(lp.words.Length)];
+				UnityEngine.Debug.Log(lp.key);
 				//find if last character was a period, and capitalize the first letter of the added word
 				int j = i;
 				do{
