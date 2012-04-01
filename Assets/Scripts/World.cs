@@ -409,9 +409,13 @@ public class World : MonoBehaviour
 	public GameObject m_treeDef;
 	public GameObject m_foodDef;
 
-	public float m_godRainEnergy = 25.0f;
-	public float m_godAddLandEnergy = 1.0f;
-	public float m_godRemLandEnergy = 1.0f;
+	public float m_godRainEnergy	= 25.0f;
+	public float m_godAddLandEnergy	= 1.0f;
+	public float m_godRemLandEnergy	= 1.0f;
+	public float m_godFloodEnergy	= 100.0f;
+	public float m_godDroughtEnergy	= 100.0f;
+	
+	
 	
 	public GameObject m_guiEnergy;
 

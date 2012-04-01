@@ -75,6 +75,27 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
+		
+		if( Input.GetKeyDown( "f" ) )
+		{
+			if( World.me.m_energy.current >= World.me.m_godFloodEnergy )
+			{
+				World.me.m_waterObj.transform.position += new Vector3( 0, 1, 0 );
+				
+				World.me.m_energy.add( -World.me.m_godFloodEnergy );
+			}
+		}
+
+		if( Input.GetKeyDown( "o" ) )
+		{
+			if( World.me.m_energy.current >= World.me.m_godDroughtEnergy )
+			{
+				World.me.m_waterObj.transform.position -= new Vector3( 0, 1, 0 );
+				
+				World.me.m_energy.add( -World.me.m_godDroughtEnergy );
+			}
+		}
+
 		if( Input.GetKeyDown( "a" ) || Input.GetMouseButtonDown( 0 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
