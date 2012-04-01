@@ -48,13 +48,16 @@ public class DeathGUI : MonoBehaviour
 	{
 		if(showingDeath)
 		{
-			if(Input.GetButtonDown("Back"))
-			{
-				showingDeath = false;
-				GetComponent<DeathGUI>().enabled = false;
-			}
+			GUI.depth = 5;
 			
-			scrollposition = GUILayout.BeginScrollView(scrollposition, background, GUILayout.Width(background.fixedWidth), GUILayout.Height(background.fixedHeight));
+			if(Input.GetButtonDown("Back"))
+				hide();
+			
+			Rect windowRect = new Rect((Screen.width - background.fixedWidth) / 2, (Screen.height - background.fixedHeight)/2, background.fixedWidth, background.fixedHeight);
+			GUILayout.BeginArea(windowRect, background);
+			GUILayout.BeginVertical();
+			
+			scrollposition = GUILayout.BeginScrollView(scrollposition);
 			GUILayout.BeginVertical();
 			for(int i = 0; i < paragraphs.Length; i++)
 			{
@@ -64,7 +67,11 @@ public class DeathGUI : MonoBehaviour
 			
 			GUILayout.EndVertical();
 			GUILayout.EndScrollView();
-			//new Rect((Screen.width - background.fixedWidth) / 2, (Screen.height - background.fixedHeight), background.fixedWidth, background.fixedHeight));
+			if(GUILayout.Button("Skip for 5 credits", exitButton))
+				hide();
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+			
 		}
 	}
 	
@@ -73,6 +80,12 @@ public class DeathGUI : MonoBehaviour
 		
 		scrollposition = Vector2.zero;
 		showingDeath = true;
+	}
+	
+	public void hide()
+	{
+		showingDeath = false;
+		GetComponent<DeathGUI>().enabled = false;
 	}
 	
 	public void setName(string newName)
