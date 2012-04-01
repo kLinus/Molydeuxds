@@ -34,14 +34,25 @@ Play as a cloud!
 
 
 ------------------------------
-Add Audio
+-- Add Audio
 Add Splash Screens
-Polish madlib
-Maybe go for Facebook Credit joke on madlib
+-- Polish madlib
+-- Maybe go for Facebook Credit joke on madlib
 Decide how we go into bear/cloud/god
-Spawn Bears
-Bear AI (Attacking / Wandering)
+-- Spawn Bears
+-- Bear AI (Attacking / Wandering)
+Mouse over Unit -> Select -> set as target	
+
+> Add RTSCam selection to switch to bear
+-- Cloud Control
+
+Particle Effects to simulate being in a cloud
+Rain effect
+
 
 "I make it rain on these Deuxds"
 "The world really looks like a Molyneux.."
 
+
+Cloud = Creates food (Uses Energy)
+Bear  = Eats people  (Gains Energy)

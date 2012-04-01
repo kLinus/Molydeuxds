@@ -8,14 +8,14 @@ using System.Collections;
 public class BearScript : MonoBehaviour 
 {
 	// Attributes
-	public  float velocity;
-	public  float rotationSpeed;
+	public  float velocity = 10;
+	public  float rotationSpeed = 90;
 	
-	public  float jumpSpeed;
+	public  float jumpSpeed = 1000;
 	private bool  canJump=true;
 	
 	public  float magicNumber;
-	public  float roarCheckRadius;
+	public  float roarCheckRadius = 15;
 	private SphereCollider roarColliderCheck;
 	
 	// Bear Actions
@@ -80,11 +80,6 @@ public class BearScript : MonoBehaviour
 		{
 			transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
 		}
-		
-		if( button.Jump && canJump )
-		{
-			
-		}
 			
 	}
 	
@@ -100,10 +95,11 @@ public class BearScript : MonoBehaviour
 	
 	public void UpdateEnergy()
 	{
-		if( World.me.m_energy.current == 0)
+		if( World.me.m_energy.current <= 0)
 		{
 			Debug.Log("That's a dead bear");
 			Destroy(this.gameObject);
+			World.me.m_currentMode = World.Mode.GOD;
 		}
 		
 		if( Time.realtimeSinceStartup - World.me.m_energy.lastDecay > World.me.m_energy.decayTime)

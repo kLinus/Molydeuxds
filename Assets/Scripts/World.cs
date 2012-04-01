@@ -543,7 +543,7 @@ public class World : MonoBehaviour
 	void OnGUI()
 	{
 		GUI.color = new Color(133, 0 ,0);
-		GUI.HorizontalScrollbar( new Rect (10, 10, 50, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
+		GUI.HorizontalScrollbar( new Rect (10, 10, World.me.m_energy.max, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
 	}
 	
 	public Camera GetActiveCamera()
@@ -560,7 +560,7 @@ public class World : MonoBehaviour
 		{
 			return camGOD;
 		}
-		return camGOD;
+		return Camera.current;
 	}
 	
 	public void ClearCameras()
