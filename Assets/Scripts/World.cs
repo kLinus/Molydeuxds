@@ -298,8 +298,7 @@ public class World : MonoBehaviour
 		public float current;
 		public float lastDecay;
 	}
-	public EnergyProperties m_bearEnergy;
-	public EnergyProperties m_cloudEnergy;
+	public EnergyProperties m_energy;
 	
 	public static World me;
 	
@@ -310,7 +309,15 @@ public class World : MonoBehaviour
 	public GameObject m_hutDef;
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
+<<<<<<< HEAD
 	#endregion
+=======
+
+	public float m_godRainEnergy = 25.0f;
+	
+	public GameObject m_guiEnergy;
+	
+>>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
 	
 	void Start () 
 	{
@@ -331,6 +338,7 @@ public class World : MonoBehaviour
 	
 	void Update()
 	{
+<<<<<<< HEAD
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
 		{
@@ -369,6 +377,10 @@ public class World : MonoBehaviour
 		else if (m_currentMode == Mode.GOD)
 		{
 		}
+=======
+		int energy = (int)m_energy.current;
+		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
+>>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )

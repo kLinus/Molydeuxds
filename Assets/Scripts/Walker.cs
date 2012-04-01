@@ -13,6 +13,8 @@ public class Walker : MonoBehaviour
 	public float m_maxAge = 600.0f;
 	public GUIStyle nameLabel;
 	
+	public float m_addEnergy = 0.25f;
+	
 	float m_age = 0.0f;
 	
 	string m_name;
@@ -37,6 +39,8 @@ public class Walker : MonoBehaviour
 	void Update() 
 	{
 		m_age += Time.deltaTime;
+		
+		World.me.m_energy.current += m_addEnergy * Time.deltaTime;
 		
 		if( m_chanceOfBuilding < s_chanceToMakeBuilding )
 		{

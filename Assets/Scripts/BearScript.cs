@@ -33,8 +33,14 @@ public class BearScript : MonoBehaviour
 	void Start () 
 	{
 		//Energy Setup
+<<<<<<< HEAD
 		World.me.m_bearEnergy.current = World.me.m_bearEnergy.max;
 		GetComponentInChildren<HealthBar>().Initialize(World.me.m_bearEnergy.max, World.me.m_bearEnergy.current);
+=======
+		World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
+		World.me.m_energy.current = World.me.m_energy.max;
+		GetComponentInChildren<HealthBar>().Initialize(World.me.m_energy.max, World.me.m_energy.current);
+>>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
 	}
 	
 	// Update is called once per frame
@@ -102,31 +108,31 @@ public class BearScript : MonoBehaviour
 	
 	public void UpdateEnergy()
 	{
-		if( World.me.m_bearEnergy.current == 0)
+		if( World.me.m_energy.current == 0)
 		{
 			Debug.Log("That's a dead bear");
 			Destroy(this.gameObject);
 		}
 		
-		if( Time.realtimeSinceStartup - World.me.m_bearEnergy.lastDecay > World.me.m_bearEnergy.decayTime)
+		if( Time.realtimeSinceStartup - World.me.m_energy.lastDecay > World.me.m_energy.decayTime)
 		{
-			World.me.m_bearEnergy.current -= World.me.m_bearEnergy.decayAmount;
-			World.me.m_bearEnergy.lastDecay = Time.realtimeSinceStartup;
+			World.me.m_energy.current -= World.me.m_energy.decayAmount;
+			World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
 		}
-		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_bearEnergy.current);
+		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 	}
 	
 	public void IncreaseEnergy(float amount)
 	{
-		if ( World.me.m_bearEnergy.current + amount < World.me.m_bearEnergy.max)
+		if ( World.me.m_energy.current + amount < World.me.m_energy.max)
 		{
-			World.me.m_bearEnergy.current += amount;
-			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_bearEnergy.current);
+			World.me.m_energy.current += amount;
+			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 		}
 		else
 		{
-			World.me.m_bearEnergy.current = World.me.m_bearEnergy.max;
-			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_bearEnergy.current);
+			World.me.m_energy.current = World.me.m_energy.max;
+			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 		}
 	}
 	
@@ -134,7 +140,7 @@ public class BearScript : MonoBehaviour
 	{
 		GUI.color = new Color(133, 0 ,0);
 		Vector3 gameObjPosition = this.gameObject.transform.position;
-		GUI.HorizontalScrollbar( new Rect (gameObjPosition.x, gameObjPosition.y + 10, 50, 20), 0, World.me.m_bearEnergy.current, 0, World.me.m_bearEnergy.max);
+		GUI.HorizontalScrollbar( new Rect (gameObjPosition.x, gameObjPosition.y + 10, 50, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
 	}
 	
 	public void TriggerJump()
