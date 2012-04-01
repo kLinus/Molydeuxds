@@ -440,7 +440,9 @@ public class World : MonoBehaviour
 	}
 	
 	void Update()
-	{		
+	{
+		m_guiEnergy.GetComponent<GUIText>().text = ((int)m_energy.current).ToString();
+		
 		CheaterKeys();
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
