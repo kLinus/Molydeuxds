@@ -63,6 +63,7 @@ public class DeathGUI : MonoBehaviour
 			}
 			
 			GUILayout.EndVertical();
+			GUILayout.EndScrollView();
 			
 			
 				//new Rect((Screen.width - background.fixedWidth) / 2, (Screen.height - background.fixedHeight), background.fixedWidth, background.fixedHeight));
