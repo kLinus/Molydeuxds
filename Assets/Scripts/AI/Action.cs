@@ -36,7 +36,7 @@ class Action
 			
 			Vector3 p = m_walker.transform.position + dir * distThisFrame;
 			
-			float y = World.me.getWorldHeight( p.x, p.z );
+			float y = World.me.getWorldHeight( p.x, p.z ) - 0.5f;
 			
 			m_walker.transform.position = new Vector3( p.x, y, p.z );
 
@@ -78,8 +78,11 @@ class Action
 		{
 			Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 256.0f, World.me.s_layerHut );
 			
-			for( int i = 0; i < collides.Length; ++i )
+			
+			if( collides.Length > 0 )
 			{
+				int i = Random.Range( 0, collides.Length );
+				
 				GameObject go = collides[i].gameObject;
 				
 				Building building = go.GetComponent<Building>();

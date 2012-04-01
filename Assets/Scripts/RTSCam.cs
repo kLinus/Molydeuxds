@@ -35,7 +35,7 @@ public class RTSCam : MonoBehaviour
 			Camera.current.transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * speed );
 		}
 		
-		/*if( Input.GetKeyDown( "r" ) )
+		if( Input.GetKeyDown( "r" ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRainEnergy )
 			{
@@ -49,7 +49,7 @@ public class RTSCam : MonoBehaviour
 					World.me.m_energy.add ( -World.me.m_godRainEnergy );
 				}
 			}
-		}*/
+		}
 		
 		if( Input.GetMouseButtonDown( 0 ) )
 		{
