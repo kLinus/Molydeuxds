@@ -51,6 +51,40 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
+		if( Input.GetKeyDown( "a" ) )
+		{
+			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
+			{
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				
+				RaycastHit hit;
+				
+	            if( Physics.Raycast( ray, out hit ) )
+				{
+					World.me.m_energy.add( -World.me.m_godRainEnergy );
+				}
+			}
+		}
+		
+		if( Input.GetKeyDown( "d" ) )
+		{
+			if( World.me.m_energy.current >= World.me.m_godRemLandEnergy )
+			{
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				
+				RaycastHit hit;
+				
+	            if( Physics.Raycast( ray, out hit ) )
+				{
+					World.me.m_energy.add( -World.me.m_godRainEnergy );
+					
+					Vector3 blockPoint = hit.point + ray.direction * 0.25f;
+					
+					World.me.remBlock ( (int)blockPoint.x, (int)blockPoint.y, (int)blockPoint.z );
+				}
+			}
+		}
+		
 		if( Input.GetMouseButtonDown( 0 ) )
 		{
 			/*

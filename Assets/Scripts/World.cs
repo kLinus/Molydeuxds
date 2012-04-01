@@ -39,6 +39,15 @@ public class Chunk : MonoBehaviour
 		return m_types[index];
 	}
 	
+	public void remBlock_l( int x, int y, int z )
+	{
+		int index = localToIndex( x, y, z );
+		
+		m_types[index] = 0;
+		
+		createGeo();
+	}
+	
 	public float getWorldHeight( int x, int z )
 	{
 		for( int y = 15; y >= 0; --y )
@@ -339,6 +348,8 @@ public class World : MonoBehaviour
 	public GameObject m_foodDef;
 
 	public float m_godRainEnergy = 25.0f;
+	public float m_godAddLandEnergy = 1.0f;
+	public float m_godRemLandEnergy = 1.0f;
 	
 	public GameObject m_guiEnergy;
 
@@ -488,6 +499,27 @@ public class World : MonoBehaviour
 		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
 		
 		return chScr.getType_l( x % Chunk.s_chunkSize, y % Chunk.s_chunkSize, z % Chunk.s_chunkSize );
+	}
+			
+	public void remBlock( int x, int y, int z )
+	{
+		if( x < 0 ) x += -16;
+		if( y < 0 ) y += -16;
+		if( z < 0 ) z += -16;
+		
+		int chunkX = x / Chunk.s_chunkSize;
+		int chunkY = y / Chunk.s_chunkSize;
+		int chunkZ = z / Chunk.s_chunkSize;
+		
+		if( chunkX < 0 || chunkX >= s_chunkSide ) return;
+		if( chunkZ < 0 || chunkZ >= s_chunkSide ) return;
+		if( chunkY < 0 || chunkY >= 2 ) return;
+
+		int index = chunkIndex( chunkX, chunkY, chunkZ );
+		
+		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
+		
+		chScr.remBlock_l( x % Chunk.s_chunkSize, y % Chunk.s_chunkSize, z % Chunk.s_chunkSize );
 	}
 
 	public float getWorldHeight( float x, float z )
