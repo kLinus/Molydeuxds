@@ -61,7 +61,7 @@ public class RTSCam : MonoBehaviour
 				
 	            if( Physics.Raycast( ray, out hit ) )
 				{
-					World.me.m_energy.add( -World.me.m_godRainEnergy );
+					World.me.m_energy.add( -World.me.m_godAddLandEnergy );
 				}
 			}
 		}
@@ -76,7 +76,7 @@ public class RTSCam : MonoBehaviour
 				
 	            if( Physics.Raycast( ray, out hit ) )
 				{
-					World.me.m_energy.add( -World.me.m_godRainEnergy );
+					World.me.m_energy.add( -World.me.m_godRemLandEnergy );
 					
 					Vector3 blockPoint = hit.point + ray.direction * 0.25f;
 					
