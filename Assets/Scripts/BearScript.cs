@@ -54,7 +54,8 @@ public class BearScript : MonoBehaviour
 		{
 			if(col.tag == "Person")
 			{
-				print("Roar!!");
+				AudioSource[] audios = GetComponents<AudioSource>();
+				audios[Random.Range(0,audios.Length-1)].Play();
 			}
 		}
 	}

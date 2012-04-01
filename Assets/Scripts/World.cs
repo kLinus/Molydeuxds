@@ -525,18 +525,21 @@ public class World : MonoBehaviour
 			ClearCameras();
 			camBEAR.enabled = true;
 			camBEAR.GetComponent<BearCam>().enabled = true;
+
 		}
 		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
 		{
 			ClearCameras();
 			camCLOUD.enabled = true;
 			camCLOUD.GetComponent<CloudCam>().enabled = true;
+
 		}		
 		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.enabled == false)
 		{
 			ClearCameras();
 			camGOD.enabled = true;
 			camGOD.GetComponent<RTSCam>().enabled = true;
+
 		}
 	}
 	
