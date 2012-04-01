@@ -415,6 +415,9 @@ public class World : MonoBehaviour
 	
 	public GameObject m_guiEnergy;
 
+	public GameObject m_waterObj;
+	
+	
 	#endregion
 		
 	void Start () 

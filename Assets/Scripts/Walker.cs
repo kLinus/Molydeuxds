@@ -54,8 +54,17 @@ public class Walker : MonoBehaviour
 			}
 		}
 		
-			if( m_age > m_maxAge )
+		if( m_age > m_maxAge )
+		{
 			oldDeath();
+		}
+		
+		float waterY = World.me.m_waterObj.transform.position.y;
+		
+		if( transform.position.y < waterY )
+		{
+			oldDeath();
+		}
 	}
 	
 	void OnGUI()
