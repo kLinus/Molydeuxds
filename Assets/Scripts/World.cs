@@ -310,8 +310,7 @@ public class World : MonoBehaviour
 			lastDecay = Time.realtimeSinceStartup;
 		}
 		
-	}
-	public EnergyProperties m_energy;
+	}public EnergyProperties m_energy;
 	
 	public static World me;
 	
@@ -322,12 +321,13 @@ public class World : MonoBehaviour
 	public GameObject m_hutDef;
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
-	#endregion
 	public GameObject m_foodDef;
 
 	public float m_godRainEnergy = 25.0f;
 	
 	public GameObject m_guiEnergy;
+
+	#endregion
 		
 	void Start () 
 	{
@@ -364,31 +364,39 @@ public class World : MonoBehaviour
 				
 				else if(cam.name == "CameraGod")
 				{
-					camCLOUD = cam;
+					camGOD = cam;
 				}
 				
 				else if(cam.name == "CameraCloud")
 				{
-					camGOD = cam;
+					camCLOUD = cam;
 				}
 			}
 		}
 		
 		//Switch Cameras depending on state
-		if (m_currentMode == Mode.BEAR)
+		if (m_currentMode == Mode.BEAR && camBEAR.enabled == false)
 		{
-			
+			Camera.current.enabled = false;
+			camBEAR.enabled = true;
 		}
 		
-		else if (m_currentMode == Mode.CLOUD)
+		else if (m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
 		{
+			Camera.current.enabled = false;
+			camCLOUD.enabled = true;
 		}
 		
-		else if (m_currentMode == Mode.GOD)
+		else if (m_currentMode == Mode.GOD && camGOD.enabled == false)
 		{
+			Camera.current.enabled = false;
+			camGOD.enabled = true;
 		}
+<<<<<<< HEAD
+=======
 		int energy = (int)m_energy.current;
 		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
+>>>>>>> 13bfb0fb238fed0ccd30edd295f7d265d728bd76
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )

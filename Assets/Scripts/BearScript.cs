@@ -64,7 +64,7 @@ public class BearScript : MonoBehaviour
 	
 	public void UpdateMovement()
 	{
-		float posY = World.me.getWorldHeight(transform.position.x, transform.position.z);
+		
 		if( button.MoveUp )
 		{
 			Move (gameObject.transform.forward);
@@ -113,7 +113,7 @@ public class BearScript : MonoBehaviour
 		{
 			World.me.m_energy.decay();
 		}
-		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
+		//GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 	}
 	
 	public void IncreaseEnergy(float amount)
