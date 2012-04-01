@@ -5,7 +5,8 @@ public class RTSCam : MonoBehaviour
 {
 
 	public GameObject m_walker;
-	
+
+	public GameObject m_selection;
 	
 	// Use this for initialization
 	void Start () 
@@ -35,6 +36,16 @@ public class RTSCam : MonoBehaviour
 			Camera.current.transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * speed );
 		}
 		
+		//TODO: Remove the other raycasts.
+		Ray raySel = Camera.main.ScreenPointToRay(Input.mousePosition);
+		
+		RaycastHit hitSel;
+		
+        if( Physics.Raycast( raySel, out hitSel ) )
+		{
+			m_selection.transform.position = hitSel.point;
+		}
+		
 		if( Input.GetKeyDown( "r" ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRainEnergy )
@@ -62,6 +73,9 @@ public class RTSCam : MonoBehaviour
 	            if( Physics.Raycast( ray, out hit ) )
 				{
 					World.me.m_energy.add( -World.me.m_godAddLandEnergy );
+					
+					Vector3 blockPoint = hit.point + ray.direction * 0.25f;
+
 				}
 			}
 		}
@@ -80,7 +94,7 @@ public class RTSCam : MonoBehaviour
 					
 					Vector3 blockPoint = hit.point + ray.direction * 0.25f;
 					
-					World.me.remBlock ( (int)blockPoint.x, (int)blockPoint.y, (int)blockPoint.z );
+					World.me.remBlock ( (int)(blockPoint.x+0.5f), (int)(blockPoint.y+0.5f), (int)(blockPoint.z+0.5f) );
 				}
 			}
 		}

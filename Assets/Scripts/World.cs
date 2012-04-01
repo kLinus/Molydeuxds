@@ -111,10 +111,12 @@ public class Chunk : MonoBehaviour
 	
 	int getVertIndex( Vector3 v, Vector2 u, List<Vector3> verts, List<Vector2> uvs, Dictionary<Vector3, int> map )
 	{
+		/*
 		if( map.ContainsKey( v ) )
 		{
 			return map[v];
 		}
+		*/
 		
 		int index = verts.Count;
 		
@@ -469,9 +471,9 @@ public class World : MonoBehaviour
 		if( y < 0 ) y += -s_chunkWorldSize;
 		if( z < 0 ) z += -s_chunkWorldSize;
 		
-		int chunkX = ((int)x) / Chunk.s_chunkSize;
-		int chunkY = ((int)y) / Chunk.s_chunkSize;
-		int chunkZ = ((int)z) / Chunk.s_chunkSize;
+		int chunkX = ((int)(x+0.5f)) / Chunk.s_chunkSize;
+		int chunkY = ((int)(y+0.5f)) / Chunk.s_chunkSize;
+		int chunkZ = ((int)(z+0.5f)) / Chunk.s_chunkSize;
 		
 		if( chunkX < 0 || chunkX >= s_chunkSide ) return 0;
 		if( chunkZ < 0 || chunkZ >= s_chunkSide ) return 0;
@@ -530,7 +532,7 @@ public class World : MonoBehaviour
 		
 		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
 		
-		return chScr.getWorldHeight( (int)x % Chunk.s_chunkSize, (int)z % Chunk.s_chunkSize );
+		return chScr.getWorldHeight( (int)(x+0.5f) % Chunk.s_chunkSize, (int)(z+0.5f) % Chunk.s_chunkSize );
 	}
 	
 	public void scatterResource( GameObject def, int count )
