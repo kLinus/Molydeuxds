@@ -48,6 +48,15 @@ public class Chunk : MonoBehaviour
 		createGeo();
 	}
 	
+	public void addBlock_l( short type, int x, int y, int z )
+	{
+		int index = localToIndex( x, y, z );
+		
+		m_types[index] = type;
+		
+		createGeo();
+	}
+	
 	public float getWorldHeight( int x, int z )
 	{
 		for( int y = 15; y >= 0; --y )
@@ -67,10 +76,8 @@ public class Chunk : MonoBehaviour
 		else return getType_l( x, y, z );
 	}
 	
-	public void createRandomCubes()
+	public void createRandomCubes( float noiseZ )
 	{
-		float noiseZ = Random.Range( 0.0f, 1000000000000000.0f );
-		
 		Noise.Triple fnFBNLargeSmooth = ( x, y, z ) => Mathf.Sin( ( 1.0f / Mathf.PI * 2.0f ) * 0.7f * ( 0.44f + (float)Noise.Perlin.fBm( x, y, z + 57.0f, ( x1, y1, z1 ) => 3.0f, ( x1, y1, z1 ) => 0.3f, ( x1, y1, z1 ) => 0.7f ) ) );
         Noise.Triple fnFBNPlanety = ( x, y, z ) =>  0.79 * ( 0.62 + Noise.Perlin.fBm( x, y, z + 37, ( x1, y1, z1 ) => 10, ( x1, y1, z1 ) => 1.9, ( x1, y1, z1 ) => 0.6 ) );
         Noise.Triple fnFBNStrings = ( x, y, z ) => Mathf.Max( -0.2f, Mathf.Min( 1.2f, 20.0f * ( -0.1f + (float)Noise.Perlin.fBm( x, y, z + 79.0f, ( x1, y1, z1 ) => 6.0f, ( x1, y1, z1 ) => 2.0f, ( x1, y1, z1 ) => 0.1f ) ) ) );
@@ -88,8 +95,10 @@ public class Chunk : MonoBehaviour
 			
 				float wx = fx + m_x;
 				float wz = fz + m_z;
-
-				float height = (float)fnFinal( wx / 50.0f, wz / 50.0f, noiseZ ) * 32.0f - 4.0f;
+				
+				float heightUnit = (float)fnFinal( wx / 50.0f, wz / 50.0f, noiseZ );
+				
+				float height = ( heightUnit ) * 16.0f;
 						
 				
 				int index0 = localToIndex( x, 0, z );
@@ -306,7 +315,7 @@ public class World : MonoBehaviour
 	public LayerMask s_layerWalker;
 	public LayerMask s_layerResource;
 	
-	static public int s_chunkSide = 10;
+	static public int s_chunkSide = 20;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
 	public enum Mode {BEAR, CLOUD, GOD};
 	public Mode m_currentMode = Mode.GOD;
@@ -372,9 +381,9 @@ public class World : MonoBehaviour
 		
 		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
 		
-		scatterResource( m_foodDef, 100 );
-		scatterResource( m_rockDef, 100 );
-		scatterResource( m_treeDef, 100 );
+		scatterResource( m_foodDef, 300 );
+		scatterResource( m_rockDef, 300 );
+		scatterResource( m_treeDef, 300 );
 	}
 	
 	void Update()
@@ -459,6 +468,10 @@ public class World : MonoBehaviour
 	public void createWorld()
 	{
 		me = this;
+
+		UnityEngine.Random.seed = (int)System.DateTime.Now.Ticks;
+		
+		float noiseZ = UnityEngine.Random.Range( 0.0f, 10.0f );		
 		
 		print ( "Start world create" );
 		for( int z = 0; z < s_chunkSide; ++z )
@@ -486,7 +499,7 @@ public class World : MonoBehaviour
 				
 				chunkScript.MakeNewChunk( this, x * (int)s_chunkWorldSize, 0, z * (int)s_chunkWorldSize );
 				
-				chunkScript.createRandomCubes();
+				chunkScript.createRandomCubes( noiseZ );
 				chunkScript.createGeo();
 			}
 		}
@@ -551,6 +564,27 @@ public class World : MonoBehaviour
 		
 		chScr.remBlock_l( x % Chunk.s_chunkSize, y % Chunk.s_chunkSize, z % Chunk.s_chunkSize );
 	}
+			
+	public void addBlock( short type, int x, int y, int z )
+	{
+		if( x < 0 ) x += -16;
+		if( y < 0 ) y += -16;
+		if( z < 0 ) z += -16;
+		
+		int chunkX = x / Chunk.s_chunkSize;
+		int chunkY = y / Chunk.s_chunkSize;
+		int chunkZ = z / Chunk.s_chunkSize;
+		
+		if( chunkX < 0 || chunkX >= s_chunkSide ) return;
+		if( chunkZ < 0 || chunkZ >= s_chunkSide ) return;
+		if( chunkY < 0 || chunkY >= 2 ) return;
+
+		int index = chunkIndex( chunkX, chunkY, chunkZ );
+		
+		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
+		
+		chScr.addBlock_l( type, x % Chunk.s_chunkSize, y % Chunk.s_chunkSize, z % Chunk.s_chunkSize );
+	}
 
 	public float getWorldHeight( float x, float z )
 	{
@@ -567,8 +601,8 @@ public class World : MonoBehaviour
 	{
 		for( int i = 0; i < count; ++i )
 		{
-			float fx = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
-			float fz = Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			float fx = UnityEngine.Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			float fz = UnityEngine.Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			
 			float fy = getWorldHeight( fx, fz ) - 0.5f;
 			
