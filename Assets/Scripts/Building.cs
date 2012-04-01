@@ -14,6 +14,8 @@ public class Building : MonoBehaviour
 	public GameObject m_walkerDef;
 	public GameObject m_upgradesToDef;
 	
+	public float m_minSpawn = 10.0f;
+	public float m_maxSpawn = 15.0f;
 
 	public ResourceDef[] m_resNeededForSpawn;
 	public ResourceDef[] m_resNeededForUpgrade;
@@ -91,7 +93,7 @@ public class Building : MonoBehaviour
 				Instantiate( m_walkerDef, transform.position, new Quaternion() );
 			}
 			
-			m_nextAgentSpawn = Random.Range( 3.0f, 5.0f );
+			m_nextAgentSpawn = Random.Range( m_minSpawn, m_minSpawn );
 		}
 	}
 }

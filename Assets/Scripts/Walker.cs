@@ -8,7 +8,7 @@ public class Walker : MonoBehaviour
 	public GameObject m_buildingDef;
 	
 	public float s_ageToMakeBuilding = 60.0f;
-	public float s_chanceToMakeBuilding = 0.1f;
+	public float s_chanceToMakeBuilding = 0.5f;
 	
 	public float m_maxAge = 600.0f;
 	public GUIStyle nameLabel;
@@ -34,7 +34,7 @@ public class Walker : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update() 
 	{
 		m_age += Time.deltaTime;
 		
