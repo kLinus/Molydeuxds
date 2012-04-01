@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+public enum Side
+{
+	Invalid,
+	Red,
+	Blue,
+}
+
+
 public class Chunk : MonoBehaviour
 {
 	static public float s_chunkHalf = 0.5f;
@@ -41,6 +49,8 @@ public class Chunk : MonoBehaviour
 	
 	public void remBlock_l( int x, int y, int z )
 	{
+		if( y == 0 ) return;
+		
 		int index = localToIndex( x, y, z );
 		
 		m_types[index] = 0;
@@ -50,6 +60,8 @@ public class Chunk : MonoBehaviour
 	
 	public void addBlock_l( short type, int x, int y, int z )
 	{
+		if( y == 15 ) return;
+		
 		int index = localToIndex( x, y, z );
 		
 		m_types[index] = type;
@@ -399,15 +411,19 @@ public class World : MonoBehaviour
 	public EnergyProperties m_energy;
 	
 	public static World me;
-	
+
+	public Side m_player = Side.Invalid;
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	
 	public GameObject m_chunkObjectDef;
-	public GameObject m_hutDef;
+
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
 	public GameObject m_foodDef;
+
+	public GameObject m_hutRedDef;
+	public GameObject m_hutBlueDef;
 
 	public float m_godRainEnergy	= 25.0f;
 	public float m_godAddLandEnergy	= 1.0f;
@@ -435,18 +451,34 @@ public class World : MonoBehaviour
 		m_energy.add(m_energy.max);
 		createWorld();
 		
-		float bX = 8.0f; 
-		float bZ = 8.0f; 
+		{
+			float bX = 8.0f; 
+			float bZ = 8.0f; 
+			
+			float bY = getWorldHeight( bX, bZ );
+	
+			Vector3 bPos = new Vector3( bX, bY, bZ );
+	
+			GameObject bHut = Instantiate( m_hutBlueDef, bPos, new Quaternion() ) as GameObject;
+		}		
 		
-		float bY = getWorldHeight( bX, bZ );
+		{
+			float maxSize = (float)s_chunkSide * s_chunkWorldSize;
+			
+			float rX = maxSize - 8.0f;
+			float rZ = maxSize - 8.0f;
+			
+			float rY = getWorldHeight( rX, rZ );
+	
+			Vector3 rPos = new Vector3( rX, rY, rZ );
+	
+			GameObject rHut = Instantiate( m_hutRedDef, rPos, new Quaternion() ) as GameObject;
+		}		
+
 		
-		Vector3 bPos = new Vector3( bX, bY, bZ );
-		
-		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
-		
-		scatterResource( m_foodDef, 300 );
-		scatterResource( m_rockDef, 300 );
-		scatterResource( m_treeDef, 300 );
+		scatterResource( m_foodDef, 200 );
+		scatterResource( m_rockDef, 200 );
+		scatterResource( m_treeDef, 200 );
 		
 		StartCoroutine( growFood() );
 		StartCoroutine( growTrees() );

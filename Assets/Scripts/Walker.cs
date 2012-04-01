@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Walker : MonoBehaviour 
 {
-	
+	public Side m_side = Side.Invalid;
 	
 	public GameObject m_buildingDef;
 	
