@@ -282,7 +282,7 @@ public class Chunk : MonoBehaviour
 		GetComponent<MeshFilter>().mesh = mesh;
 		//GetComponent<MeshFilter>().sharedMesh = mesh;
 		GetComponent<MeshCollider>().sharedMesh = mesh;
-		//GetComponent<MeshRenderer>().gameObject.active = true;
+		//GetComponent<MeshRenderer>().enabled = true;
 	}
 }
 
@@ -366,6 +366,7 @@ public class World : MonoBehaviour
 	
 	void Update()
 	{		
+		CheaterKeys();
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
 		{
@@ -388,24 +389,52 @@ public class World : MonoBehaviour
 				{
 					camCLOUD = cam;
 				}
+				
+				cam.enabled = false;
 			}
 		}
 		
 		//Switch Cameras depending on state
-		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.gameObject.active == false)
+		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.enabled == false)
 		{
-			Camera.current.gameObject.active = false;
-			camBEAR.gameObject.active = true;
+			ClearCameras();
+			camBEAR.enabled = true;
 		}
-		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.gameObject.active == false)
+		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
 		{
-			Camera.current.gameObject.active = false;
-			camCLOUD.gameObject.active = true;
+			ClearCameras();
+			camCLOUD.enabled = true;
 		}		
-		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.gameObject.active == false)
+		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.enabled == false)
 		{
-			Camera.current.gameObject.active = false;
-			camGOD.gameObject.active = true;
+			ClearCameras();
+			camGOD.enabled = true;
+		}
+	}
+	public Camera GetActiveCamera()
+	{
+		if(camBEAR.enabled == true)
+		{
+			return camBEAR;
+		}
+		if (camCLOUD.enabled == true)
+		{
+			return camCLOUD;
+		}
+		if (camGOD.enabled == true)
+		{
+			return camGOD;
+		}
+		return camGOD;
+	}
+	
+	public void ClearCameras()
+	{
+		Camera[] cameras = Camera.allCameras;
+		
+		foreach(Camera cam in cameras)
+		{
+			cam.enabled = false;
 		}
 	}
 	
@@ -516,6 +545,24 @@ public class World : MonoBehaviour
 			
 		}
 
+	}
+	
+	public void CheaterKeys()
+	{
+		if(Input.GetKey(KeyCode.Alpha1))
+		{
+			m_currentMode = Mode.BEAR;
+		}
+		
+		if(Input.GetKey(KeyCode.Alpha2))
+		{
+			m_currentMode = Mode.GOD;
+		}
+		
+		if(Input.GetKey(KeyCode.Alpha3))
+		{
+			m_currentMode = Mode.CLOUD;
+		}
 	}
 	
 }

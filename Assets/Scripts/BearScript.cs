@@ -32,9 +32,7 @@ public class BearScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		//Energy Setup
-		World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
-		GetComponentInChildren<HealthBar>().Initialize(World.me.m_energy.max, World.me.m_energy.current);
+	
 	}
 	
 	// Update is called once per frame
