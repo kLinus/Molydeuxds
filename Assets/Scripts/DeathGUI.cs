@@ -31,8 +31,12 @@ public class DeathGUI : MonoBehaviour
 		paragraphs = new string[headers.Length];
 		
 		MadLib ml = new MadLib();
+		Debug.Log(paragraphs.Length + " " + headers.Length);
 		for(int i = 0; i < paragraphs.Length; i++)
+		{
+			Debug.Log("Get Paragraph: " + i);
 			paragraphs[i] = ml.GetParagraph(i, name);
+		}
 		
 		
 	}
