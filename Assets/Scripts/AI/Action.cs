@@ -234,19 +234,33 @@ class ActGhost : Action
 	{
 		while( true )
 		{
-			
 			MonoBehaviour.print( "Wandering the spirit realm" );
 			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
 			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
 			
 			float y = World.me.getWorldHeight( x, z );
 			
-			
 			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 0.5f, 0.01f ) );
-			
-			
-			
 		}
 	}
 }
 
+class ActBear : Action
+{
+	public ActBear( RabidBear bear ): base( bear )
+	{
+	}
+	
+	public IEnumerator act()
+	{
+		while( true )
+		{
+			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			
+			float y = World.me.getWorldHeight( x, z );
+			
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 0.5f, 0.01f ) );
+		}
+	}
+}

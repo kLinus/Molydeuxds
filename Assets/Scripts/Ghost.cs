@@ -2,9 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class Ghost : Walker 
-{
-	public GameObject m_buildingDef;
-	
+{	
 	string ghostName;
 	
 	ActGhost m_act;

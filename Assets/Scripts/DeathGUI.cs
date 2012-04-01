@@ -11,7 +11,7 @@ public class DeathGUI : MonoBehaviour
 	public GUIStyle paragraph;
 	public GUIStyle exitButton;
 	
-	public string name;
+	//public string name;
 	
 	string[] paragraphs;
 	string[] headers;
