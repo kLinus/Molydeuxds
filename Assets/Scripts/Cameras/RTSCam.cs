@@ -45,25 +45,27 @@ public class RTSCam : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		transform.position = new Vector3(6,25,0);
+		transform.Rotate(52.0f, 0f, 0f);	
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		
-		if( Input.GetKey(KeyCode.UpArrow) )
+		if( Input.GetKey(KeyCode.W) )
 		{
 			World.me.GetActiveCamera().transform.position += ( new Vector3( 0, 0, 1 ) * Time.deltaTime * m_speed );
 		}
-		if( Input.GetKey(KeyCode.DownArrow) )
+		if( Input.GetKey(KeyCode.S) )
 		{
 			World.me.GetActiveCamera().transform.position += ( new Vector3( 0, 0,-1 ) * Time.deltaTime * m_speed );
 		}
-		if( Input.GetKey(KeyCode.LeftArrow) )
+		if( Input.GetKey(KeyCode.A) )
 		{
 			World.me.GetActiveCamera().transform.position += ( new Vector3(-1, 0, 0 ) * Time.deltaTime * m_speed );
 		}
-		if( Input.GetKey(KeyCode.RightArrow) )
+		if( Input.GetKey(KeyCode.D) )
 		{
 			World.me.GetActiveCamera().transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * m_speed );
 		}
@@ -148,7 +150,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 
-		if( Input.GetKeyDown( "a" ) || Input.GetMouseButtonDown( 0 ) )
+		if( Input.GetKeyDown( "q" ) || Input.GetMouseButtonDown( 0 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
 			{
@@ -167,7 +169,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKeyDown( "d" ) || Input.GetMouseButtonDown( 1 ) )
+		if( Input.GetKeyDown( "e" ) || Input.GetMouseButtonDown( 1 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRemLandEnergy )
 			{

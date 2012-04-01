@@ -66,17 +66,17 @@ public class Walker : MonoBehaviour
 			oldDeath();
 		}
 	}
-	
+	/*
 	void OnGUI()
 	{
 		if(renderer.isVisible)
 		{
-			Vector3 inScreen = Camera.current.WorldToScreenPoint(transform.position);
+			Vector3 inScreen = Camera.main.WorldToScreenPoint(transform.position);
 			Rect labelRect = new Rect(inScreen.x - 100, Screen.height - inScreen.y + 50, 200, 100); 
 			GUI.Label(labelRect, m_name, nameLabel);
 		}
 	}
-	
+	*/
 	void oldDeath()
 	{
 		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
