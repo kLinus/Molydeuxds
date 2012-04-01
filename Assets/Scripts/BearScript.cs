@@ -38,7 +38,7 @@ public class BearScript : MonoBehaviour
 		GetComponentInChildren<HealthBar>().Initialize(World.me.m_bearEnergy.max, World.me.m_bearEnergy.current);
 =======
 		World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
-		World.me.m_energy.current = World.me.m_energy.max;
+		World.me.m_energy.add( World.me.m_energy.max );
 		GetComponentInChildren<HealthBar>().Initialize(World.me.m_energy.max, World.me.m_energy.current);
 >>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
 	}
@@ -116,24 +116,15 @@ public class BearScript : MonoBehaviour
 		
 		if( Time.realtimeSinceStartup - World.me.m_energy.lastDecay > World.me.m_energy.decayTime)
 		{
-			World.me.m_energy.current -= World.me.m_energy.decayAmount;
-			World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
+			World.me.m_energy.decay();
 		}
 		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 	}
 	
 	public void IncreaseEnergy(float amount)
 	{
-		if ( World.me.m_energy.current + amount < World.me.m_energy.max)
-		{
-			World.me.m_energy.current += amount;
-			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
-		}
-		else
-		{
-			World.me.m_energy.current = World.me.m_energy.max;
-			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
-		}
+		World.me.m_energy.add ( amount );
+		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 	}
 	
 	void OnGUI()

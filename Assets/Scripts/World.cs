@@ -295,8 +295,21 @@ public class World : MonoBehaviour
 		public float max;
 		public float decayAmount;
 		public float decayTime;
-		public float current;
 		public float lastDecay;
+
+		public float current{ get; private set; }
+		
+		public void add( float val )
+		{
+			current = Mathf.Clamp( current + val, 0, max );
+		}
+		
+		public void decay()
+		{
+			current -= decayAmount;
+			lastDecay = Time.realtimeSinceStartup;
+		}
+		
 	}
 	public EnergyProperties m_energy;
 	
