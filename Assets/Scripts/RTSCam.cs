@@ -36,6 +36,7 @@ public class RTSCam : MonoBehaviour
 		
 		if( Input.GetMouseButtonDown( 0 ) )
 		{
+			/*
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			
 			RaycastHit hit;
@@ -50,7 +51,7 @@ public class RTSCam : MonoBehaviour
 				Instantiate( m_walker, hit.point, new Quaternion() );
                 //Instantiate( Walker ); //, this.transform.position, this.transform.rotation );
 			}
-            		
+			*/            		
 		}
 		
 	}

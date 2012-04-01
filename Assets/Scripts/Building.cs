@@ -17,6 +17,7 @@ public class Building : MonoBehaviour
 	public float m_minSpawn = 10.0f;
 	public float m_maxSpawn = 15.0f;
 
+	public ResourceDef[] m_resStart;
 	public ResourceDef[] m_resNeededForSpawn;
 	public ResourceDef[] m_resNeededForUpgrade;
 	
@@ -28,6 +29,10 @@ public class Building : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		for( int i = 0; i < m_resStart.Length; ++i )
+		{
+			addResource( m_resStart[i] );
+		}
 	}
 	
 	public void addResource( ResourceDef def )
