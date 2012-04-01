@@ -480,8 +480,8 @@ public class World : MonoBehaviour
 
 		
 		scatterResource( m_foodDef, 200 );
-		scatterResource( m_rockDef, 200 );
-		scatterResource( m_treeDef, 200 );
+		scatterResource( m_rockDef, 50 );
+		scatterResource( m_treeDef, 500 );
 		
 		StartCoroutine( growBear() );
 		StartCoroutine( growFood() );
@@ -765,7 +765,7 @@ public class World : MonoBehaviour
 		{
 			scatterResource( m_bearDef, 1 );
 
-			yield return new WaitForSeconds( 30 );
+			yield return new WaitForSeconds( 1 );
 		}
 	}
 	
