@@ -4,8 +4,7 @@ using System.Collections;
 // TODO: Collider around bear to trigger 'Roar' sound
 // TODO: Fix jump and movement physics
 
-// Required Components
-[RequireComponent( typeof(Rigidbody) )]
+
 public class BearScript : MonoBehaviour 
 {
 	// Attributes
@@ -17,16 +16,6 @@ public class BearScript : MonoBehaviour
 	
 	public  float roarCheckRadius;
 	private SphereCollider roarColliderCheck;
-	
-	[System.SerializableAttribute]
-	public class EnergyProperties
-	{
-		public float max;
-		public float decayAmount;
-		public float decayTime;
-		public float current;
-		public float lastDecay;
-	} public EnergyProperties energy;
 	
 	// Bear Actions
 	public class ButtonProperties
@@ -43,9 +32,9 @@ public class BearScript : MonoBehaviour
 	void Start () 
 	{
 		//Energy Setup
-		energy.lastDecay = Time.realtimeSinceStartup;
-		energy.current = energy.max;
-		GetComponentInChildren<HealthBar>().Initialize(energy.max, energy.current);
+		World.me.m_bearEnergy.lastDecay = Time.realtimeSinceStartup;
+		World.me.m_bearEnergy.current = World.me.m_bearEnergy.max;
+		GetComponentInChildren<HealthBar>().Initialize(World.me.m_bearEnergy.max, World.me.m_bearEnergy.current);
 	}
 	
 	// Update is called once per frame
@@ -71,14 +60,15 @@ public class BearScript : MonoBehaviour
 	
 	public void UpdateMovement()
 	{
+		float posY = World.me.getWorldHeight(transform.position.x, transform.position.z);
 		if( button.MoveUp )
 		{
-			transform.Translate(new Vector3(0,0, velocity * Time.deltaTime) );
+			transform.Translate(new Vector3(0, posY, velocity * Time.deltaTime) );
 		}
 		
 		if( button.MoveDown )
 		{
-			transform.Translate(new Vector3(0,0, -velocity * Time.deltaTime) );
+			transform.Translate(new Vector3(0, posY, -velocity * Time.deltaTime) );
 		}
 		
 		if( button.MoveLeft )
@@ -93,47 +83,47 @@ public class BearScript : MonoBehaviour
 		
 		if( button.Jump && canJump )
 		{
-			rigidbody.AddForce( new Vector3(0, jumpSpeed * Time.deltaTime, 0));
+			
 		}
 			
 	}
 	
 	public void UpdateEnergy()
 	{
-		if( energy.current == 0)
+		if( World.me.m_bearEnergy.current == 0)
 		{
 			Debug.Log("That's a dead bear");
 			Destroy(this.gameObject);
 		}
 		
-		if( Time.realtimeSinceStartup - energy.lastDecay > energy.decayTime)
+		if( Time.realtimeSinceStartup - World.me.m_bearEnergy.lastDecay > World.me.m_bearEnergy.decayTime)
 		{
-			energy.current -= energy.decayAmount;
-			energy.lastDecay = Time.realtimeSinceStartup;
+			World.me.m_bearEnergy.current -= World.me.m_bearEnergy.decayAmount;
+			World.me.m_bearEnergy.lastDecay = Time.realtimeSinceStartup;
 		}
-		GetComponentInChildren<HealthBar>().UpdateHealth(energy.current);
+		GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_bearEnergy.current);
 	}
 	
 	public void IncreaseEnergy(float amount)
 	{
-		if (energy.current + amount < energy.max)
+		if ( World.me.m_bearEnergy.current + amount < World.me.m_bearEnergy.max)
 		{
-			energy.current += amount;
-			GetComponentInChildren<HealthBar>().UpdateHealth(energy.current);
+			World.me.m_bearEnergy.current += amount;
+			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_bearEnergy.current);
 		}
 		else
 		{
-			energy.current = energy.max;
-			GetComponentInChildren<HealthBar>().UpdateHealth(energy.current);
+			World.me.m_bearEnergy.current = World.me.m_bearEnergy.max;
+			GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_bearEnergy.current);
 		}
 	}
 	
-//	void OnGUI()
-//	{
-//		GUI.color = new Color(133, 0 ,0);
-//		Vector3 gameObjPosition = this.gameObject.transform.position;
-//		GUI.HorizontalScrollbar( new Rect (gameObjPosition.x, gameObjPosition.y + 10, 50, 20), 0, energy.current, 0, energy.max);
-//	}
+	void OnGUI()
+	{
+		GUI.color = new Color(133, 0 ,0);
+		Vector3 gameObjPosition = this.gameObject.transform.position;
+		GUI.HorizontalScrollbar( new Rect (gameObjPosition.x, gameObjPosition.y + 10, 50, 20), 0, World.me.m_bearEnergy.current, 0, World.me.m_bearEnergy.max);
+	}
 	
 	public void TriggerJump()
 	{

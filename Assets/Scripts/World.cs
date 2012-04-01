@@ -278,8 +278,19 @@ public class World : MonoBehaviour
 	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
 	
-	public static World me;
+	[System.SerializableAttribute]
+	public class EnergyProperties
+	{
+		public float max;
+		public float decayAmount;
+		public float decayTime;
+		public float current;
+		public float lastDecay;
+	}
+	public EnergyProperties m_bearEnergy;
+	public EnergyProperties m_cloudEnergy;
 	
+	public static World me;
 	
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
@@ -290,6 +301,28 @@ public class World : MonoBehaviour
 	public GameObject m_treeDef;
 	
 	void Start () 
+	{
+		createWorld();
+		
+		float bX = 8.0f; 
+		float bZ = 8.0f; 
+		
+		float bY = getWorldHeight( bX, bZ );
+		
+		Vector3 bPos = new Vector3( bX, bY, bZ );
+		
+		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
+		
+		scatterResource( m_treeDef, 100 );
+		scatterResource( m_rockDef, 100 );
+	}
+	
+	int chunkIndex( int chX, int chY, int chZ )
+	{
+		return chZ * s_chunkSide + chX;
+	}
+	
+	public void createWorld()
 	{
 		me = this;
 		
@@ -324,23 +357,6 @@ public class World : MonoBehaviour
 			}
 		}
 		print ( "End world create" );
-		
-		float bX = 8.0f; 
-		float bZ = 8.0f; 
-		
-		float bY = getWorldHeight( bX, bZ );
-		
-		Vector3 bPos = new Vector3( bX, bY, bZ );
-		
-		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
-		
-		scatterResource( m_treeDef, 100 );
-		scatterResource( m_rockDef, 100 );
-	}
-	
-	int chunkIndex( int chX, int chY, int chZ )
-	{
-		return chZ * s_chunkSide + chX;
 	}
 	
 	public int worldToChunkIndex( float x, float y, float z )

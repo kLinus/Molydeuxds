@@ -1,17 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(GUITexture) )]
+
 public class HealthBar : MonoBehaviour 
 {
-	public float currentHealth = 0.0f;
-	public float maxHealth = 0.0f;
-	public float barHeightOffset;
-	public GameObject pinnedObject;
-	private bool isInitialized = false;
+	public float       barHeightOffset;
+	public GameObject  healthBarPrefab;
+	public GameObject  pinnedObject;
+	private bool       isInitialized = false;
 	private GameObject healthBar;
-	public GameObject healthBarPrefab;
-				
+	
+	private float currentHealth = 0.0f;
+	private float maxHealth = 0.0f;
+	
 	// Use this for initialization
 	void Start () 
 	{
