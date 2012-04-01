@@ -762,7 +762,7 @@ public class World : MonoBehaviour
 		{
 			scatterResource( m_bearDef, 1 );
 
-			yield return new WaitForSeconds( 1 );
+			yield return new WaitForSeconds( 10 );
 		}
 	}
 	
