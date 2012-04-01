@@ -33,14 +33,9 @@ public class BearScript : MonoBehaviour
 	void Start () 
 	{
 		//Energy Setup
-<<<<<<< HEAD
-		World.me.m_bearEnergy.current = World.me.m_bearEnergy.max;
-		GetComponentInChildren<HealthBar>().Initialize(World.me.m_bearEnergy.max, World.me.m_bearEnergy.current);
-=======
 		World.me.m_energy.lastDecay = Time.realtimeSinceStartup;
 		World.me.m_energy.add( World.me.m_energy.max );
 		GetComponentInChildren<HealthBar>().Initialize(World.me.m_energy.max, World.me.m_energy.current);
->>>>>>> b77a772e33fa8543e1daf5a8cc672f67083c3bfd
 	}
 	
 	// Update is called once per frame
