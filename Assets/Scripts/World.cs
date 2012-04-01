@@ -153,12 +153,18 @@ public class Chunk : MonoBehaviour
 		List<Vector2> uvs = new List<Vector2>();
 		Dictionary<Vector3, int> map = new Dictionary<Vector3, int>();
 		List<int> indices = new List<int>();
+		List<Color> colors = new List<Color>();
+
 
 		for( int y = 0; y < 16; ++y )
 		{
 			float fy = (float)y;
 			float yhp = fy + 0.5f;
 			float yhn = fy - 0.5f;
+			
+			float fColor = Mathf.Clamp( (float)y / 6.0f, 0.0f, 1.0f );
+			
+			Color color = new Color( fColor, fColor, fColor );
 
 			for( int z = 0; z < 16; ++z )
 			{
@@ -197,7 +203,14 @@ public class Chunk : MonoBehaviour
 						Vector2 u3 = new Vector2( fx+0, fz+1 );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
-						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );
+						
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( yp == 0 )
@@ -214,6 +227,13 @@ public class Chunk : MonoBehaviour
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( zp == 0 )
@@ -230,6 +250,13 @@ public class Chunk : MonoBehaviour
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( xn == 0 )
@@ -246,6 +273,13 @@ public class Chunk : MonoBehaviour
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( yn == 0 )
@@ -261,7 +295,15 @@ public class Chunk : MonoBehaviour
 						Vector2 u3 = new Vector2( fx+0, fz+1 );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
-						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );	
+						
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						
 					}
 					
 					if( zn == 0 )
@@ -277,7 +319,14 @@ public class Chunk : MonoBehaviour
 						Vector2 u3 = new Vector2( fx+0, fz+1 );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
-						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );
+						
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 
 				}
@@ -293,6 +342,7 @@ public class Chunk : MonoBehaviour
 		mesh.vertices = verts.ToArray();
 		mesh.uv = uvs.ToArray();
 		mesh.triangles = indices.ToArray();
+		mesh.colors = colors.ToArray();
 		
 		
 		mesh.RecalculateNormals();
