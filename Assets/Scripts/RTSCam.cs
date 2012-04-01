@@ -62,7 +62,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKeyDown( "a" ) )
+		if( Input.GetKeyDown( "a" ) || Input.GetMouseButtonDown( 0 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
 			{
@@ -74,13 +74,14 @@ public class RTSCam : MonoBehaviour
 				{
 					World.me.m_energy.add( -World.me.m_godAddLandEnergy );
 					
-					Vector3 blockPoint = hit.point + ray.direction * 0.25f;
-
+					Vector3 blockPoint = hit.point + hit.normal * 0.25f;
+					
+					World.me.addBlock ( 1, (int)(blockPoint.x+0.5f), (int)(blockPoint.y+0.5f), (int)(blockPoint.z+0.5f) );
 				}
 			}
 		}
 		
-		if( Input.GetKeyDown( "d" ) )
+		if( Input.GetKeyDown( "d" ) || Input.GetMouseButtonDown( 1 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRemLandEnergy )
 			{
