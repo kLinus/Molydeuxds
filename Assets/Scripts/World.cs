@@ -21,10 +21,10 @@ public class Chunk : MonoBehaviour
 	
 	static Vector2[] s_texOff = 
 	{
-		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 0.5f, 0.0f ),
-		new Vector2( 0.0f, 0.5f ),
-		new Vector2( 0.5f, 0.5f ),
+		new Vector2( 0.0f, 0.5f ), //Blank
+		new Vector2( 0.5f, 0.5f ), //Grass
+		new Vector2( 0.0f, 0.0f ), //Mud
+		new Vector2( 0.5f, 0.0f ), //Stone
 	};
 	
 	World m_world;
@@ -141,11 +141,11 @@ public class Chunk : MonoBehaviour
 					}
 					else if( heightDiff > 3.0f )
 					{
-						val = Random.Range( 0.0f, 1.0f ) < 0.5f ? (short)2 : (short)1;
+						val = 3;
 					}
 					else if( heightDiff > 2.0f )
 					{
-						val = 3;
+						val = Random.Range( 0.0f, 1.0f ) < 0.5f ? (short)2 : (short)1;
 					}
 										
 					m_types[ index ] = val;
