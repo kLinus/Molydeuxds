@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CloudCam : MonoBehaviour {
 	
-	public float velocity = 15.0f;
+	public GameObject target;
 	
 	// Use this for initialization
 	void Start () 
@@ -15,6 +15,11 @@ public class CloudCam : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (target != null)
+		{
+			transform.position = target.transform.position;
+		}
+		/*
 		if(Input.GetKey(KeyCode.W))
 		{
 			World.me.GetActiveCamera().transform.position += Vector3.forward * Time.deltaTime * velocity;
@@ -34,5 +39,6 @@ public class CloudCam : MonoBehaviour {
 		{
 			World.me.GetActiveCamera().transform.position += Vector3.left * Time.deltaTime * velocity;
 		}
+		*/
 	}
 }

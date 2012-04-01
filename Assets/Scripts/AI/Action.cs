@@ -271,7 +271,7 @@ class ActBear : Action
 					
 					if( dist.sqrMagnitude < 1.1 )
 					{
-						Object.Destroy( go );
+						Object.Destroy( go, 5.0f );
 						
 						yield break;
 					}
