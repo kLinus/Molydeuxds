@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-
 public class Chunk : MonoBehaviour
 {
 	static public float s_chunkHalf = 0.5f;
@@ -275,13 +274,21 @@ public class Chunk : MonoBehaviour
 
 public class World : MonoBehaviour 
 {
+	#region Variables
+	
 	public LayerMask s_layerHut;
 	public LayerMask s_layerWalker;
 	public LayerMask s_layerResource;
 	
 	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
+	public enum Mode {BEAR, CLOUD, GOD};
+	public Mode m_currentMode = Mode.GOD;
 	
+	private Camera camBEAR = null;
+	private Camera camGOD = null;
+	private Camera camCLOUD = null;
+		
 	[System.SerializableAttribute]
 	public class EnergyProperties
 	{
@@ -303,6 +310,7 @@ public class World : MonoBehaviour
 	public GameObject m_hutDef;
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
+	#endregion
 	
 	void Start () 
 	{
@@ -319,6 +327,48 @@ public class World : MonoBehaviour
 		
 		scatterResource( m_treeDef, 100 );
 		scatterResource( m_rockDef, 100 );
+	}
+	
+	void Update()
+	{
+		//Determine which camera is which
+		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
+		{
+			Camera[] cameras = Camera.allCameras;
+			
+			//Initialize them
+			foreach(Camera cam in cameras)
+			{
+				if(cam.name == "CameraBear")
+				{
+					camBEAR = cam;
+				}
+				
+				else if(cam.name == "CameraGod")
+				{
+					camCLOUD = cam;
+				}
+				
+				else if(cam.name == "CameraCloud")
+				{
+					camGOD = cam;
+				}
+			}
+		}
+		
+		//Switch Cameras depending on state
+		if (m_currentMode == Mode.BEAR)
+		{
+			
+		}
+		
+		else if (m_currentMode == Mode.CLOUD)
+		{
+		}
+		
+		else if (m_currentMode == Mode.GOD)
+		{
+		}
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )

@@ -14,6 +14,7 @@ public class BearScript : MonoBehaviour
 	public  float jumpSpeed;
 	private bool  canJump=true;
 	
+	public  float magicNumber;
 	public  float roarCheckRadius;
 	private SphereCollider roarColliderCheck;
 	
@@ -32,7 +33,6 @@ public class BearScript : MonoBehaviour
 	void Start () 
 	{
 		//Energy Setup
-		World.me.m_bearEnergy.lastDecay = Time.realtimeSinceStartup;
 		World.me.m_bearEnergy.current = World.me.m_bearEnergy.max;
 		GetComponentInChildren<HealthBar>().Initialize(World.me.m_bearEnergy.max, World.me.m_bearEnergy.current);
 	}
@@ -40,9 +40,12 @@ public class BearScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		UpdateMovement();
-		UpdateEnergy();
-		Roar();
+		if (World.me.m_currentMode == World.Mode.BEAR)
+		{
+			UpdateMovement();
+			UpdateEnergy();
+			Roar();
+		}
 	}
 	
 	
@@ -63,12 +66,11 @@ public class BearScript : MonoBehaviour
 		float posY = World.me.getWorldHeight(transform.position.x, transform.position.z);
 		if( button.MoveUp )
 		{
-			transform.Translate(new Vector3(0, posY, velocity * Time.deltaTime) );
+			Move (gameObject.transform.forward);
 		}
-		
 		if( button.MoveDown )
 		{
-			transform.Translate(new Vector3(0, posY, -velocity * Time.deltaTime) );
+			Move (-1 * gameObject.transform.forward);
 		}
 		
 		if( button.MoveLeft )
@@ -86,6 +88,16 @@ public class BearScript : MonoBehaviour
 			
 		}
 			
+	}
+	
+	public void Move(Vector3 direction)
+	{
+		float distThisFrame = velocity * Time.deltaTime;
+		Vector3 p = gameObject.transform.position + direction * distThisFrame;
+		float y = World.me.getWorldHeight( p.x, p.z );
+		y += magicNumber;
+		
+		gameObject.transform.position = new Vector3( p.x, y, p.z );
 	}
 	
 	public void UpdateEnergy()
