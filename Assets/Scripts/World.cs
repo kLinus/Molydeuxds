@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+// TODO: Make Cameras through code
+
 public class Chunk : MonoBehaviour
 {
 	static public float s_chunkHalf = 0.5f;
