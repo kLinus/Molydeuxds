@@ -71,8 +71,9 @@ public class Walker : MonoBehaviour
 	{
 		if(renderer.isVisible)
 		{
+			GUI.depth = 10;
 			Vector3 inScreen = Camera.main.WorldToScreenPoint(transform.position);
-			Rect labelRect = new Rect(inScreen.x - 100, Screen.height - inScreen.y + 50, 200, 100); 
+			Rect labelRect = new Rect(inScreen.x - 100, Screen.height - inScreen.y - 50, 200, 100); 
 			GUI.Label(labelRect, m_name, nameLabel);
 		}
 	}
