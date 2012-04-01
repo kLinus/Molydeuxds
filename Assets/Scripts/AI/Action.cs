@@ -249,6 +249,48 @@ class ActGhost : Action
 
 class ActBear : Action
 {
+	
+	
+	public IEnumerator extractHumanResource()
+	{
+		Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 32.0f, World.me.s_layerWalker );
+		
+		if( collides.Length > 0 )
+		{
+			int i = Random.Range( 0, collides.Length - 1 );
+			{
+				GameObject go = collides[i].gameObject;
+
+				MonoBehaviour.print( "Attack towards:"+go.name );
+					
+				yield return m_walker.StartCoroutine( gotoSquare( go.transform.position, 6.0f, 0.01f ) );
+					
+				if( go != null )
+				{
+					Vector3 dist = go.transform.position - m_walker.transform.position;
+					
+					if( dist.sqrMagnitude < 1.1 )
+					{
+						Object.Destroy( go );
+						
+						yield break;
+					}
+				}
+			}
+		}
+		
+		float xOff = Random.Range( -32.0f, 32.0f );
+		float zOff = Random.Range( -32.0f, 32.0f );
+		
+		float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+		float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+		
+		float y = World.me.getWorldHeight( x, z );
+				
+		yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 2.0f, 0.01f ) );
+	}
+	
+	
 	public ActBear( RabidBear bear ): base( bear )
 	{
 	}
@@ -257,12 +299,7 @@ class ActBear : Action
 	{
 		while( true )
 		{
-			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			
-			float y = World.me.getWorldHeight( x, z );
-			
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 0.5f, 0.01f ) );
+			yield return m_walker.StartCoroutine( extractHumanResource() );
 		}
 	}
 }
