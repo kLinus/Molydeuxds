@@ -414,12 +414,18 @@ public class World : MonoBehaviour
 	public float m_godRemLandEnergy	= 1.0f;
 	public float m_godFloodEnergy	= 100.0f;
 	public float m_godDroughtEnergy	= 100.0f;
+	public float m_godVolcanoEnergy	= 100.0f;
 	
 	
 	
 	public GameObject m_guiEnergy;
 
 	public GameObject m_waterObj;
+
+
+	public int m_volcanoProbes = 1000;
+	public float m_volcanoRadius = 8.0f;
+	
 	
 	
 	#endregion

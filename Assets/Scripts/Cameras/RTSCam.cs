@@ -14,7 +14,24 @@ public class RTSCam : MonoBehaviour
 		int count = 0;
 		while( count < World.me.m_volcanoProbes )
 		{
+			float xOff = Random.Range( -World.me.m_volcanoRadius, World.me.m_volcanoRadius );
+			float zOff = Random.Range( -World.me.m_volcanoRadius, World.me.m_volcanoRadius );
 			
+			float linChance = Mathf.Clamp( 1.0f - Mathf.Sqrt( xOff * xOff + zOff * zOff ) / World.me.m_volcanoRadius, 0, 1 );
+			
+			float sqrChance = linChance * linChance* linChance* linChance;
+			
+			if( sqrChance <= Random.Range( 0, 1 ) )
+			{
+				continue;
+			}
+			
+			float x = pos.x + xOff;
+			float z = pos.z + zOff;
+			
+			float y = World.me.getWorldHeight( x, z );
+			
+			World.me.addBlock( (short)1, (int)(x+0.5f), (int)(y+0.5f), (int)(z+0.5f) );
 			
 			yield return 0;
 			++count;
@@ -111,6 +128,23 @@ public class RTSCam : MonoBehaviour
 				World.me.m_waterObj.transform.position -= new Vector3( 0, 1, 0 );
 				
 				World.me.m_energy.add( -World.me.m_godDroughtEnergy );
+			}
+		}
+
+		if( Input.GetKeyDown( "v" ) )
+		{
+			if( World.me.m_energy.current >= World.me.m_godVolcanoEnergy )
+			{
+				Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
+				
+				RaycastHit hit;
+				
+	            if( Physics.Raycast( ray, out hit ) )
+				{
+					World.me.m_energy.add( -World.me.m_godVolcanoEnergy );
+					
+					StartCoroutine( Volcano( hit.point ) );
+				}
 			}
 		}
 
