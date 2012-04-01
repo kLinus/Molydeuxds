@@ -38,6 +38,33 @@ class Action
 			
 			float y = World.me.getWorldHeight( p.x, p.z ) - 0.5f;
 			
+			if( m_walker.gameObject.GetComponent<Ghost>() == null )
+			{
+				if( y < World.me.m_waterObj.transform.position.y )
+				{
+					//I would drown!
+					
+					float curY = World.me.getWorldHeight( m_walker.transform.position.x, m_walker.transform.position.z ) - 0.5f;
+					Vector3 pos = m_walker.transform.position;
+					pos.y = curY;
+					m_walker.transform.position = pos;
+					
+					yield break;
+				}
+				
+				if( Mathf.Abs( m_walker.transform.position.y - y ) > 1.5f )
+				{
+					//Too damn high!
+
+					float curY = World.me.getWorldHeight( m_walker.transform.position.x, m_walker.transform.position.z ) - 0.5f;
+					Vector3 pos = m_walker.transform.position;
+					pos.y = curY;
+					m_walker.transform.position = pos;
+
+					yield break;
+				}
+			}
+			
 			m_walker.transform.position = new Vector3( p.x, y, p.z );
 
 			yield return 0;
@@ -74,7 +101,8 @@ class Action
 
 	public IEnumerator returnHome(  )
 	{
-		while( true )
+		int count = 30;
+		while( count > 0 )
 		{
 			Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 256.0f, World.me.s_layerHut );
 			
@@ -87,26 +115,36 @@ class Action
 				
 				Building building = go.GetComponent<Building>();
 				
-				if( building != null )
+				if( building != null && building.m_side == m_walker.m_side )
 				{
 					MonoBehaviour.print( "Heading home to:"+building.gameObject.name );
 					yield return m_walker.StartCoroutine( gotoSquare( building.transform.position, 1.0f, 0.01f ) );
 					
-					building.addResource( m_walker.m_resCarrying );
+					Vector3 dist = building.transform.position - m_walker.transform.position;
 					
-					m_walker.m_resCarrying = null;
-					
-					yield break;
+					if( dist.sqrMagnitude < 1.1 )
+					{
+						building.addResource( m_walker.m_resCarrying );
+						
+						m_walker.m_resCarrying = null;
+						
+						yield break;
+					}
 				}
 			}
 	
-			MonoBehaviour.print( "Finding home!" );
-			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			MonoBehaviour.print( "Finding home!" );		
+			float xOff = Random.Range( -32.0f, 32.0f );
+			float zOff = Random.Range( -32.0f, 32.0f );
+			
+			float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
 			
 			float y = World.me.getWorldHeight( x, z );
 					
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 1.0f, 0.01f ) );
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 2.0f, 0.01f ) );
+						
+			--count;
 		}
 	}
 	
@@ -128,24 +166,25 @@ class Action
 					MonoBehaviour.print( "Heading towards:"+res.gameObject.name+" for res:"+type );
 					
 					yield return m_walker.StartCoroutine( gotoSquare( res.transform.position, 4.0f, 0.01f ) );
+
 					
 					if( go != null )
 					{
-						m_walker.m_resCarrying = res.def;
-						Object.Destroy( go );
+						Vector3 dist = go.transform.position - m_walker.transform.position;
 						
-						yield return m_walker.StartCoroutine( returnHome() );
-						
-						yield break;
+						if( dist.sqrMagnitude < 1.1 )
+						{
+							m_walker.m_resCarrying = res.def;
+							Object.Destroy( go );
+							
+							yield return m_walker.StartCoroutine( returnHome() );
+							
+							yield break;
+						}
 					}
 				}
 			}
 		}
-		
-		//MonoBehaviour.print( "Random walk" );
-
-		//float x = Random.Range( -32.0f, World.s_chunkWorldSize * World.s_chunkSide );
-		//float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
 		
 		float xOff = Random.Range( -32.0f, 32.0f );
 		float zOff = Random.Range( -32.0f, 32.0f );
@@ -203,7 +242,7 @@ class ActGhost : Action
 			float y = World.me.getWorldHeight( x, z );
 			
 			
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 4.0f, 0.01f ) );
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 0.5f, 0.01f ) );
 			
 			
 			

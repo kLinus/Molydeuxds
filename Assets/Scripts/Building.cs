@@ -11,6 +11,8 @@ public class ResourceDef
 
 public class Building : MonoBehaviour 
 {
+	public Side m_side = Side.Invalid;
+	
 	public GameObject m_walkerDef;
 	public GameObject m_upgradesToDef;
 	

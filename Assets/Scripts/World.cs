@@ -3,7 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+
 // TODO: Make Cameras through code
+public enum Side
+{
+	Invalid,
+	Red,
+	Blue,
+}
 
 public class Chunk : MonoBehaviour
 {
@@ -43,6 +50,8 @@ public class Chunk : MonoBehaviour
 	
 	public void remBlock_l( int x, int y, int z )
 	{
+		if( y == 0 ) return;
+		
 		int index = localToIndex( x, y, z );
 		
 		m_types[index] = 0;
@@ -52,6 +61,8 @@ public class Chunk : MonoBehaviour
 	
 	public void addBlock_l( short type, int x, int y, int z )
 	{
+		if( y == 15 ) return;
+		
 		int index = localToIndex( x, y, z );
 		
 		m_types[index] = type;
@@ -155,12 +166,18 @@ public class Chunk : MonoBehaviour
 		List<Vector2> uvs = new List<Vector2>();
 		Dictionary<Vector3, int> map = new Dictionary<Vector3, int>();
 		List<int> indices = new List<int>();
+		List<Color> colors = new List<Color>();
+
 
 		for( int y = 0; y < 16; ++y )
 		{
 			float fy = (float)y;
 			float yhp = fy + 0.5f;
 			float yhn = fy - 0.5f;
+			
+			float fColor = Mathf.Clamp( (float)y / 6.0f, 0.0f, 1.0f );
+			
+			Color color = new Color( fColor, fColor, fColor );
 
 			for( int z = 0; z < 16; ++z )
 			{
@@ -199,7 +216,14 @@ public class Chunk : MonoBehaviour
 						Vector2 u3 = new Vector2( fx+0, fz+1 );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
-						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );
+						
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( yp == 0 )
@@ -216,6 +240,13 @@ public class Chunk : MonoBehaviour
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( zp == 0 )
@@ -232,6 +263,13 @@ public class Chunk : MonoBehaviour
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( xn == 0 )
@@ -248,6 +286,13 @@ public class Chunk : MonoBehaviour
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 					
 					if( yn == 0 )
@@ -263,7 +308,15 @@ public class Chunk : MonoBehaviour
 						Vector2 u3 = new Vector2( fx+0, fz+1 );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
-						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );	
+						
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						
 					}
 					
 					if( zn == 0 )
@@ -279,7 +332,14 @@ public class Chunk : MonoBehaviour
 						Vector2 u3 = new Vector2( fx+0, fz+1 );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
-						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
+						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );
+						
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
+						colors.Add( color );
 					}
 
 				}
@@ -295,6 +355,7 @@ public class Chunk : MonoBehaviour
 		mesh.vertices = verts.ToArray();
 		mesh.uv = uvs.ToArray();
 		mesh.triangles = indices.ToArray();
+		mesh.colors = colors.ToArray();
 		
 		
 		mesh.RecalculateNormals();
@@ -317,7 +378,7 @@ public class World : MonoBehaviour
 	public LayerMask s_layerWalker;
 	public LayerMask s_layerResource;
 	
-	static public int s_chunkSide = 20;
+	static public int s_chunkSide = 10;
 	static public float s_chunkWorldSize = (float)Chunk.s_chunkSize;
 	public enum Mode {BEAR, CLOUD, GOD};
 	public Mode m_currentMode = Mode.GOD;
@@ -351,22 +412,39 @@ public class World : MonoBehaviour
 	public EnergyProperties m_energy;
 	
 	public static World me;
-	
+
+	public Side m_player = Side.Invalid;
 
 	GameObject[] m_chunks = new GameObject[ s_chunkSide * s_chunkSide ];
 	
 	public GameObject m_chunkObjectDef;
-	public GameObject m_hutDef;
+
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
 	public GameObject m_foodDef;
 
-	public float m_godRainEnergy = 25.0f;
-	public float m_godAddLandEnergy = 1.0f;
-	public float m_godRemLandEnergy = 1.0f;
+	public GameObject m_hutRedDef;
+	public GameObject m_hutBlueDef;
+
+	public float m_godRainEnergy	= 25.0f;
+	public float m_godAddLandEnergy	= 1.0f;
+	public float m_godRemLandEnergy	= 1.0f;
+	public float m_godFloodEnergy	= 100.0f;
+	public float m_godDroughtEnergy	= 100.0f;
+	public float m_godVolcanoEnergy	= 100.0f;
+	
+	
 	
 	public GameObject m_guiEnergy;
 
+	public GameObject m_waterObj;
+
+
+	public int m_volcanoProbes = 1000;
+	public float m_volcanoRadius = 8.0f;
+	
+	
+	
 	#endregion
 		
 	void Start () 
@@ -374,22 +452,43 @@ public class World : MonoBehaviour
 		m_energy.add(m_energy.max);
 		createWorld();
 		
-		float bX = 8.0f; 
-		float bZ = 8.0f; 
+		{
+			float bX = 8.0f; 
+			float bZ = 8.0f; 
+			
+			float bY = getWorldHeight( bX, bZ );
+	
+			Vector3 bPos = new Vector3( bX, bY, bZ );
+	
+			GameObject bHut = Instantiate( m_hutBlueDef, bPos, new Quaternion() ) as GameObject;
+		}		
 		
-		float bY = getWorldHeight( bX, bZ );
+		{
+			float maxSize = (float)s_chunkSide * s_chunkWorldSize;
+			
+			float rX = maxSize - 8.0f;
+			float rZ = maxSize - 8.0f;
+			
+			float rY = getWorldHeight( rX, rZ );
+	
+			Vector3 rPos = new Vector3( rX, rY, rZ );
+	
+			GameObject rHut = Instantiate( m_hutRedDef, rPos, new Quaternion() ) as GameObject;
+		}		
+
 		
-		Vector3 bPos = new Vector3( bX, bY, bZ );
+		scatterResource( m_foodDef, 200 );
+		scatterResource( m_rockDef, 200 );
+		scatterResource( m_treeDef, 200 );
 		
-		GameObject building = Instantiate( m_hutDef, bPos, new Quaternion() ) as GameObject;
-		
-		scatterResource( m_foodDef, 300 );
-		scatterResource( m_rockDef, 300 );
-		scatterResource( m_treeDef, 300 );
+		StartCoroutine( growFood() );
+		StartCoroutine( growTrees() );
 	}
 	
 	void Update()
-	{		
+	{
+		m_guiEnergy.GetComponent<GUIText>().text = ((int)m_energy.current).ToString();
+		
 		CheaterKeys();
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
@@ -423,16 +522,19 @@ public class World : MonoBehaviour
 		{
 			ClearCameras();
 			camBEAR.enabled = true;
+			camBEAR.GetComponent<BearCam>().enabled = true;
 		}
 		else if ( camCLOUD != null && m_currentMode == Mode.CLOUD && camCLOUD.enabled == false)
 		{
 			ClearCameras();
 			camCLOUD.enabled = true;
+			camCLOUD.GetComponent<CloudCam>().enabled = true;
 		}		
 		else if ( camGOD != null && m_currentMode == Mode.GOD && camGOD.enabled == false)
 		{
 			ClearCameras();
 			camGOD.enabled = true;
+			camGOD.GetComponent<RTSCam>().enabled = true;
 		}
 	}
 	public Camera GetActiveCamera()
@@ -460,6 +562,11 @@ public class World : MonoBehaviour
 		{
 			cam.enabled = false;
 		}
+
+		camBEAR.GetComponent<BearCam>().enabled = false;
+		camCLOUD.GetComponent<CloudCam>().enabled = false;
+		camGOD.GetComponent<RTSCam>().enabled = true;
+
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )
@@ -608,6 +715,8 @@ public class World : MonoBehaviour
 			
 			float fy = getWorldHeight( fx, fz ) - 0.5f;
 			
+			if( fy < World.me.m_waterObj.transform.position.y ) continue;
+			
 			Vector3 pos = new Vector3( fx, fy, fz );
 			
 			GameObject resource = Instantiate( def, pos, new Quaternion() ) as GameObject;
@@ -632,6 +741,27 @@ public class World : MonoBehaviour
 		if(Input.GetKey(KeyCode.Alpha3))
 		{
 			m_currentMode = Mode.CLOUD;
+		}
+	}
+	
+	
+	IEnumerator growTrees()
+	{
+		while( true )
+		{
+			yield return new WaitForSeconds(1);
+
+			scatterResource( m_foodDef, 1 );
+		}
+	}
+	
+	IEnumerator growFood()
+	{
+		while( true )
+		{
+			yield return new WaitForSeconds(1);
+
+			scatterResource( m_foodDef, 1 );
 		}
 	}
 	
