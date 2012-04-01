@@ -419,6 +419,8 @@ public class World : MonoBehaviour
 	
 	public GameObject m_chunkObjectDef;
 
+	public GameObject m_bearDef;
+
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
 	public GameObject m_foodDef;
@@ -481,6 +483,7 @@ public class World : MonoBehaviour
 		scatterResource( m_rockDef, 200 );
 		scatterResource( m_treeDef, 200 );
 		
+		StartCoroutine( growBear() );
 		StartCoroutine( growFood() );
 		StartCoroutine( growTrees() );
 	}
@@ -750,6 +753,18 @@ public class World : MonoBehaviour
 		}
 	}
 	
+	
+	IEnumerator growBear()
+	{
+		//yield return new WaitForSeconds(10);
+		
+		while( true )
+		{
+			scatterResource( m_bearDef, 1 );
+
+			yield return new WaitForSeconds( 30 );
+		}
+	}
 	
 	IEnumerator growTrees()
 	{
