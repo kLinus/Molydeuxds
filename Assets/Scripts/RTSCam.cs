@@ -16,26 +16,29 @@ public class RTSCam : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if( Input.GetKeyDown("up") )
+		float speed = 15.0f;
+		
+		if( Input.GetKey("up") )
 		{
-			Camera.main.transform.position += ( new Vector3( 0, 0, 1 ) );
+			Camera.main.transform.position += ( new Vector3( 0, 0, 1 ) * Time.deltaTime * speed );
 		}
-		if( Input.GetKeyDown("down") )
+		if( Input.GetKey("down") )
 		{
-			Camera.main.transform.position += ( new Vector3( 0, 0,-1 ) );
+			Camera.main.transform.position += ( new Vector3( 0, 0,-1 ) * Time.deltaTime * speed );
 		}
-		if( Input.GetKeyDown("left") )
+		if( Input.GetKey("left") )
 		{
-			Camera.main.transform.position += ( new Vector3(-1, 0, 0 ) );
+			Camera.main.transform.position += ( new Vector3(-1, 0, 0 ) * Time.deltaTime * speed );
 		}
-		if( Input.GetKeyDown("right") )
+		if( Input.GetKey("right") )
 		{
-			Camera.main.transform.position += ( new Vector3( 1, 0, 0 ) );
+			Camera.main.transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * speed );
 		}
 		
 		
 		if( Input.GetMouseButtonDown( 0 ) )
 		{
+			/*
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			
 			RaycastHit hit;
@@ -50,7 +53,7 @@ public class RTSCam : MonoBehaviour
 				Instantiate( m_walker, hit.point, new Quaternion() );
                 //Instantiate( Walker ); //, this.transform.position, this.transform.rotation );
 			}
-            		
+			*/            		
 		}
 		
 	}

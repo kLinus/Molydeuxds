@@ -76,7 +76,7 @@ class Action
 	{
 		while( true )
 		{
-			Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 64.0f );
+			Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 256.0f, World.me.s_layerHut );
 			
 			for( int i = 0; i < collides.Length; ++i )
 			{
@@ -90,6 +90,8 @@ class Action
 					yield return m_walker.StartCoroutine( gotoSquare( building.transform.position, 1.0f, 0.01f ) );
 					
 					building.addResource( m_walker.m_resCarrying );
+					
+					m_walker.m_resCarrying = null;
 					
 					yield break;
 				}
@@ -108,38 +110,45 @@ class Action
 	
 	public IEnumerator extractResource( string type )
 	{
-		Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 32.0f );
+		Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 32.0f, World.me.s_layerResource );
 		
-		for( int i = 0; i < collides.Length; ++i )
+		if( collides.Length > 0 )
 		{
-			GameObject go = collides[i].gameObject;
-			
-			Resource res = go.GetComponent<Resource>();
-			
-			if( res != null && type == res.def.type )
+			int i = Random.Range( 0, collides.Length - 1 );
 			{
-				MonoBehaviour.print( "Heading towards:"+res.gameObject.name+" for res:"+type );
+				GameObject go = collides[i].gameObject;
 				
-				yield return m_walker.StartCoroutine( gotoSquare( res.transform.position, 4.0f, 0.01f ) );
+				Resource res = go.GetComponent<Resource>();
 				
-				if( go != null )
+				if( res != null && type == res.def.type )
 				{
-					m_walker.m_resCarrying = res.def;
-					Object.Destroy( go );
+					MonoBehaviour.print( "Heading towards:"+res.gameObject.name+" for res:"+type );
 					
-					yield return m_walker.StartCoroutine( returnHome() );
+					yield return m_walker.StartCoroutine( gotoSquare( res.transform.position, 4.0f, 0.01f ) );
 					
-					yield break;
+					if( go != null )
+					{
+						m_walker.m_resCarrying = res.def;
+						Object.Destroy( go );
+						
+						yield return m_walker.StartCoroutine( returnHome() );
+						
+						yield break;
+					}
 				}
-				
-				break;
 			}
 		}
-
+		
 		//MonoBehaviour.print( "Random walk" );
 
-		float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-		float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+		//float x = Random.Range( -32.0f, World.s_chunkWorldSize * World.s_chunkSide );
+		//float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+		
+		float xOff = Random.Range( -32.0f, 32.0f );
+		float zOff = Random.Range( -32.0f, 32.0f );
+		
+		float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+		float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
 		
 		float y = World.me.getWorldHeight( x, z );
 				
