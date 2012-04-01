@@ -6,8 +6,9 @@ Shader "Custom/height" {
 		Tags { "RenderType"="Opaque" }
 		LOD 200
 		
+		
 		CGPROGRAM
-		#pragma surface surf Lambert
+		#pragma surface surf Lambert vertex:vert
 
 		sampler2D _MainTex;
 
@@ -16,18 +17,19 @@ Shader "Custom/height" {
 			float3 customColor;
   		};
 	      void vert (inout appdata_full v, out Input o) {
-	          o.customColor.r = v.vertex.y * 255;
-	          o.customColor.g = v.vertex.y * 255;
-	          o.customColor.b = v.vertex.y * 255;
+	          o.customColor.r = v.vertex.y;
+	          o.customColor.g = v.vertex.y;
+	          o.customColor.b = v.vertex.y;
+	          //o.customColor.rgb = abs(v.normal);
 	      }
 
 		void surf (Input IN, inout SurfaceOutput o) {
 			half4 c = tex2D (_MainTex, IN.uv_MainTex);
-			o.Albedo = c.rgb;
-			o.Albedo *= IN.customColor;
+			o.Albedo = c.rgb * IN.customColor;
+			//o.Albedo *= ;
 			o.Alpha = c.a;
 		}
 		ENDCG
 	} 
-	FallBack "VertexLit"
+	FallBack "Diffuse"
 }
