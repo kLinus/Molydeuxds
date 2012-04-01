@@ -291,8 +291,7 @@ public class World : MonoBehaviour
 		public float current;
 		public float lastDecay;
 	}
-	public EnergyProperties m_bearEnergy;
-	public EnergyProperties m_cloudEnergy;
+	public EnergyProperties m_energy;
 	
 	public static World me;
 	
@@ -303,6 +302,11 @@ public class World : MonoBehaviour
 	public GameObject m_hutDef;
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
+
+	public float m_godRainEnergy = 25.0f;
+	
+	public GameObject m_guiEnergy;
+	
 	
 	void Start () 
 	{
@@ -319,6 +323,12 @@ public class World : MonoBehaviour
 		
 		scatterResource( m_treeDef, 100 );
 		scatterResource( m_rockDef, 100 );
+	}
+	
+	void Update()
+	{
+		int energy = (int)m_energy.current;
+		m_guiEnergy.GetComponent<GUIText>().text = energy.ToString();
 	}
 	
 	int chunkIndex( int chX, int chY, int chZ )

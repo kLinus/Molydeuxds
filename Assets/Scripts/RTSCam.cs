@@ -37,13 +37,17 @@ public class RTSCam : MonoBehaviour
 		
 		if( Input.GetKeyDown( "r" ) )
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			
-			RaycastHit hit;
-			
-            if( Physics.Raycast( ray, out hit ) )
+			if( World.me.m_energy.current >= World.me.m_godRainEnergy )
 			{
-				Instantiate( World.me.m_treeDef, hit.point, new Quaternion() );
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				
+				RaycastHit hit;
+				
+	            if( Physics.Raycast( ray, out hit ) )
+				{
+					Instantiate( World.me.m_treeDef, hit.point, new Quaternion() );
+					World.me.m_energy.current -= World.me.m_godRainEnergy;
+				}
 			}
 		}
 		
