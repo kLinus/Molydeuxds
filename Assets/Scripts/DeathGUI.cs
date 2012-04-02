@@ -10,6 +10,8 @@ public class DeathGUI : MonoBehaviour
 	public GUIStyle header1;
 	public GUIStyle paragraph;
 	public GUIStyle exitButton;
+	public GUIStyle skipButton;
+		
 	
 	//public string name;
 	
@@ -73,8 +75,13 @@ public class DeathGUI : MonoBehaviour
 			
 			GUILayout.EndVertical();
 			GUILayout.EndScrollView();
-			if(GUILayout.Button("Skip for 5 credits", exitButton))
+			GUILayout.BeginHorizontal();
+			GUILayout.FlexibleSpace();
+			if(GUILayout.Button(" ", exitButton))
 				hide();
+			if(GUILayout.Button(" ", skipButton))
+				hide();
+			GUILayout.EndHorizontal();
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
 			
