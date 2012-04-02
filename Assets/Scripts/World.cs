@@ -456,6 +456,7 @@ public class World : MonoBehaviour
 	public GameObject m_chunkObjectDef;
 
 	public GameObject m_bearDef;
+	public GameObject m_cloudDef;
 
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
