@@ -169,7 +169,8 @@ public class Chunk : MonoBehaviour
 					}
 					else if( heightDiff > 2.0f )
 					{
-						val = 2;
+						//val = 2;
+						val = fy > 6.5f ? (short)1 : (short)2;
 					}
 										
 					m_types[ index ] = val;
