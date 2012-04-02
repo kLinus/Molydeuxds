@@ -491,6 +491,11 @@ public class World : MonoBehaviour
 		m_energy.add(m_energy.max);
 		createWorld();
 		
+
+		
+		//hutColor = Color.red;
+		//m_hutRedDef.renderer.material.color = hutColor;
+		
 		{
 			float bX = 8.0f; 
 			float bZ = 8.0f; 
@@ -498,8 +503,8 @@ public class World : MonoBehaviour
 			float bY = getWorldHeight( bX, bZ );
 	
 			Vector3 bPos = new Vector3( bX, bY, bZ );
-	
 			GameObject bHut = Instantiate( m_hutBlueDef, bPos, new Quaternion() ) as GameObject;
+			bHut.GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
 		}		
 		
 		{
@@ -513,6 +518,7 @@ public class World : MonoBehaviour
 			Vector3 rPos = new Vector3( rX, rY, rZ );
 	
 			GameObject rHut = Instantiate( m_hutRedDef, rPos, new Quaternion() ) as GameObject;
+			rHut.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
 		}		
 
 		
