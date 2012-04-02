@@ -7,12 +7,13 @@ public class CloudScript : MonoBehaviour {
 	public  float rotationSpeed = 90;
 	
 	public  float jumpSpeed = 100;
-	private bool  canJump=true;
 	
 	public  float magicNumber = 0;
 	public  float banterTimeInterval = 10;
 	private SphereCollider roarColliderCheck;
 	private float originalY;
+	
+	private float m_driftSpeed = Random.Range( 0.8f, 1.2f );
 	
 	// Bear Actions
 	public class ButtonProperties
@@ -38,6 +39,23 @@ public class CloudScript : MonoBehaviour {
 		if (World.me.m_currentMode == World.Mode.CLOUD)
 		{
 			UpdateMovement();
+		}
+		else
+		{
+			UpdateFloat();
+		}
+	}
+	
+	static Vector3 s_driftDir = new Vector3( 1.0f, 0, 0 );
+	
+	public void UpdateFloat()
+	{
+		transform.position += s_driftDir * (Time.deltaTime * m_driftSpeed);
+
+		if( World.isOutside( transform.position ) )
+		{
+			Destroy( gameObject );
+			World.me.scatterClouds( World.me.m_cloudDef, 1 );
 		}
 	}
 	
@@ -95,7 +113,5 @@ public class CloudScript : MonoBehaviour {
 			if(i >= audios.Length) i = 0;
 			
 		}while(true);
-		
-		yield return null;	
 	}
 }

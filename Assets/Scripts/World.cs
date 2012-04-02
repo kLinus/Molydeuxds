@@ -80,12 +80,23 @@ public class Chunk : MonoBehaviour
 	
 	public float getWorldHeight( int x, int z )
 	{
+		short dontCare;
+		return getWorldHeight( x, z, out dontCare );
+	}
+	
+	public float getWorldHeight( int x, int z, out short o_type )
+	{
 		for( int y = 15; y >= 0; --y )
 		{
 			short type = getType_l( x, y, z );
-			if( type != 0 ) return m_y + y + 1.0f;
+			if( type != 0 )
+			{
+				o_type = type;
+				return m_y + y + 1.0f;
+			}
 		}
 		
+		o_type = 0;
 		return m_y;
 	}
 	
@@ -158,6 +169,7 @@ public class Chunk : MonoBehaviour
 					}
 					else if( heightDiff > 2.0f )
 					{
+						//val = 2;
 						val = fy > 6.5f ? (short)1 : (short)2;
 					}
 										
@@ -408,6 +420,16 @@ public class Chunk : MonoBehaviour
 
 public class World : MonoBehaviour 
 {
+	static public bool isOutside( Vector3 pos )
+	{
+		if( pos.x < 0 || pos.z < 0 ) return true;
+		if( pos.x > (float)s_chunkSide * s_chunkWorldSize || pos.y > (float)s_chunkSide * s_chunkWorldSize ) return true;
+		
+		return false;
+	}
+	
+	
+	
 	#region Variables
 	
 	public LayerMask s_layerHut;
@@ -524,9 +546,9 @@ public class World : MonoBehaviour
 		
 		scatterClouds( m_cloudDef, 20 );
 
-		scatterResource( m_foodDef, 200 );
-		scatterResource( m_rockDef, 50 );
-		scatterResource( m_treeDef, 500 );
+		scatterResource( m_foodDef, 200, 1 );
+		scatterResource( m_rockDef, 50, -1 );
+		scatterResource( m_treeDef, 500, 1 );
 		
 		StartCoroutine( growBear() );
 		StartCoroutine( growFood() );
@@ -761,13 +783,23 @@ public class World : MonoBehaviour
 
 	public float getWorldHeight( float x, float z )
 	{
+		short dontCare;
+		return getWorldHeight( x, z, out dontCare );
+	}
+
+	public float getWorldHeight( float x, float z, out short o_type )
+	{	
 		int index = worldToChunkIndex( x, 0, z );
 		
-		if( index < 0 || index > (s_chunkSide * s_chunkSide) ) return 0.0f;
+		if( index < 0 || index > (s_chunkSide * s_chunkSide) ) 
+		{
+			o_type = 0;
+			return 0.0f;
+		}
 		
 		Chunk chScr = m_chunks[index].GetComponent<Chunk>();
 		
-		return chScr.getWorldHeight( (int)(x+0.5f) % Chunk.s_chunkSize, (int)(z+0.5f) % Chunk.s_chunkSize );
+		return chScr.getWorldHeight( (int)(x+0.5f) % Chunk.s_chunkSize, (int)(z+0.5f) % Chunk.s_chunkSize, out o_type );
 	}
 	
 	
@@ -790,14 +822,17 @@ public class World : MonoBehaviour
 
 	}
 	
-	public void scatterResource( GameObject def, int count )
+	public void scatterResource( GameObject def, int count, short type )
 	{
 		for( int i = 0; i < count; ++i )
 		{
 			float fx = UnityEngine.Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			float fz = UnityEngine.Random.Range( 0, s_chunkSide * s_chunkWorldSize );
 			
-			float fy = getWorldHeight( fx, fz ) - 0.5f;
+			short groundType;
+			float fy = getWorldHeight( fx, fz, out groundType ) - 0.5f;
+			
+			if( type != -1 && type != groundType ) continue;
 			
 			if( fy < World.me.m_waterObj.transform.position.y ) continue;
 			
@@ -851,7 +886,7 @@ public class World : MonoBehaviour
 		
 		while( true )
 		{
-			scatterResource( m_bearDef, 1 );
+			scatterResource( m_bearDef, 1, -1 );
 
 			yield return new WaitForSeconds( 10 );
 		}
@@ -863,7 +898,7 @@ public class World : MonoBehaviour
 		{
 			yield return new WaitForSeconds(1);
 
-			scatterResource( m_foodDef, 1 );
+			scatterResource( m_foodDef, 1, 1 );
 		}
 	}
 	
@@ -873,7 +908,7 @@ public class World : MonoBehaviour
 		{
 			yield return new WaitForSeconds(1);
 
-			scatterResource( m_foodDef, 1 );
+			scatterResource( m_foodDef, 1, 1 );
 		}
 	}
 	
