@@ -34,15 +34,15 @@ public class MadLib
 	};
 	
 	private string[] sa_youngAdult = new string[] {
-		@"As a young *size* adult I was really into *hobby*, until I took an arrow to the *bodypart* and I had to stop. In the end I felt *feelgood* because it meant I didn't have to work anymore. Work makes me feel *feelbad*. Until one day I met a *shape* Molydeuxd who was *appearance* and I fell in love.  Unfortunately, they would only date *occupation* Molyduexds with  *size* *bodypart* so I ended up feeling *feelbad*. I bought a *size* pet *animal* instead. It used to *verb* *pluralthings* when I was feeling *feelbad* to cheer me up. It was really good to me until it died in a freak accident involving a  *singularthing*, several *pluralthing*, a shady *occupation*, and a *shape* *animal* in the back of a *size* *singularplace*. I cried a lot until my friend gave me a new *appearance* *singularthing* and I forgot about my old *feelgood* pet."
+		@"As a young *size* adult I was really into *hobby*, until I took an arrow to the *bodypart* and I had to stop. In the end I felt *feelgood* because it meant I didn't have to work anymore. Work makes me feel *feelbad*. Until one day I met a *shape* Molydeuxd who was *appearance* and I fell in love.  Unfortunately, they would only date *occupation* Molyduexds with  *size* *bodypart* so I ended up feeling *feelbad*. I bought a *size* pet *animal* instead. It used to *verb* *pluralthings* when I was feeling *feelbad* to cheer me up. It was really good to me until it died in a freak accident involving a  *singularthing*, several *pluralthing*, a shady *occupation*, and a *shape* *animal* in the back of a *size* *singularplace*. I cried a lot until my friend gave me a new *appearance* *singularthing* and I forgot about my old *feelgood* pet. "
 	};
 
 	private string[] sa_adult = new string[] {
-		@"I had a *feelbad* breakdown when I was an adult. It was triggered by a *appearance* *animal* that I saw and made me question the *size* universe we live in. I was under the *feelgood* influence of *pluralthing* which made me *verb* *pluralthing* to really feel *feelgood*. I went to a few *pluralplace* for rehab and even though I felt *feelbad* while their, it was for the best. Except when I tripped on a *shape* *singularthing* and lost the use of my *feelgood* *bodypart*. After I got back to feeling *feelgood* I decided to try and become a *appearance* *occupation* but it was too hard so I decided to just *verb* *pluralthing* instead. Friends noticed that I had become *size* and *shape* so I decided it was time to stop eating *pluralthing*."
+		@"I had a *feelbad* breakdown when I was an adult. It was triggered by a *appearance* *animal* that I saw and made me question the *size* universe we live in. I was under the *feelgood* influence of *pluralthing* which made me *verb* *pluralthing* to really feel *feelgood*. I went to a few *pluralplace* for rehab and even though I felt *feelbad* while their, it was for the best. Except when I tripped on a *shape* *singularthing* and lost the use of my *feelgood* *bodypart*. After I got back to feeling *feelgood* I decided to try and become a *appearance* *occupation* but it was too hard so I decided to just *verb* *pluralthing* instead. Friends noticed that I had become *size* and *shape* so I decided it was time to stop eating *pluralthing*. "
 	};
 
 	private string[] sa_elderly = new string[] {
-		@"I was one of those *shape* *feelbad* elderly people. I spent way too much time doing *hobby* and yelling at *shape* children to make them feel *feelbad*. Other Molydeuxds took note of my situtaion and bought me a *size* pet *animal* with a *shape* *bodypart* which was weird, but it was a *feelgood* creature. All good things end however, and it was stolen by a *appearance* *occupation* while I was *hobby* at the local *singularplace*. I found a *size* tumor on my *bodypart* and was worried I had contracted cancer from *singularthing*  exposure, but it was just a *size* *feelbad* bug. I ended up getting married to a *size* *animal* but our *appearance* love wasn't recognized by the *feelbad* Molyduexd government and was annulled. As my health deteriorated I started collecting *size* *pluralthing* to feel *feelgood*, but I only felt *feelbad*."
+		@"I was one of those *shape* *feelbad* elderly people. I spent way too much time doing *hobby* and yelling at *shape* children to make them feel *feelbad*. Other Molydeuxds took note of my situtaion and bought me a *size* pet *animal* with a *shape* *bodypart* which was weird, but it was a *feelgood* creature. All good things end however, and it was stolen by a *appearance* *occupation* while I was *hobby* at the local *singularplace*. I found a *size* tumor on my *bodypart* and was worried I had contracted cancer from *singularthing*  exposure, but it was just a *size* *feelbad* bug. I ended up getting married to a *size* *animal* but our *appearance* love wasn't recognized by the *feelbad* Molyduexd government and was annulled. As my health deteriorated I started collecting *size* *pluralthing* to feel *feelgood*, but I only felt *feelbad*. "
 	};
 	
 	// Use this for initialization
@@ -427,7 +427,7 @@ public class MadLib
 	
 	public String GetParagraph(int type, string name)
 	{
-		UnityEngine.Debug.Log(name);
+		//UnityEngine.Debug.Log(name);
 		return GetParagraph(type, name, name, name);
 	}
 	
@@ -445,7 +445,8 @@ public class MadLib
 		lp_libParts.Add(new LibPart("FORMAL", new string[] { formalname }));
 		
 		String paragraph;
-
+		
+		//UnityEngine.Debug.Log("Type: " + type);
 		
 		switch(type)
 		{
@@ -479,7 +480,7 @@ public class MadLib
 			while((i = paragraph.IndexOf(lp.key, i)) != -1)
 			{
 				string randomWord = lp.words[rand.Next(lp.words.Length)];
-				UnityEngine.Debug.Log(lp.key);
+				
 				//find if last character was a period, and capitalize the first letter of the added word
 				int j = i;
 				do{
@@ -490,7 +491,8 @@ public class MadLib
 				while(char.IsWhiteSpace(paragraph[j]));
 				
 				paragraph = paragraph.Remove(i,keylength).Insert(i,randomWord);
-				i += keylength;
+				//i += keylength - 1;
+				//UnityEngine.Debug.Log("stringLength: " + paragraph.Length + ", i:" + i + ", key: " + lp.key + ", keylength: " + keylength);
 			}
 		}
 		

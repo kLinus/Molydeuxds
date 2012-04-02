@@ -46,7 +46,9 @@ public class RTSCam : MonoBehaviour
 	void Start () 
 	{
 		transform.position = new Vector3(6,25,0);
-		transform.Rotate(52.0f, 0f, 0f);	
+		transform.Rotate(30f, 45f, 0f);	
+		camera.orthographic = true;
+		camera.orthographicSize = 10;
 	}
 	
 	// Update is called once per frame

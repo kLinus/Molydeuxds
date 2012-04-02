@@ -86,6 +86,15 @@ public class Walker : MonoBehaviour
 		
 		Object.Destroy( gameObject );
 	}
+	
+	public void bearDeath()
+	{
+		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
+		temp.GetComponent<Ghost>().setName(m_name);
+		temp.GetComponent<DeathGUI>().setName(m_name);
+		
+		Object.Destroy( gameObject );
+	}
 
 		static string[] s_firstNames = {
 			"MolyEliot ",

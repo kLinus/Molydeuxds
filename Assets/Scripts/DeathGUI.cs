@@ -31,8 +31,12 @@ public class DeathGUI : MonoBehaviour
 		paragraphs = new string[headers.Length];
 		
 		MadLib ml = new MadLib();
+		Debug.Log(paragraphs.Length + " " + headers.Length);
 		for(int i = 0; i < paragraphs.Length; i++)
+		{
+			Debug.Log("Get Paragraph: " + i);
 			paragraphs[i] = ml.GetParagraph(i, name);
+		}
 		
 		
 	}
@@ -53,12 +57,14 @@ public class DeathGUI : MonoBehaviour
 			if(Input.GetButtonDown("Back"))
 				hide();
 			
+			float scrollwidth = background.fixedWidth - background.padding.left - background.padding.right - 20;
+			
 			Rect windowRect = new Rect((Screen.width - background.fixedWidth) / 2, (Screen.height - background.fixedHeight)/2, background.fixedWidth, background.fixedHeight);
 			GUILayout.BeginArea(windowRect, background);
 			GUILayout.BeginVertical();
 			
 			scrollposition = GUILayout.BeginScrollView(scrollposition);
-			GUILayout.BeginVertical();
+			GUILayout.BeginVertical(GUILayout.Width(scrollwidth));
 			for(int i = 0; i < paragraphs.Length; i++)
 			{
 				GUILayout.Label(headers[i], header1);

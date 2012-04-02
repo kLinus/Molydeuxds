@@ -19,6 +19,14 @@ public class Chunk : MonoBehaviour
 	
 	short[] m_types = new short[s_chunkSize * s_chunkSize * s_chunkSize];
 	
+	static Vector2[] s_texOff = 
+	{
+		new Vector2( 0.0f, 0.5f ), //Blank
+		new Vector2( 0.5f, 0.5f ), //Grass
+		new Vector2( 0.0f, 0.0f ), //Mud
+		new Vector2( 0.5f, 0.0f ), //Stone
+	};
+	
 	World m_world;
 	
 	//World basis
@@ -111,7 +119,20 @@ public class Chunk : MonoBehaviour
 				
 				float heightUnit = (float)fnFinal( wx / 50.0f, wz / 50.0f, noiseZ );
 				
-				float height = ( heightUnit ) * 16.0f;
+				float hut0X = wx - 8.0f;
+				float hut0Z = wz - 8.0f;				
+				bool nearHut0 = hut0X * hut0X + hut0Z * hut0Z < (16.0f*16.0f);
+
+				float hut1X = wx - 152.0f;
+				float hut1Z = wz - 152.0f;				
+				bool nearHut1 = hut1X * hut1X + hut1Z * hut1Z < (16.0f*16.0f);
+				
+				float height = ( heightUnit ) * 12.0f + 4.0f;
+				
+				if( nearHut0 || nearHut1 )
+				{
+					height = Mathf.Max( height, 9 );
+				}
 						
 				
 				int index0 = localToIndex( x, 0, z );
@@ -123,8 +144,23 @@ public class Chunk : MonoBehaviour
 				
 					int index = localToIndex( x, y, z );
 					
-					short val = (short)((height > fy) ? 1 : 0 );
+					float heightDiff = height - fy;
 					
+					short val = 0;
+					
+					if( heightDiff < 0.0f )
+					{
+						val = 0;
+					}
+					else if( heightDiff > 3.0f )
+					{
+						val = 3;
+					}
+					else if( heightDiff > 2.0f )
+					{
+						val = fy > 6.5f ? (short)1 : (short)2;
+					}
+										
 					m_types[ index ] = val;
 				}
 			}
@@ -210,10 +246,10 @@ public class Chunk : MonoBehaviour
 						Vector3 v2 = new Vector3( xhp, yhn, zhp );
 						Vector3 v3 = new Vector3( xhp, yhn, zhn );
 						
-						Vector2 u0 = new Vector2( fx+0, fz+0 );
-						Vector2 u1 = new Vector2( fx+1, fz+0 );
-						Vector2 u2 = new Vector2( fx+1, fz+1 );
-						Vector2 u3 = new Vector2( fx+0, fz+1 );
+						Vector2 u0 = s_texOff[myType] + new Vector2( 0.0f, 0.0f );
+						Vector2 u1 = s_texOff[myType] + new Vector2( 0.5f, 0.0f );
+						Vector2 u2 = s_texOff[myType] + new Vector2( 0.5f, 0.5f );
+						Vector2 u3 = s_texOff[myType] + new Vector2( 0.0f, 0.5f );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );
@@ -233,10 +269,10 @@ public class Chunk : MonoBehaviour
 						Vector3 v2 = new Vector3( xhp, yhp, zhn );
 						Vector3 v3 = new Vector3( xhn, yhp, zhn );
 						
-						Vector2 u0 = new Vector2( fx+0, fz+0 );
-						Vector2 u1 = new Vector2( fx+1, fz+0 );
-						Vector2 u2 = new Vector2( fx+1, fz+1 );
-						Vector2 u3 = new Vector2( fx+0, fz+1 );
+						Vector2 u0 = s_texOff[myType] + new Vector2( 0.0f, 0.0f );
+						Vector2 u1 = s_texOff[myType] + new Vector2( 0.5f, 0.0f );
+						Vector2 u2 = s_texOff[myType] + new Vector2( 0.5f, 0.5f );
+						Vector2 u3 = s_texOff[myType] + new Vector2( 0.0f, 0.5f );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
@@ -256,10 +292,10 @@ public class Chunk : MonoBehaviour
 						Vector3 v2 = new Vector3( xhn, yhn, zhp );
 						Vector3 v3 = new Vector3( xhp, yhn, zhp );
 						
-						Vector2 u0 = new Vector2( fx+0, fz+0 );
-						Vector2 u1 = new Vector2( fx+1, fz+0 );
-						Vector2 u2 = new Vector2( fx+1, fz+1 );
-						Vector2 u3 = new Vector2( fx+0, fz+1 );
+						Vector2 u0 = s_texOff[myType] + new Vector2( 0.0f, 0.0f );
+						Vector2 u1 = s_texOff[myType] + new Vector2( 0.5f, 0.0f );
+						Vector2 u2 = s_texOff[myType] + new Vector2( 0.5f, 0.5f );
+						Vector2 u3 = s_texOff[myType] + new Vector2( 0.0f, 0.5f );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
@@ -279,10 +315,10 @@ public class Chunk : MonoBehaviour
 						Vector3 v2 = new Vector3( xhn, yhn, zhn );
 						Vector3 v3 = new Vector3( xhn, yhn, zhp );
 						
-						Vector2 u0 = new Vector2( fx+0, fz+0 );
-						Vector2 u1 = new Vector2( fx+1, fz+0 );
-						Vector2 u2 = new Vector2( fx+1, fz+1 );
-						Vector2 u3 = new Vector2( fx+0, fz+1 );
+						Vector2 u0 = s_texOff[myType] + new Vector2( 0.0f, 0.0f );
+						Vector2 u1 = s_texOff[myType] + new Vector2( 0.5f, 0.0f );
+						Vector2 u2 = s_texOff[myType] + new Vector2( 0.5f, 0.5f );
+						Vector2 u3 = s_texOff[myType] + new Vector2( 0.0f, 0.5f );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );						
@@ -302,10 +338,10 @@ public class Chunk : MonoBehaviour
 						Vector3 v2 = new Vector3( xhn, yhn, zhn );
 						Vector3 v3 = new Vector3( xhp, yhn, zhn );
 						
-						Vector2 u0 = new Vector2( fx+0, fz+0 );
-						Vector2 u1 = new Vector2( fx+1, fz+0 );
-						Vector2 u2 = new Vector2( fx+1, fz+1 );
-						Vector2 u3 = new Vector2( fx+0, fz+1 );
+						Vector2 u0 = s_texOff[myType] + new Vector2( 0.0f, 0.0f );
+						Vector2 u1 = s_texOff[myType] + new Vector2( 0.5f, 0.0f );
+						Vector2 u2 = s_texOff[myType] + new Vector2( 0.5f, 0.5f );
+						Vector2 u3 = s_texOff[myType] + new Vector2( 0.0f, 0.5f );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );	
@@ -326,10 +362,10 @@ public class Chunk : MonoBehaviour
 						Vector3 v2 = new Vector3( xhp, yhn, zhn );
 						Vector3 v3 = new Vector3( xhn, yhn, zhn );
 						
-						Vector2 u0 = new Vector2( fx+0, fz+0 );
-						Vector2 u1 = new Vector2( fx+1, fz+0 );
-						Vector2 u2 = new Vector2( fx+1, fz+1 );
-						Vector2 u3 = new Vector2( fx+0, fz+1 );
+						Vector2 u0 = s_texOff[myType] + new Vector2( 0.0f, 0.0f );
+						Vector2 u1 = s_texOff[myType] + new Vector2( 0.5f, 0.0f );
+						Vector2 u2 = s_texOff[myType] + new Vector2( 0.5f, 0.5f );
+						Vector2 u3 = s_texOff[myType] + new Vector2( 0.0f, 0.5f );
 						
 						createTriangle ( v0, v1, v3, u0, u1, u3, verts, uvs, map, indices );
 						createTriangle ( v1, v2, v3, u1, u2, u3, verts, uvs, map, indices );
