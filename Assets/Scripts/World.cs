@@ -799,6 +799,17 @@ public class World : MonoBehaviour
 		}
 	}
 	
+	IEnumerator growGrass()
+	{
+		//yield return new WaitForSeconds(10);
+		
+		while( true )
+		{
+			scatterResource( m_bearDef, 1 );
+
+			yield return new WaitForSeconds( 10 );
+		}
+	}
 	
 	IEnumerator growBear()
 	{
