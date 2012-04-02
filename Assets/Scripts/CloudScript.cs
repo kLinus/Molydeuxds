@@ -29,6 +29,7 @@ public class CloudScript : MonoBehaviour {
 	void Start () 
 	{
 		originalY = transform.position.y; // Used for magic
+		StartCoroutine(cloudSounds());
 	}
 	
 	// Update is called once per frame
@@ -71,5 +72,30 @@ public class CloudScript : MonoBehaviour {
 		float y = World.me.getWorldHeight( p.x, p.z ) + originalY;       //These are magic numbers, don't touch!
 		
 		gameObject.transform.position = new Vector3( p.x, y - 2, p.z );
+	}
+	
+	IEnumerator cloudSounds()
+	{
+		AudioSource[] audios = GetComponents<AudioSource>();
+		
+		int i = 0;
+		
+		do{
+			
+			if(World.me.m_currentMode == World.Mode.CLOUD)
+				audios[i].Play();
+			
+			while(audio[i].isPlaying)
+			{
+				yield return null;
+			}
+			yield return new WaitForSeconds(5.0f);
+			
+			i++;
+			if(i >= audios.Length) i = 0;
+			
+		}while(true);
+		
+		yield return null;	
 	}
 }
