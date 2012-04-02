@@ -52,14 +52,18 @@ public class BearScript : MonoBehaviour
 		Collider[] collides = Physics.OverlapSphere(gameObject.transform.position, roarCheckRadius, World.me.s_layerWalker);
 		foreach( Collider col in collides)
 		{
-			Debug.Log("Collided");
-			if(col.tag == "Walker" || true)
-			{
-				Debug.Log("rar");
+
 				AudioSource[] audios = GetComponents<AudioSource>();
 				audios[Random.Range(0,audios.Length-1)].Play();
-				col.GetComponent<Walker>().oldDeath();
-			}
+				
+		}
+	}
+	
+	void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.GetComponent<Walker>() != null)
+		{
+			collision.gameObject.GetComponent<Walker>().oldDeath();
 		}
 	}
 	

@@ -87,6 +87,11 @@ public class Walker : MonoBehaviour
 		Object.Destroy( gameObject );
 	}
 	
+	public void OnDestroy()
+	{
+		int dummy = 0;
+	}
+	
 	public void bearDeath()
 	{
 		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
