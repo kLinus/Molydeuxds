@@ -805,9 +805,9 @@ public class World : MonoBehaviour
 		
 		while( true )
 		{
-			scatterResource( m_bearDef, 1 );
-
-			yield return new WaitForSeconds( 10 );
+			
+			
+			yield return new WaitForSeconds( 0.1f );
 		}
 	}
 	
