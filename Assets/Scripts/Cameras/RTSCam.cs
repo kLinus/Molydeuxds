@@ -45,7 +45,7 @@ public class RTSCam : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		transform.position = new Vector3(6,25,0);
+		transform.position = new Vector3(6,50,0);
 		transform.Rotate(30f, 45f, 0f);	
 		camera.orthographic = true;
 		camera.orthographicSize = 10;

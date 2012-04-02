@@ -76,7 +76,7 @@ public class CloudScript : MonoBehaviour {
 	
 	IEnumerator cloudSounds()
 	{
-		AudioSource[] audios = GetComponents<AudioSource>();
+		AudioSource[] audios = gameObject.GetComponents<AudioSource>();
 		
 		int i = 0;
 		
@@ -85,7 +85,7 @@ public class CloudScript : MonoBehaviour {
 			if(World.me.m_currentMode == World.Mode.CLOUD)
 				audios[i].Play();
 			
-			while(audio[i].isPlaying)
+			while(audios[i].isPlaying)
 			{
 				yield return null;
 			}
