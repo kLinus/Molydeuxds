@@ -518,7 +518,18 @@ public class World : MonoBehaviour
 			}
 		}
 		
-		
+		RefreshCameras();
+
+	}
+	
+	void OnGUI()
+	{
+		GUI.color = new Color(133, 0 ,0);
+		GUI.HorizontalScrollbar( new Rect (10, 10, World.me.m_energy.max, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
+	}
+	
+	public void RefreshCameras()
+	{
 		//Switch Cameras depending on state
 		if( camBEAR != null && m_currentMode == Mode.BEAR && camBEAR.enabled == false)
 		{
@@ -541,12 +552,7 @@ public class World : MonoBehaviour
 			camGOD.GetComponent<RTSCam>().enabled = true;
 			camGOD.GetComponentInChildren<AudioListener>().enabled = true;
 		}
-	}
-	
-	void OnGUI()
-	{
-		GUI.color = new Color(133, 0 ,0);
-		GUI.HorizontalScrollbar( new Rect (10, 10, World.me.m_energy.max, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
+		
 	}
 	
 	public Camera GetActiveCamera()

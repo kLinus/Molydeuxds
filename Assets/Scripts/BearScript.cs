@@ -102,8 +102,9 @@ public class BearScript : MonoBehaviour
 		if( World.me.m_energy.current <= 0)
 		{
 			Debug.Log("That's a dead bear");
-			Destroy(this.gameObject);
 			World.me.m_currentMode = World.Mode.GOD;
+			World.me.RefreshCameras();
+			Destroy(this.gameObject);
 		}
 		
 		if( Time.realtimeSinceStartup - World.me.m_energy.lastDecay > World.me.m_energy.decayTime)

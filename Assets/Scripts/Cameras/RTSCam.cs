@@ -70,22 +70,6 @@ public class RTSCam : MonoBehaviour
 			World.me.GetActiveCamera().transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * m_speed );
 		}
 		
-		if( Input.GetKeyDown( "r" ) )
-		{
-			if( World.me.m_energy.current >= World.me.m_godRainEnergy )
-			{
-				Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-				
-				RaycastHit hit;
-				
-	            if( Physics.Raycast( ray, out hit ) )
-				{
-					Instantiate( World.me.m_foodDef, hit.point, new Quaternion() );
-					World.me.m_energy.add ( -World.me.m_godRainEnergy );
-				}
-			}
-		}
-		
 		//TODO: Remove the other raycasts.
 		Ray raySel = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
 		
@@ -185,6 +169,37 @@ public class RTSCam : MonoBehaviour
 					
 					World.me.remBlock ( (int)(blockPoint.x+0.5f), (int)(blockPoint.y+0.5f), (int)(blockPoint.z+0.5f) );
 				}
+			}
+		}
+		
+		if( Input.GetKey(KeyCode.B) )
+		{
+			if(Physics.Raycast(raySel, out hitSel))
+			{
+				if(hitSel.transform.gameObject.name == "Bear(Clone)")
+				{
+					World.me.m_currentMode = World.Mode.BEAR;
+					World.me.RefreshCameras();
+					World.me.GetActiveCamera().GetComponentInChildren<BearCam>().target = hitSel.transform.gameObject;
+					hitSel.transform.gameObject.GetComponentInChildren<RabidBear>().enabled = false;
+					hitSel.transform.gameObject.GetComponentInChildren<BearScript>().enabled = true;
+				}
+			}
+		}
+		
+		if( Input.GetKey(KeyCode.C) )
+		{
+			if(Physics.Raycast(raySel, out hitSel))
+			{
+				if(hitSel.transform.gameObject.name == "CloudPrefab")
+				{
+					Debug.Log("Switching to Cloud Mode");
+					World.me.m_currentMode = World.Mode.CLOUD;
+					World.me.RefreshCameras();
+					World.me.GetActiveCamera().GetComponent<CloudCam>().target = hitSel.transform.gameObject;
+					hitSel.transform.gameObject.AddComponent<CloudScript>();
+				}
+				Debug.Log("Raycast hit: " + hitSel.transform.gameObject);
 			}
 		}
 		

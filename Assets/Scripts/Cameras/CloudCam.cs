@@ -15,10 +15,31 @@ public class CloudCam : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (target != null)
+		if (World.me.m_currentMode == World.Mode.CLOUD)
 		{
-			transform.position = target.transform.position;
+			if (target != null)
+			{
+				transform.position = target.transform.position;
+				
+				if( Input.GetKeyDown( "r" ) )
+				{
+					if( World.me.m_energy.current >= World.me.m_godRainEnergy )
+					{
+						Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
+					
+						RaycastHit hit;
+					
+		            	if( Physics.Raycast( ray, out hit ) )
+						{
+							Instantiate( World.me.m_foodDef, hit.point, new Quaternion() );
+							World.me.m_energy.add ( -World.me.m_godRainEnergy );
+						}
+					}
+				}
+			}
 		}
+		
+		
 		/*
 		if(Input.GetKey(KeyCode.W))
 		{
