@@ -55,6 +55,7 @@ public class CloudScript : MonoBehaviour {
 		if( World.isOutside( transform.position ) )
 		{
 			Destroy( gameObject );
+			World.me.scatterClouds( World.me.m_cloudDef, 1 );
 		}
 	}
 	
