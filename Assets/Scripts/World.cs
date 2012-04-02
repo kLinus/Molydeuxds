@@ -127,11 +127,11 @@ public class Chunk : MonoBehaviour
 				float hut1Z = wz - 152.0f;				
 				bool nearHut1 = hut1X * hut1X + hut1Z * hut1Z < (16.0f*16.0f);
 				
-				float height = ( heightUnit ) * 16.0f + 4.0f;
+				float height = ( heightUnit ) * 12.0f + 4.0f;
 				
 				if( nearHut0 || nearHut1 )
 				{
-					height = Mathf.Max( height, 10 );
+					height = Mathf.Max( height, 9 );
 				}
 						
 				
