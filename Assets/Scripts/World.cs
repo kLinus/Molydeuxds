@@ -121,17 +121,17 @@ public class Chunk : MonoBehaviour
 				
 				float hut0X = wx - 8.0f;
 				float hut0Z = wz - 8.0f;				
-				bool nearHut0 = hut0X * hut0X < (16.0f*16.0f) && hut0Z * hut0Z < (16.0f*16.0f);
+				bool nearHut0 = hut0X * hut0X + hut0Z * hut0Z < (16.0f*16.0f);
 
-				float hut1X = wx - 144.0f;
-				float hut1Z = wz - 144.0f;				
-				bool nearHut1 = hut0X * hut0X < (16.0f*16.0f) && hut0Z * hut0Z < (16.0f*16.0f);
+				float hut1X = wx - 152.0f;
+				float hut1Z = wz - 152.0f;				
+				bool nearHut1 = hut1X * hut1X + hut1Z * hut1Z < (16.0f*16.0f);
 				
-				float height = ( heightUnit ) * 22.0f;
+				float height = ( heightUnit ) * 12.0f + 4.0f;
 				
 				if( nearHut0 || nearHut1 )
 				{
-					height = Mathf.Max( height, 10 );
+					height = Mathf.Max( height, 9 );
 				}
 						
 				
