@@ -15,6 +15,7 @@ public class Walker : MonoBehaviour
 	
 	public float m_maxAge = 600.0f;
 	public GUIStyle nameLabel;
+	public GUIStyle shadow;
 	
 	public float m_addEnergy = 0.25f;
 	
@@ -69,21 +70,28 @@ public class Walker : MonoBehaviour
 			oldDeath();
 		}
 	}
-	/*
+	
 	void OnGUI()
 	{
 		if(renderer.isVisible)
 		{
 			GUI.depth = 10;
-			Vector3 inScreen = Camera.main.WorldToScreenPoint(transform.position);
+			Vector3 inScreen = Camera.current.WorldToScreenPoint(transform.position);
 			Rect labelRect = new Rect(inScreen.x - 100, Screen.height - inScreen.y - 50, 200, 100); 
+			
+			GUI.Label(labelRect, m_name, shadow);
+			
+			labelRect.x -=1;
+			labelRect.y -=1;
+			shadow = new GUIStyle(nameLabel);
+			shadow.normal.textColor = Color.black;
+			
 			GUI.Label(labelRect, m_name, nameLabel);
 		}
 	}
-	*/
+	
 	public void oldDeath()
 	{
-		
 		
 		Object.Destroy( gameObject );
 	}

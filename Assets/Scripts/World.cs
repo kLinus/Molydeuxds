@@ -820,6 +820,11 @@ public class World : MonoBehaviour
 		{
 			m_currentMode = Mode.CLOUD;
 		}
+		
+		if(Input.GetKey(KeyCode.Alpha9))
+		{
+			World.me.m_energy.add(500f);
+		}
 	}
 	
 	IEnumerator growGrass()
