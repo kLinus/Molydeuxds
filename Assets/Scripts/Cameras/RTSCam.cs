@@ -193,7 +193,7 @@ public class RTSCam : MonoBehaviour
 		{
 			if(Physics.Raycast(raySel, out hitSel))
 			{
-				if(hitSel.transform.gameObject.name == "CloudPrefab")
+				if(hitSel.transform.gameObject.name == "CloudPrefab(clone)")
 				{
 					Debug.Log("Switching to Cloud Mode");
 					World.me.m_currentMode = World.Mode.CLOUD;
