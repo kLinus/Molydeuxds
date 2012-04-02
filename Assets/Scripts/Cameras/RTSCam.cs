@@ -136,7 +136,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 
-		if( Input.GetKeyDown( "q" ) || Input.GetMouseButtonDown( 0 ) )
+		if( Input.GetKey( KeyCode.Q ) || Input.GetMouseButton( 0 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
 			{
@@ -155,7 +155,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKeyDown( "e" ) || Input.GetMouseButtonDown( 1 ) )
+		if( Input.GetKey(KeyCode.E ) || Input.GetMouseButton( 1 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRemLandEnergy )
 			{
@@ -174,7 +174,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKey(KeyCode.B) )
+		if( Input.GetKeyDown(KeyCode.B) )
 		{
 			if(Physics.Raycast(raySel, out hitSel))
 			{
@@ -189,11 +189,11 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKey(KeyCode.C) )
+		if( Input.GetKeyDown(KeyCode.C) )
 		{
 			if(Physics.Raycast(raySel, out hitSel))
 			{
-				if(hitSel.transform.gameObject.name == "CloudPrefab")
+				if(hitSel.transform.gameObject.name == "CloudPrefab(clone)")
 				{
 					Debug.Log("Switching to Cloud Mode");
 					World.me.m_currentMode = World.Mode.CLOUD;
@@ -205,24 +205,25 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetMouseButtonDown( 0 ) )
+		if( Input.GetKeyDown(KeyCode.Alpha0) )
 		{
-			/*
+			
 			Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
 			
 			RaycastHit hit;
 			
             if( Physics.Raycast( ray, out hit ) )
 			{
-				if( m_walker == null )
+				if( World.me.m_bearDef == null )
 				{
 					print( "No walker" );
 				}
-				
-				Instantiate( m_walker, hit.point, new Quaternion() );
-                //Instantiate( Walker ); //, this.transform.position, this.transform.rotation );
+				GameObject bear;
+				bear = (GameObject)Instantiate( World.me.m_bearDef, hit.point, new Quaternion() );
+				bear.AddComponent<RabidBear>();
+				bear.AddComponent<RabidBear>().enabled = true;
 			}
-			*/            		
+			           		
 		}
 		
 	}

@@ -456,6 +456,7 @@ public class World : MonoBehaviour
 	public GameObject m_chunkObjectDef;
 
 	public GameObject m_bearDef;
+	public GameObject m_cloudDef;
 
 	public GameObject m_rockDef;
 	public GameObject m_treeDef;
@@ -515,6 +516,8 @@ public class World : MonoBehaviour
 		}		
 
 		
+		scatterClouds( m_cloudDef, 20 );
+
 		scatterResource( m_foodDef, 200 );
 		scatterResource( m_rockDef, 50 );
 		scatterResource( m_treeDef, 500 );
@@ -761,6 +764,26 @@ public class World : MonoBehaviour
 		return chScr.getWorldHeight( (int)(x+0.5f) % Chunk.s_chunkSize, (int)(z+0.5f) % Chunk.s_chunkSize );
 	}
 	
+	
+	
+	public void scatterClouds( GameObject def, int count )
+	{
+		for( int i = 0; i < count; ++i )
+		{
+			float fx = UnityEngine.Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			float fz = UnityEngine.Random.Range( 0, s_chunkSide * s_chunkWorldSize );
+			
+			float fy = UnityEngine.Random.Range( 18, 24 );
+			
+			Vector3 pos = new Vector3( fx, fy, fz );
+			
+			GameObject resource = Instantiate( def, pos, new Quaternion() ) as GameObject;
+			
+			
+		}
+
+	}
+	
 	public void scatterResource( GameObject def, int count )
 	{
 		for( int i = 0; i < count; ++i )
@@ -805,9 +828,9 @@ public class World : MonoBehaviour
 		
 		while( true )
 		{
-			scatterResource( m_bearDef, 1 );
-
-			yield return new WaitForSeconds( 10 );
+			
+			
+			yield return new WaitForSeconds( 0.1f );
 		}
 	}
 	
