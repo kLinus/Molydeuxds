@@ -18,6 +18,8 @@ public class BearScript : MonoBehaviour
 	public  float roarCheckRadius = 15;
 	private SphereCollider roarColliderCheck;
 	
+	private bool roaring;
+	
 	// Bear Actions
 	public class ButtonProperties
 	{
@@ -43,6 +45,7 @@ public class BearScript : MonoBehaviour
 			UpdateMovement();
 			UpdateEnergy();
 			Roar();
+			CheckforKill();
 		}
 	}
 	
@@ -52,19 +55,27 @@ public class BearScript : MonoBehaviour
 		Collider[] collides = Physics.OverlapSphere(gameObject.transform.position, roarCheckRadius, World.me.s_layerWalker);
 		foreach( Collider col in collides)
 		{
-
-				AudioSource[] audios = GetComponents<AudioSource>();
+			
+			AudioSource[] audios = GetComponents<AudioSource>();
+			if(!roaring)
 				audios[Random.Range(0,audios.Length-1)].Play();
+			roaring = true;
 				
 		}
+		if(collides.Length == 0)
+			roaring = false;
+
 	}
 	
-	void OnCollisionEnter(Collision collision)
+	void CheckforKill()
 	{
-		if(collision.gameObject.GetComponent<Walker>() != null)
+		Collider[] collides = Physics.OverlapSphere(gameObject.transform.position, .5f, World.me.s_layerWalker);
+		foreach( Collider col in collides)
 		{
-			collision.gameObject.GetComponent<Walker>().oldDeath();
+			col.gameObject.GetComponent<Walker>().bearDeath();
+				
 		}
+
 	}
 	
 	public void UpdateMovement()
