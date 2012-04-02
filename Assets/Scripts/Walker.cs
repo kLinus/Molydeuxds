@@ -8,6 +8,7 @@ public class Walker : MonoBehaviour
 	public GameObject m_buildingDef;
 	
 	public GameObject ghostSpawn;
+	public GameObject bloodSpawn;
 	
 	public float s_ageToMakeBuilding = 60.0f;
 	public float s_chanceToMakeBuilding = 0.5f;
@@ -80,9 +81,7 @@ public class Walker : MonoBehaviour
 	*/
 	public void oldDeath()
 	{
-		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
-		temp.GetComponent<Ghost>().setName(m_name);
-		temp.GetComponent<DeathGUI>().setName(m_name);
+		
 		
 		Object.Destroy( gameObject );
 	}
@@ -90,15 +89,17 @@ public class Walker : MonoBehaviour
 	public void OnDestroy()
 	{
 		int dummy = 0;
+		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
+		temp.GetComponent<Ghost>().setName(m_name);
+		temp.GetComponent<DeathGUI>().setName(m_name);
 	}
 	
 	public void bearDeath()
 	{
-		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
-		temp.GetComponent<Ghost>().setName(m_name);
-		temp.GetComponent<DeathGUI>().setName(m_name);
-		
-		Object.Destroy( gameObject );
+		GameObject temp = (GameObject)Instantiate(bloodSpawn);
+		temp.transform.parent = transform;
+		temp.transform.localPosition = Vector3.zero;
+		Object.Destroy( gameObject , 5.0f);
 	}
 
 		static string[] s_firstNames = {
