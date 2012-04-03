@@ -34,7 +34,7 @@ public class BearScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -42,10 +42,18 @@ public class BearScript : MonoBehaviour
 	{
 		if (World.me.m_currentMode == World.Mode.BEAR)
 		{
+			if ( transform.gameObject.GetComponent<RabidBear>().enabled )
+			{
+				gameObject.GetComponent<RabidBear>().enabled = false;
+				Debug.Log("Rabid Bear Script disabled");
+			}
+			
 			UpdateMovement();
 			UpdateEnergy();
 			Roar();
 			CheckforKill();
+			
+			
 		}
 	}
 	

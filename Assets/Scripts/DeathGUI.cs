@@ -67,6 +67,7 @@ public class DeathGUI : MonoBehaviour
 			
 			scrollposition = GUILayout.BeginScrollView(scrollposition);
 			GUILayout.BeginVertical(GUILayout.Width(scrollwidth));
+			GUILayout.Label(gameObject.name, header1);
 			for(int i = 0; i < paragraphs.Length; i++)
 			{
 				GUILayout.Label(headers[i], header1);

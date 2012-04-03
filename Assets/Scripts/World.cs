@@ -512,9 +512,7 @@ public class World : MonoBehaviour
 	{
 		m_energy.add(m_energy.max);
 		createWorld();
-		
 
-		
 		//hutColor = Color.red;
 		//m_hutRedDef.renderer.material.color = hutColor;
 		
