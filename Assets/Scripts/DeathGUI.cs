@@ -11,7 +11,6 @@ public class DeathGUI : MonoBehaviour
 	public GUIStyle paragraph;
 	public GUIStyle exitButton;
 	public GUIStyle skipButton;
-		
 	
 	//public string name;
 	
@@ -52,7 +51,7 @@ public class DeathGUI : MonoBehaviour
 	
 	void OnGUI()
 	{
-		if(showingDeath)
+		if(showingDeath && World.me.m_displayDeathGUI)
 		{
 			GUI.depth = 5;
 			
@@ -88,7 +87,7 @@ public class DeathGUI : MonoBehaviour
 			if(GUILayout.Button(" ", exitButton))
 				hide();
 			if(GUILayout.Button(" ", skipButton))
-				hide();
+				World.me.m_displayDeathGUI = false;
 			GUILayout.EndHorizontal();
 			GUILayout.EndVertical();
 			GUILayout.EndArea();

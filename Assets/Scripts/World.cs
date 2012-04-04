@@ -517,7 +517,7 @@ public class World : MonoBehaviour
 	public int m_volcanoProbes = 1000;
 	public float m_volcanoRadius = 8.0f;
 	
-	
+	public bool m_displayDeathGUI = true;
 	
 	#endregion
 		

@@ -26,7 +26,7 @@ public class MadLib
 	};
 
 	private string[] sa_childhood = new string[] {
-		@"When I was young I spent my days at *pluralplace* even though it made my parents feel *feelbad*. Oh well, it always made me feel *feelgood*. Other Molydeuxds picked on me because I had a *shape* *bodypart* that really stuck out. I had a pet *animal* who was a total jerk and would always bite my *bodypart*. I would spend long nights with *pluralthings* and pick my nose a lot, as all good Molydeuxds do. I wanted to be a *occupation* when I grew up, but I learned I would have to *verb* a *singularthing* at a *singularplace* if I wanted to do that, so I ended up doing *hobby* instead." 
+		@"When I was young I spent my days at *pluralplace* even though it made my parents feel *feelbad*. Oh well, it always made me feel *feelgood*. Other Molydeuxds picked on me because I had a *shape* *bodypart* that really stuck out. I had a pet *animal* who was a total jerk and would always bite my *bodypart*. I would spend long nights with *pluralthing* and pick my nose a lot, as all good Molydeuxds do. I wanted to be a *occupation* when I grew up, but I learned I would have to *verb* a *singularthing* at a *singularplace* if I wanted to do that, so I ended up doing *hobby* instead." 
 	};
 
 	private string[] sa_teen = new string[] {
@@ -34,7 +34,7 @@ public class MadLib
 	};
 	
 	private string[] sa_youngAdult = new string[] {
-		@"As a young *size* adult I was really into *hobby*, until I took an arrow to the *bodypart* and I had to stop. In the end I felt *feelgood* because it meant I didn't have to work anymore. Work makes me feel *feelbad*. Until one day I met a *shape* Molydeuxd who was *appearance* and I fell in love.  Unfortunately, they would only date *occupation* Molyduexds with  *size* *bodypart* so I ended up feeling *feelbad*. I bought a *size* pet *animal* instead. It used to *verb* *pluralthings* when I was feeling *feelbad* to cheer me up. It was really good to me until it died in a freak accident involving a  *singularthing*, several *pluralthing*, a shady *occupation*, and a *shape* *animal* in the back of a *size* *singularplace*. I cried a lot until my friend gave me a new *appearance* *singularthing* and I forgot about my old *feelgood* pet. "
+		@"As a young *size* adult I was really into *hobby*, until I took an arrow to the *bodypart* and I had to stop. In the end I felt *feelgood* because it meant I didn't have to work anymore. Work makes me feel *feelbad*. Until one day I met a *shape* Molydeuxd who was *appearance* and I fell in love.  Unfortunately, they would only date *occupation* Molyduexds with  *size* *bodypart* so I ended up feeling *feelbad*. I bought a *size* pet *animal* instead. It used to *verb* *pluralthing* when I was feeling *feelbad* to cheer me up. It was really good to me until it died in a freak accident involving a  *singularthing*, several *pluralthing*, a shady *occupation*, and a *shape* *animal* in the back of a *size* *singularplace*. I cried a lot until my friend gave me a new *appearance* *singularthing* and I forgot about my old *feelgood* pet. "
 	};
 
 	private string[] sa_adult = new string[] {

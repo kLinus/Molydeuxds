@@ -18,7 +18,10 @@ public class RabidBear : Walker
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if (gameObject.transform.position.y <= World.me.m_waterObj.transform.position.y)
+		{
+			Destroy (gameObject);
+		}
 
 	}
 		
