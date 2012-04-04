@@ -103,7 +103,7 @@ class Action
 
 	public IEnumerator returnHome(  )
 	{
-		int count = 30;
+		int count = 10;
 		while( count > 0 )
 		{
 			Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 256.0f, World.me.s_layerHut );
@@ -136,8 +136,8 @@ class Action
 			}
 	
 			MonoBehaviour.print( "Finding home!" );		
-			float xOff = Random.Range( -32.0f, 32.0f );
-			float zOff = Random.Range( -32.0f, 32.0f );
+			float xOff = Random.Range( -16.0f, 16.0f );
+			float zOff = Random.Range( -16.0f, 16.0f );
 			
 			float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
 			float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
@@ -188,8 +188,8 @@ class Action
 			}
 		}
 		
-		float xOff = Random.Range( -32.0f, 32.0f );
-		float zOff = Random.Range( -32.0f, 32.0f );
+		float xOff = Random.Range( -16.0f, 16.0f );
+		float zOff = Random.Range( -16.0f, 16.0f );
 		
 		float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
 		float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
@@ -198,30 +198,140 @@ class Action
 				
 		yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 2.0f, 0.01f ) );
 	}
+	
+	public bool shouldAttack( out Walker who )
+	{
+		Collider[] collides = Physics.OverlapSphere( m_walker.transform.position, 32.0f, World.me.s_layerWalker );
+		
+		if( collides.Length > 0 )
+		{
+			int count = 6;
+			while( count > 0 )
+			{
+				int i = Random.Range( 0, collides.Length );
+				{
+					GameObject go = collides[i].gameObject;
+					
+					Walker otherWalker = go.GetComponent<Walker>();
+					
+					if( otherWalker != null && m_walker.m_side != otherWalker.m_side )
+					{
+						who = otherWalker;
+						return true;
+					}
+				}
+				
+				--count;
+			}
+		}
+		
+		who = null;
+		return false;
+	}
 
+
+	public IEnumerator attack( Walker otherWalker )
+	{
+		int count = 6;
+		while( count > 0 )
+		{
+			if( otherWalker != null && m_walker.m_side != otherWalker.m_side )
+			{
+				MonoBehaviour.print( "Attacking:"+otherWalker.gameObject.name );
+				
+				yield return m_walker.StartCoroutine( gotoSquare( otherWalker.transform.position, 4.0f, 1.0f ) );
+				
+				if( otherWalker != null )
+				{
+					Vector3 dist = otherWalker.transform.position - m_walker.transform.position;
+					
+					if( dist.sqrMagnitude < 1.1 )
+					{
+						World.me.m_currentMode = World.Mode.GOD;
+						GameObject temp = Object.Instantiate( otherWalker.bloodSpawn ) as GameObject;
+						temp.transform.parent = otherWalker.transform;
+						temp.transform.localPosition = Vector3.zero;
+						World.me.RefreshCameras();
+						
+						Object.Destroy( otherWalker.gameObject, 1.0f );
+						
+						yield return m_walker.StartCoroutine( returnHome() );
+						
+						yield break;
+					}
+				}
+			}
+			
+			float xOff = Random.Range( -2.0f, 2.0f );
+			float zOff = Random.Range( -2.0f, 2.0f );
+			
+			float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+			
+			float y = World.me.getWorldHeight( x, z );
+					
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 3.0f, 0.01f ) );
+			
+			--count;
+		}
+	}
+	
+	
 }
 
 class ActWorker : Action
 {
-	public ActWorker( Walker walker ): base( walker )
+	public enum Task
 	{
+		Normal,
+		Attack
+	}
+
+	Task m_task;
+	
+	public ActWorker( Walker walker, Task task ): base( walker )
+	{
+		m_task = task;
 	}
 	
 	public IEnumerator act()
 	{
 		while( true )
 		{
-			/*
-			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			
-			float y = World.me.getWorldHeight( x, z );
-			
-			
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 4.0f, 0.01f ) );
-			*/
-			MonoBehaviour.print( "Finding resource" );
-			yield return m_walker.StartCoroutine( extractResource( "Food" ) );
+			switch( m_task )
+			{
+			case Task.Normal:
+				if( m_walker.m_resCarrying != null )
+				{
+					yield return m_walker.StartCoroutine( returnHome() );
+				}
+				else
+				{
+					MonoBehaviour.print( "Finding resource" );
+					yield return m_walker.StartCoroutine( extractResource( "Food" ) );
+					
+					Walker otherWalker;
+					if( shouldAttack( out otherWalker ) )
+					{
+						m_task = Task.Attack;
+					}
+				}
+				break;
+				
+			case Task.Attack:
+			{
+				MonoBehaviour.print( "Attack!" );
+				Walker otherWalker;
+				if( shouldAttack( out otherWalker ) )
+				{
+					yield return m_walker.StartCoroutine( attack(otherWalker) );
+				}
+				
+				m_task = Task.Normal;
+			}
+				
+				break;
+			}
 		}
 	}
 }
@@ -237,12 +347,15 @@ class ActGhost : Action
 		while( true )
 		{
 			MonoBehaviour.print( "Wandering the spirit realm" );
-			float x = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
-			float z = Random.Range( 0.0f, World.s_chunkWorldSize * World.s_chunkSide );
+			float xOff = Random.Range( -4.0f, 4.0f );
+			float zOff = Random.Range( -4.0f, 4.0f );
+			
+			float x = Mathf.Clamp( m_walker.transform.position.x + xOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
+			float z = Mathf.Clamp( m_walker.transform.position.z + zOff, 0, World.s_chunkWorldSize * World.s_chunkSide );
 			
 			float y = World.me.getWorldHeight( x, z );
-			
-			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 0.5f, 0.01f ) );
+					
+			yield return m_walker.StartCoroutine( gotoSquare( new Vector3( x, y, z ), 2.0f, 0.01f ) );
 		}
 	}
 }

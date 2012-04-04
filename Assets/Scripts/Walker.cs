@@ -32,7 +32,7 @@ public class Walker : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		m_act = new ActWorker( this );
+		m_act = new ActWorker( this, ActWorker.Task.Normal );
 		
 		m_name = Walker.getName();
 		
@@ -74,11 +74,13 @@ public class Walker : MonoBehaviour
 		{
 			oldDeath();
 		}
+		
+		
 	}
 	
 	void OnGUI()
 	{
-		if(renderer.isVisible)
+		if( renderer.isVisible && Camera.current != null )
 		{
 			GUI.depth = 10;
 			Vector3 inScreen = Camera.current.WorldToScreenPoint(transform.position);
@@ -103,10 +105,12 @@ public class Walker : MonoBehaviour
 	
 	public void OnDestroy()
 	{
-		int dummy = 0;
-		GameObject temp = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
-		temp.GetComponent<Ghost>().setName(m_name);
-		temp.GetComponent<DeathGUI>().setName(m_name);
+		if( !Application.isEditor )
+		{
+			GameObject ghost = (GameObject)Instantiate(ghostSpawn, transform.position, Quaternion.identity);
+			ghost.GetComponent<Ghost>().setName(m_name);
+			ghost.GetComponent<DeathGUI>().setName(m_name);
+		}
 	}
 	
 	public void bearDeath()

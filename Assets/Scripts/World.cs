@@ -533,7 +533,7 @@ public class World : MonoBehaviour
 			float bX = 8.0f; 
 			float bZ = 8.0f; 
 			
-			float bY = getWorldHeight( bX, bZ );
+			float bY = getWorldHeight( bX, bZ ) - 0.5f;
 	
 			Vector3 bPos = new Vector3( bX, bY, bZ );
 			GameObject bHut = Instantiate( m_hutBlueDef, bPos, new Quaternion() ) as GameObject;
@@ -546,7 +546,7 @@ public class World : MonoBehaviour
 			float rX = maxSize - 8.0f;
 			float rZ = maxSize - 8.0f;
 			
-			float rY = getWorldHeight( rX, rZ );
+			float rY = getWorldHeight( rX, rZ ) - 0.5f;
 	
 			Vector3 rPos = new Vector3( rX, rY, rZ );
 	
