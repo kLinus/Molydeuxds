@@ -9,7 +9,11 @@ public class CloudScript : MonoBehaviour {
 	public  float jumpSpeed = 100;
 	
 	public  float magicNumber = 0;
-	public  float banterTimeInterval = 10;
+	
+	private float lastBanter = 0;
+	public  float banterTimeInterval = 10.0f;
+	private AudioSource[] banterClips;
+	
 	private SphereCollider roarColliderCheck;
 	private float originalY;
 	
@@ -30,7 +34,8 @@ public class CloudScript : MonoBehaviour {
 	void Start () 
 	{
 		originalY = transform.position.y; // Used for magic
-		StartCoroutine(cloudSounds());
+		//StartCoroutine(cloudSounds());
+		banterClips = gameObject.GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -39,6 +44,8 @@ public class CloudScript : MonoBehaviour {
 		if (World.me.m_currentMode == World.Mode.CLOUD)
 		{
 			UpdateMovement();
+			if(gameObject == World.me.GetActiveCamera().GetComponent<CloudCam>().target)
+				CheckForIdleSound();
 		}
 		else
 		{
@@ -92,7 +99,20 @@ public class CloudScript : MonoBehaviour {
 		gameObject.transform.position = new Vector3( p.x, y - 2, p.z );
 	}
 	
-	IEnumerator cloudSounds()
+	private int audioCounter = 0;
+	public void CheckForIdleSound()
+	{	
+		if(Time.realtimeSinceStartup - lastBanter > banterTimeInterval)
+		{
+			banterClips[audioCounter].Play();
+			audioCounter++;
+			if (audioCounter > banterClips.Length)
+				audioCounter = 0;
+			lastBanter = Time.realtimeSinceStartup;
+		}
+	}
+	
+/*	IEnumerator cloudSounds()
 	{
 		AudioSource[] audios = gameObject.GetComponents<AudioSource>();
 		
@@ -113,5 +133,5 @@ public class CloudScript : MonoBehaviour {
 			if(i >= audios.Length) i = 0;
 			
 		}while(true);
-	}
+	}*/
 }

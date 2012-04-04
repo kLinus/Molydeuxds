@@ -4,7 +4,8 @@ using System.Collections;
 public class RTSCam : MonoBehaviour 
 {
 	public float m_speed = 15.0f;
-	
+	public float m_resetCamXOffset = -20;
+	public float m_resetCamZOffset = -20;
 	public GameObject m_selection;
 	
 	
@@ -62,7 +63,7 @@ public class RTSCam : MonoBehaviour
 		else
 		{
 			Vector3 camPos = World.me.GetActiveCamera().transform.position;
-			transform.position = new Vector3(camPos.x, 50, camPos.z);
+			transform.position = new Vector3(camPos.x + m_resetCamXOffset, 50, camPos.z + m_resetCamZOffset);
 		}
 	}
 	
@@ -89,7 +90,6 @@ public class RTSCam : MonoBehaviour
 	private void UpdateAbilities()
 	{
 		Ray raySel = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-		
 		RaycastHit hitSel;
 		
         if( Physics.Raycast( raySel, out hitSel ) )
@@ -122,16 +122,12 @@ public class RTSCam : MonoBehaviour
 		//if( Input.GetKeyDown( "v" ) )
 		//{
 		//	if( World.me.m_energy.current >= World.me.m_godVolcanoEnergy )
-		//	{
-		//		Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-		//		
-		//		RaycastHit hit;
-		//		
-	    //      if( Physics.Raycast( ray, out hit ) )
+		//	{	
+	    //      if( Physics.Raycast( raySel, out hitSel ) )
 		//		{
 		//			World.me.m_energy.add( -World.me.m_godVolcanoEnergy );
 		//			
-		//			StartCoroutine( Volcano( hit.point ) );
+		//			StartCoroutine( Volcano( hitSel.point ) );
 		//		}
 		//	}
 		//}
@@ -139,16 +135,12 @@ public class RTSCam : MonoBehaviour
 		if( Input.GetKeyDown( KeyCode.Q ) || Input.GetMouseButton( 0 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
-			{
-				Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-				
-				RaycastHit hit;
-				
-	            if( Physics.Raycast( ray, out hit ) )
+			{	
+	            if( Physics.Raycast( raySel, out hitSel ) )
 				{
 					World.me.m_energy.add( -World.me.m_godAddLandEnergy );
 					
-					Vector3 blockPoint = hit.point + hit.normal * 0.25f;
+					Vector3 blockPoint = hitSel.point + hitSel.normal * 0.25f;
 					
 					World.me.addBlock ( 1, (int)(blockPoint.x+0.5f), (int)(blockPoint.y+0.5f), (int)(blockPoint.z+0.5f) );
 				}
@@ -158,16 +150,12 @@ public class RTSCam : MonoBehaviour
 		if( Input.GetKeyDown(KeyCode.E ) || Input.GetMouseButton( 1 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRemLandEnergy )
-			{
-				Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-				
-				RaycastHit hit;
-				
-	            if( Physics.Raycast( ray, out hit ) )
+			{	
+	            if( Physics.Raycast( raySel, out hitSel ) )
 				{
 					World.me.m_energy.add( -World.me.m_godRemLandEnergy );
 					
-					Vector3 blockPoint = hit.point + ray.direction * 0.25f;
+					Vector3 blockPoint = hitSel.point + raySel.direction * 0.25f;
 					
 					World.me.remBlock ( (int)(blockPoint.x+0.5f), (int)(blockPoint.y+0.5f), (int)(blockPoint.z+0.5f) );
 				}
@@ -206,25 +194,20 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKeyDown(KeyCode.Alpha0) )
-		{
-			
-			Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-			
-			RaycastHit hit;
-			
-            if( Physics.Raycast( ray, out hit ) )
-			{
-				if( World.me.m_bearDef == null )
-				{
-					print( "No walker" );
-				}
-				GameObject bear;
-				bear = (GameObject)Instantiate( World.me.m_bearDef, hit.point, new Quaternion() );
-				bear.AddComponent<RabidBear>();
-				bear.AddComponent<RabidBear>().enabled = true;
-			}
-		}
+	//	if( Input.GetKeyDown(KeyCode.Alpha0) )
+	//	{
+    //        if( Physics.Raycast( raySel, out hitSel ) )
+	//		{
+	//			if( World.me.m_bearDef == null )
+	//			{
+	//				print( "No walker" );
+	//			}
+	//			GameObject bear;
+	//			bear = (GameObject)Instantiate( World.me.m_bearDef, hitSel.point, new Quaternion() );
+	//			bear.AddComponent<RabidBear>();
+	//			bear.AddComponent<RabidBear>().enabled = true;
+	//		}
+	//	}
 	}
 	
 }

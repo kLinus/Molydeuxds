@@ -114,7 +114,8 @@ public class Walker : MonoBehaviour
 		GameObject temp = (GameObject)Instantiate(bloodSpawn);
 		temp.transform.parent = transform;
 		temp.transform.localPosition = Vector3.zero;
-		Object.Destroy( gameObject , 5.0f);
+		StopAllCoroutines();
+		Object.Destroy( gameObject , 2.0f);
 	}
 
 		static string[] s_firstNames = {

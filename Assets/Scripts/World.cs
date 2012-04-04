@@ -495,6 +495,10 @@ public class World : MonoBehaviour
 	public float m_godFloodEnergy	= 100.0f;
 	public float m_godDroughtEnergy	= 100.0f;
 	public float m_godVolcanoEnergy	= 100.0f;
+	public float m_cooldownGrowFood = 10;
+	public float m_cooldownGrowBear = 20;
+	public float m_cooldownGrowTree = 10;
+	
 	
 	private int m_numWalkerRed;
 	private int m_numWalkerBlue;
@@ -564,7 +568,7 @@ public class World : MonoBehaviour
 	
 	void Update()
 	{	
-		CheaterKeys();
+		//CheaterKeys();
 		//Determine which camera is which
 		if ( camBEAR == null || camCLOUD == null || camGOD == null) // if they aren't initialized
 		{
@@ -911,7 +915,7 @@ public class World : MonoBehaviour
 		{
 			scatterResource( m_bearDef, 1, -1 );
 
-			yield return new WaitForSeconds( 10 );
+			yield return new WaitForSeconds( 20 );
 		}
 	}
 	
@@ -921,7 +925,7 @@ public class World : MonoBehaviour
 		{
 			yield return new WaitForSeconds(1);
 
-			scatterResource( m_foodDef, 1, 1 );
+			scatterResource( m_treeDef, 1, 1 );
 		}
 	}
 	

@@ -36,7 +36,7 @@ public class BearScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		
+		roarClips = GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -59,16 +59,14 @@ public class BearScript : MonoBehaviour
 		}
 	}
 	
-	
+	AudioSource[] roarClips;
 	public void Roar()
 	{
 		Collider[] collides = Physics.OverlapSphere(gameObject.transform.position, roarCheckRadius, World.me.s_layerWalker);
 		foreach( Collider col in collides)
 		{
-			
-			AudioSource[] audios = GetComponents<AudioSource>();
 			if(!roaring)
-				audios[Random.Range(0,audios.Length-1)].Play();
+				audios[Random.Range(0,audios.Length+1)].Play();
 			roaring = true;
 				
 		}
@@ -132,7 +130,7 @@ public class BearScript : MonoBehaviour
 			temp.transform.parent = transform;
 			temp.transform.localPosition = Vector3.zero;
 			World.me.RefreshCameras();
-			Destroy(this.gameObject, 3.0f);
+			Destroy(this.gameObject, 1.0f);
 		}
 		
 		if( Time.realtimeSinceStartup - World.me.m_energy.lastDecay > World.me.m_energy.decayTime)
