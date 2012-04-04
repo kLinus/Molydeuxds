@@ -454,7 +454,7 @@ public class World : MonoBehaviour
 		public float decayAmount;
 		public float decayTime;
 		public float lastDecay;
-
+		public float increasePerWorker = 0.01f;
 		public float current{ get; private set; }
 		
 		public void add( float val )

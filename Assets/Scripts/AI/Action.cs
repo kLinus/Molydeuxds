@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 
-class Action
+class Action 
 {
-	protected Walker m_walker; 
+	protected Walker m_walker;
 	
 	public Action( Walker walker )
 	{
@@ -39,6 +39,11 @@ class Action
 			Vector3 p = m_walker.transform.position + dir * distThisFrame;
 			
 			float y = World.me.getWorldHeight( p.x, p.z ) - 0.5f;
+			
+			if (isUnderGodControl)
+			{
+				yield break;
+			}
 			
 			if( m_walker.gameObject.GetComponent<Ghost>() == null )
 			{
@@ -299,7 +304,7 @@ class ActBear : Action
 	{
 		while( true )
 		{
-			yield return m_walker.StartCoroutine( extractHumanResource() );
+				yield return m_walker.StartCoroutine( extractHumanResource() );
 		}
 	}
 }

@@ -26,6 +26,11 @@ public class RabidBear : Walker
 	{
 	}
 	
+	public void GetPossessed()
+	{
+		StopAllCoroutines();
+	}
+	
 	public void setName(string name)
 	{
 		bearName = name;

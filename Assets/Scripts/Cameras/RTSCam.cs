@@ -82,26 +82,10 @@ public class RTSCam : MonoBehaviour
 			m_selection.transform.position = hitSel.point;
 		}
 		
-		if( Input.GetKeyDown( "r" ) )
-		{
-			if( World.me.m_energy.current >= World.me.m_godRainEnergy )
-			{
-				Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-				
-				RaycastHit hit;
-				
-	            if( Physics.Raycast( ray, out hit ) )
-				{
-					Instantiate( World.me.m_foodDef, hit.point, new Quaternion() );
-					World.me.m_energy.add ( -World.me.m_godRainEnergy );
-				}
-			}
-		}
-		
-		
 		if( Input.GetKeyDown( "f" ) )
 		{
-			if( World.me.m_energy.current >= World.me.m_godFloodEnergy )
+			Vector3 waterPos = World.me.m_waterObj.transform.position;
+			if( World.me.m_energy.current >= World.me.m_godFloodEnergy && waterPos.y <= 10)
 			{
 				World.me.m_waterObj.transform.position += new Vector3( 0, 1, 0 );
 				
@@ -111,7 +95,8 @@ public class RTSCam : MonoBehaviour
 
 		if( Input.GetKeyDown( "o" ) )
 		{
-			if( World.me.m_energy.current >= World.me.m_godDroughtEnergy )
+			Vector3 waterPos = World.me.m_waterObj.transform.position;
+			if( World.me.m_energy.current >= World.me.m_godDroughtEnergy && waterPos.y >= 0 )
 			{
 				World.me.m_waterObj.transform.position -= new Vector3( 0, 1, 0 );
 				
@@ -119,24 +104,24 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 
-		if( Input.GetKeyDown( "v" ) )
-		{
-			if( World.me.m_energy.current >= World.me.m_godVolcanoEnergy )
-			{
-				Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
-				
-				RaycastHit hit;
-				
-	            if( Physics.Raycast( ray, out hit ) )
-				{
-					World.me.m_energy.add( -World.me.m_godVolcanoEnergy );
-					
-					StartCoroutine( Volcano( hit.point ) );
-				}
-			}
-		}
+		//if( Input.GetKeyDown( "v" ) )
+		//{
+		//	if( World.me.m_energy.current >= World.me.m_godVolcanoEnergy )
+		//	{
+		//		Ray ray = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
+		//		
+		//		RaycastHit hit;
+		//		
+	    //      if( Physics.Raycast( ray, out hit ) )
+		//		{
+		//			World.me.m_energy.add( -World.me.m_godVolcanoEnergy );
+		//			
+		//			StartCoroutine( Volcano( hit.point ) );
+		//		}
+		//	}
+		//}
 
-		if( Input.GetKey( KeyCode.Q ) || Input.GetMouseButton( 0 ) )
+		if( Input.GetKeyDown( KeyCode.Q ) || Input.GetMouseButton( 0 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godAddLandEnergy )
 			{
@@ -155,7 +140,7 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKey(KeyCode.E ) || Input.GetMouseButton( 1 ) )
+		if( Input.GetKeyDown(KeyCode.E ) || Input.GetMouseButton( 1 ) )
 		{
 			if( World.me.m_energy.current >= World.me.m_godRemLandEnergy )
 			{
@@ -183,6 +168,7 @@ public class RTSCam : MonoBehaviour
 					World.me.m_currentMode = World.Mode.BEAR;
 					World.me.RefreshCameras();
 					World.me.GetActiveCamera().GetComponentInChildren<BearCam>().target = hitSel.transform.gameObject;
+					hitSel.transform.gameObject.GetComponentInChildren<RabidBear>().GetPossessed();
 					hitSel.transform.gameObject.GetComponentInChildren<RabidBear>().enabled = false;
 					hitSel.transform.gameObject.GetComponentInChildren<BearScript>().enabled = true;
 				}

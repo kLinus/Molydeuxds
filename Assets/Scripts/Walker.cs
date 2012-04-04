@@ -44,7 +44,7 @@ public class Walker : MonoBehaviour
 	{
 		m_age += Time.deltaTime;
 		
-		float energy = World.me.m_player == m_side ? m_addEnergy : -m_addEnergy * 0.75f;
+		float energy = World.me.m_player == m_side ? m_addEnergy : m_addEnergy * World.me.m_energy.increasePerWorker;
 		
 		World.me.m_energy.add( energy * Time.deltaTime );
 		
@@ -53,8 +53,13 @@ public class Walker : MonoBehaviour
 			if( m_age > s_ageToMakeBuilding )
 			{
 				m_chanceOfBuilding = 1.0f;
-				
-				Instantiate( m_buildingDef, transform.position, new Quaternion() );
+				GameObject hut = Instantiate( m_buildingDef, transform.position, new Quaternion() )as GameObject;
+				if (m_side == Side.Blue)
+					hut.GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
+				else if (m_side == Side.Red)
+					hut.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+				else
+					Debug.Log(m_name + " has no side....DAMNIT JAKE");
 			}
 		}
 		

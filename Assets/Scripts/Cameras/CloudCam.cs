@@ -38,29 +38,6 @@ public class CloudCam : MonoBehaviour {
 				}
 			}
 		}
-		
-		
-		/*
-		if(Input.GetKey(KeyCode.W))
-		{
-			World.me.GetActiveCamera().transform.position += Vector3.forward * Time.deltaTime * velocity;
-		}
-		
-		if(Input.GetKey(KeyCode.S))
-		{
-			World.me.GetActiveCamera().transform.position += Vector3.back * Time.deltaTime * velocity;
-		}
-		
-		if(Input.GetKey(KeyCode.D))
-		{
-			World.me.GetActiveCamera().transform.position += Vector3.right * Time.deltaTime * velocity;
-		}
-	
-		if(Input.GetKey(KeyCode.A))
-		{
-			World.me.GetActiveCamera().transform.position += Vector3.left * Time.deltaTime * velocity;
-		}
-		*/
 	}
 	
 	
