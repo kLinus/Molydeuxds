@@ -130,12 +130,12 @@ public class Chunk : MonoBehaviour
 				
 				float heightUnit = (float)fnFinal( wx / 50.0f, wz / 50.0f, noiseZ );
 				
-				float hut0X = wx - 8.0f;
-				float hut0Z = wz - 8.0f;				
+				float hut0X = wx - (2 * Chunk.s_chunkSize + 8.0f);
+				float hut0Z = wz - (2 * Chunk.s_chunkSize + 8.0f);				
 				bool nearHut0 = hut0X * hut0X + hut0Z * hut0Z < (16.0f*16.0f);
 
-				float hut1X = wx - 152.0f;
-				float hut1Z = wz - 152.0f;				
+				float hut1X = wx - (152.0f - 2 * Chunk.s_chunkSize);
+				float hut1Z = wz - (152.0f - 2 * Chunk.s_chunkSize);				
 				bool nearHut1 = hut1X * hut1X + hut1Z * hut1Z < (16.0f*16.0f);
 				
 				float height = ( heightUnit ) * 12.0f + 4.0f;
@@ -529,9 +529,11 @@ public class World : MonoBehaviour
 		//hutColor = Color.red;
 		//m_hutRedDef.renderer.material.color = hutColor;
 		
+		int chunkOff = 2;
+		
 		{
-			float bX = 8.0f; 
-			float bZ = 8.0f; 
+			float bX = chunkOff * Chunk.s_chunkSize + 8.0f; 
+			float bZ = chunkOff * Chunk.s_chunkSize + 8.0f; 
 			
 			float bY = getWorldHeight( bX, bZ ) - 0.5f;
 	
@@ -543,8 +545,8 @@ public class World : MonoBehaviour
 		{
 			float maxSize = (float)s_chunkSide * s_chunkWorldSize;
 			
-			float rX = maxSize - 8.0f;
-			float rZ = maxSize - 8.0f;
+			float rX = maxSize - (chunkOff * Chunk.s_chunkSize + 8.0f);
+			float rZ = maxSize - (chunkOff * Chunk.s_chunkSize + 8.0f);
 			
 			float rY = getWorldHeight( rX, rZ ) - 0.5f;
 	
