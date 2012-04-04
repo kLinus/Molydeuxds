@@ -444,6 +444,8 @@ public class World : MonoBehaviour
 	private Camera camBEAR = null;
 	private Camera camGOD = null;
 	private Camera camCLOUD = null;
+	
+	public Rect statsGUI = new Rect(0, 0, 200, 100);
 		
 	[System.SerializableAttribute]
 	public class EnergyProperties
@@ -493,6 +495,13 @@ public class World : MonoBehaviour
 	public float m_godFloodEnergy	= 100.0f;
 	public float m_godDroughtEnergy	= 100.0f;
 	public float m_godVolcanoEnergy	= 100.0f;
+	
+	private int m_numWalkerRed;
+	private int m_numWalkerBlue;
+	private int m_numHutRed;
+	private int m_numHutBlue;
+	private int m_numBears;
+	private int m_numFoodLeft;
 	
 	
 	
@@ -583,14 +592,29 @@ public class World : MonoBehaviour
 			}
 		}
 		
+		m_numWalkerRed  = GameObject.FindGameObjectsWithTag("WalkerRed").Length;
+		m_numWalkerBlue = GameObject.FindGameObjectsWithTag("WalkerBlue").Length;
+		m_numFoodLeft   = GameObject.FindGameObjectsWithTag("Food").Length;
+		m_numHutBlue    = GameObject.FindGameObjectsWithTag("HutBlue").Length;
+		m_numHutRed     = GameObject.FindGameObjectsWithTag("HutRed").Length;
+		m_numBears      = GameObject.FindGameObjectsWithTag("Bear").Length;
 		RefreshCameras();
 
 	}
 	
 	void OnGUI()
 	{
+		GUI.Box(new Rect(0,0, 200, 165), "Energy");
 		GUI.color = new Color(133, 0 ,0);
-		GUI.HorizontalScrollbar( new Rect (10, 10, World.me.m_energy.max, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
+		GUI.HorizontalScrollbar( new Rect (10, 20, 180, 20), 0, World.me.m_energy.current, 0, World.me.m_energy.max);
+		GUI.color = Color.white;
+		GUI.Label( new Rect(10, 40, 200, 20), "Red Workers: " + m_numWalkerRed.ToString() );
+		GUI.Label( new Rect(10, 60, 200, 20), "Red Huts: " + m_numHutRed.ToString() );
+		GUI.Label( new Rect(10, 80, 200, 20), "Blue Workers: " + m_numWalkerBlue.ToString() );
+		GUI.Label( new Rect(10, 100, 200, 20), "Blue Hut: " + m_numHutBlue.ToString() );
+		GUI.Label( new Rect(10, 120, 200, 20), "Food Left: " + m_numFoodLeft.ToString() );
+		GUI.Label( new Rect(10, 140, 200, 20), "Bears: " + m_numBears.ToString() );
+
 	}
 	
 	public void RefreshCameras()

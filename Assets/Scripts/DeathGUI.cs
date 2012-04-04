@@ -67,7 +67,14 @@ public class DeathGUI : MonoBehaviour
 			
 			scrollposition = GUILayout.BeginScrollView(scrollposition);
 			GUILayout.BeginVertical(GUILayout.Width(scrollwidth));
-			GUILayout.Label(gameObject.name, header1);
+	/******* I'm going to create a custom style here becuase I can't figure out where the rest of the GUI is */
+	/******* Make sure to take these lines out when the right place is found */		
+			
+			GUIStyle nameStyle = new GUIStyle(header1);
+			nameStyle.alignment = TextAnchor.MiddleCenter;
+			GUILayout.Label(gameObject.name, nameStyle);
+	/******* End of shotty shit */		
+			
 			for(int i = 0; i < paragraphs.Length; i++)
 			{
 				GUILayout.Label(headers[i], header1);
