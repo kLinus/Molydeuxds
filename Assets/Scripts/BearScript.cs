@@ -14,6 +14,8 @@ public class BearScript : MonoBehaviour
 	public  float jumpSpeed = 1000;
 	private bool  canJump=true;
 	
+	public GameObject bloodPrefab;
+	
 	public  float magicNumber;
 	public  float roarCheckRadius = 15;
 	private SphereCollider roarColliderCheck;
@@ -122,19 +124,21 @@ public class BearScript : MonoBehaviour
 	
 	public void UpdateEnergy()
 	{
-		if( World.me.m_energy.current <= 0)
+		if( World.me.m_energy.current <= 2)
 		{
 			Debug.Log("That's a dead bear");
 			World.me.m_currentMode = World.Mode.GOD;
+			GameObject temp = Instantiate(bloodPrefab) as GameObject;
+			temp.transform.parent = transform;
+			temp.transform.localPosition = Vector3.zero;
 			World.me.RefreshCameras();
-			Destroy(this.gameObject);
+			Destroy(this.gameObject, 3.0f);
 		}
 		
 		if( Time.realtimeSinceStartup - World.me.m_energy.lastDecay > World.me.m_energy.decayTime)
 		{
 			World.me.m_energy.decay();
 		}
-		//GetComponentInChildren<HealthBar>().UpdateHealth(World.me.m_energy.current);
 	}
 	
 	public void IncreaseEnergy(float amount)

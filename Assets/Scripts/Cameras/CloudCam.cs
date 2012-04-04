@@ -36,6 +36,11 @@ public class CloudCam : MonoBehaviour {
 						}
 					}
 				}
+				
+				if( Input.GetKeyDown(KeyCode.Escape))
+				{
+					World.me.m_currentMode = World.Mode.GOD;
+				}
 			}
 		}
 	}

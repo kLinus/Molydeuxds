@@ -40,11 +40,6 @@ class Action
 			
 			float y = World.me.getWorldHeight( p.x, p.z ) - 0.5f;
 			
-			if (isUnderGodControl)
-			{
-				yield break;
-			}
-			
 			if( m_walker.gameObject.GetComponent<Ghost>() == null )
 			{
 				if( y < World.me.m_waterObj.transform.position.y )

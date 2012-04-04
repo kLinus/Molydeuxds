@@ -54,7 +54,20 @@ public class RTSCam : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		
+		if (World.me.m_currentMode == World.Mode.GOD)
+		{
+			UpdateMovement();
+			UpdateAbilities();
+		}
+		else
+		{
+			Vector3 camPos = World.me.GetActiveCamera().transform.position;
+			transform.position = new Vector3(camPos.x, 50, camPos.z);
+		}
+	}
+	
+	private void UpdateMovement()
+	{
 		if( Input.GetKey(KeyCode.W) )
 		{
 			World.me.GetActiveCamera().transform.position += ( new Vector3( 0, 0, 1 ) * Time.deltaTime * m_speed );
@@ -70,9 +83,11 @@ public class RTSCam : MonoBehaviour
 		if( Input.GetKey(KeyCode.D) )
 		{
 			World.me.GetActiveCamera().transform.position += ( new Vector3( 1, 0, 0 ) * Time.deltaTime * m_speed );
-		}
+		}	
+	}
 		
-		//TODO: Remove the other raycasts.
+	private void UpdateAbilities()
+	{
 		Ray raySel = World.me.GetActiveCamera().ScreenPointToRay(Input.mousePosition);
 		
 		RaycastHit hitSel;
@@ -175,11 +190,11 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
-		if( Input.GetKeyDown(KeyCode.C) )
+		if( Input.GetKey(KeyCode.C) )
 		{
 			if(Physics.Raycast(raySel, out hitSel))
 			{
-				if(hitSel.transform.gameObject.name == "CloudPrefab(clone)")
+				if(hitSel.transform.gameObject.name == "CloudPrefab(Clone)")
 				{
 					Debug.Log("Switching to Cloud Mode");
 					World.me.m_currentMode = World.Mode.CLOUD;
@@ -209,10 +224,9 @@ public class RTSCam : MonoBehaviour
 				bear.AddComponent<RabidBear>();
 				bear.AddComponent<RabidBear>().enabled = true;
 			}
-			           		
 		}
-		
 	}
+	
 }
 
 
