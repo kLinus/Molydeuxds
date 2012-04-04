@@ -39,6 +39,11 @@ public class Building : MonoBehaviour
 	
 	public void addResource( ResourceDef def )
 	{
+		if( def == null )
+		{
+			return;
+		}
+		
 		ResourceDef curDef;
 		if( m_res.TryGetValue( def.type, out curDef ) )
 		{
