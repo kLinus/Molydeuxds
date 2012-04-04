@@ -66,7 +66,7 @@ public class BearScript : MonoBehaviour
 		foreach( Collider col in collides)
 		{
 			if(!roaring)
-				audios[Random.Range(0,audios.Length+1)].Play();
+				roarClips[Random.Range(0,roarClips.Length+1)].Play();
 			roaring = true;
 				
 		}
