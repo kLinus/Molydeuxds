@@ -332,7 +332,7 @@ public class Walker : MonoBehaviour
 	static string getName()
 	{
 		//return s_firstNames[Random.Range(0,s_firstNames.Length)] + s_lastNames[Random.Range(0,s_lastNames.Length)];
-		int x = Random.Range(0, s_firstNames.Length+1);
+		int x = Random.Range(0, s_firstNames.Length);
 		return s_firstNames[x] + s_lastNames[x];
 	}
 }

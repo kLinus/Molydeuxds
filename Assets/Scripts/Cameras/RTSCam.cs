@@ -194,6 +194,11 @@ public class RTSCam : MonoBehaviour
 			}
 		}
 		
+		if( Input.GetKey(KeyCode.Alpha9) )
+		{
+			Application.LoadLevel("Final");
+		}
+		
 	//	if( Input.GetKeyDown(KeyCode.Alpha0) )
 	//	{
     //        if( Physics.Raycast( raySel, out hitSel ) )

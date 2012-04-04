@@ -620,7 +620,7 @@ public class World : MonoBehaviour
 		GUI.Label( new Rect(10, 100, 200, 20), "Blue Hut: " + m_numHutBlue.ToString() );
 		GUI.Label( new Rect(10, 120, 200, 20), "Food Left: " + m_numFoodLeft.ToString() );
 		GUI.Label( new Rect(10, 140, 200, 20), "Bears: " + m_numBears.ToString() );
-		GUI.Label( new Rect(10, 160, 200, 20), "Energy: " + World.me.m_energy.current.ToString() );
+		//GUI.Label( new Rect(10, 160, 200, 20), "Energy: " + World.me.m_energy.current.ToString() );
 
 	}
 	
@@ -917,7 +917,7 @@ public class World : MonoBehaviour
 		{
 			scatterResource( m_bearDef, 1, -1 );
 
-			yield return new WaitForSeconds( 20 );
+			yield return new WaitForSeconds( m_cooldownGrowBear );
 		}
 	}
 	
@@ -925,7 +925,7 @@ public class World : MonoBehaviour
 	{
 		while( true )
 		{
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(m_cooldownGrowTree);
 
 			scatterResource( m_treeDef, 1, 1 );
 		}
@@ -935,7 +935,7 @@ public class World : MonoBehaviour
 	{
 		while( true )
 		{
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(m_cooldownGrowFood);
 
 			scatterResource( m_foodDef, 1, 1 );
 		}

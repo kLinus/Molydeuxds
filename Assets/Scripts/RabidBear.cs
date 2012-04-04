@@ -4,6 +4,8 @@ using System.Collections;
 public class RabidBear : Walker 
 {
 	string bearName;
+	public float m_bearEnergy = 100;
+	public float m_bearDecay = 5;
 	
 	ActBear m_act;
 	
@@ -22,6 +24,11 @@ public class RabidBear : Walker
 		{
 			Destroy (gameObject);
 		}
+		if (m_bearEnergy <= 0)
+		{
+			Destroy (gameObject);
+		}
+		m_bearEnergy -= m_bearDecay * Time.deltaTime;
 
 	}
 		
