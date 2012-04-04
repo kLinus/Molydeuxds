@@ -541,7 +541,7 @@ public class World : MonoBehaviour
 		}		
 		
 		{
-			float maxSize = 24.0f; //(float)s_chunkSide * s_chunkWorldSize;
+			float maxSize = (float)s_chunkSide * s_chunkWorldSize;
 			
 			float rX = maxSize - 8.0f;
 			float rZ = maxSize - 8.0f;
