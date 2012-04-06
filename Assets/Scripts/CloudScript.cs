@@ -16,6 +16,7 @@ public class CloudScript : MonoBehaviour {
 	
 	private SphereCollider roarColliderCheck;
 	private float originalY;
+	public float m_lockedYAxis = 30.0f;
 	
 	private float m_driftSpeed = Random.Range( 0.8f, 1.2f );
 	
@@ -96,7 +97,7 @@ public class CloudScript : MonoBehaviour {
 		Vector3 p = gameObject.transform.position + direction * distThisFrame;
 		float y = World.me.getWorldHeight( p.x, p.z ) + originalY;       //These are magic numbers, don't touch!
 		
-		gameObject.transform.position = new Vector3( p.x, y - 2, p.z );
+		gameObject.transform.position = new Vector3( p.x, m_lockedYAxis, p.z );
 	}
 	
 	private int audioCounter = 0;
